@@ -188,6 +188,17 @@
       0%, 100% { transform: scale(1, 1); }
       50% { transform: scale(1.2, 1); }
     }
+
+    /* -------------------------------------
+       Pop-up Bouncy Animation
+       ------------------------------------- */
+    @keyframes popInBouncy {
+        0% { opacity: 0; transform: scale(0.5) translateY(50px); }
+        60% { opacity: 1; transform: scale(1.05) translateY(-10px); }
+        80% { opacity: 1; transform: scale(0.95) translateY(5px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-popIn { animation: popInBouncy 0.6s cubic-bezier(0.68, -0.55, 0.26, 1.55) forwards; }
   </style>
 </head>
 <body class="text-gray-800">
@@ -422,26 +433,52 @@
               <h2 class="text-3xl md:text-4xl font-black text-[#003380] mb-3">บันทึกข้อมูลสำเร็จ!</h2>
               <p class="text-gray-500 mb-6 max-w-md text-sm md:text-base leading-relaxed">ข้อมูลของท่านถูกส่งเข้าระบบเรียบร้อยแล้ว<br>ใช้นิ้วถูที่การ์ดด้านล่างเพื่อลุ้นรับของรางวัล!</p>
               
-              <!-- Scratch Card Area (ปรับขนาดให้ยืดหยุ่นขึ้น) -->
+              <!-- Scratch Card Area -->
               <div id="scratchContainer" class="relative w-full max-w-[320px] md:max-w-[360px] aspect-[2/1] mx-auto mb-6 select-none overflow-hidden rounded-2xl shadow-lg border-2 border-gray-200 touch-none bg-white">
-                  <!-- Result Background (ซ่อนอยู่ด้านหลัง) -->
+                  <!-- Result Background -->
                   <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4">
                       <!-- JS จะแทรกข้อความหรือรูปภาพรางวัลตรงนี้ -->
                   </div>
                   <!-- Canvas สำหรับขูด -->
-                  <canvas id="scratchCanvas" class="absolute inset-0 z-10 cursor-crosshair block"></canvas>
-              </div>
-              
-              <!-- ปุ่มรับรางวัล (แสดงเฉพาะตอนถูกรางวัล) -->
-              <div id="claimContainer" class="hidden mb-6 z-20 w-full max-w-[280px] mx-auto">
-                  <button onclick="claimPrizeBtn()" id="btnClaim" class="w-full bg-[#22c55e] hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-bold transition shadow-md flex items-center justify-center gap-2">
-                      <i class="fi fi-sr-gift mt-1"></i> กดใช้สิทธิ์รับรางวัล
-                  </button>
-                  <p class="text-xs text-red-500 mt-2 font-bold text-center">*สำหรับเจ้าหน้าที่กดยืนยันเท่านั้น</p>
+                  <canvas id="scratchCanvas" class="absolute inset-0 z-10 cursor-crosshair w-full h-full transition-opacity duration-500"></canvas>
               </div>
 
-              <button onclick="goToMedia()" class="btn-orange px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-bold transition shadow-lg text-base md:text-lg flex items-center gap-2 mt-2">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></button>
+              <button onclick="goToMedia()" class="btn-orange px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-bold transition shadow-lg text-base md:text-lg flex items-center gap-2 mt-4">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></button>
           </div>
+      </div>
+  </div>
+
+  <!-- ==========================================
+       WIN PRIZE MODAL (Pop-up ดุ๊กดิ๊ก)
+       ========================================== -->
+  <div id="winModal" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 bg-[#001133]/80 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+      <div class="bg-white w-full max-w-sm md:max-w-md rounded-[2rem] p-6 md:p-8 text-center shadow-2xl relative border-4 border-[#22c55e]">
+          <!-- Icon Header -->
+          <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto -mt-16 mb-4 border-4 border-white shadow-lg">
+              <i class="fi fi-sr-gift text-5xl text-green-500 mt-2"></i>
+          </div>
+          
+          <h3 class="text-3xl font-black text-green-600 mb-2">ยินดีด้วย!</h3>
+          <p class="text-lg font-bold text-[#003380] mb-2">คุณได้รับรางวัล</p>
+          
+          <!-- Name Display -->
+          <div class="bg-orange-50 border border-orange-100 rounded-xl py-3 px-4 mb-4 shadow-inner">
+              <p id="winnerNameDisplay" class="text-lg md:text-xl text-[#f26b21] font-black truncate"></p>
+          </div>
+          
+          <p class="text-sm md:text-base text-gray-600 mb-6 font-medium leading-relaxed bg-gray-50 p-3 rounded-xl border border-gray-100">
+              โปรดแคปหน้าจอนี้<br>หรือแสดงหลักฐานให้ทางเจ้าหน้าที่ที่บูธดู
+          </p>
+
+          <!-- Claim Button -->
+          <div id="modalClaimContainer" class="w-full">
+              <button onclick="claimPrizeBtn()" id="btnModalClaim" class="w-full bg-[#22c55e] hover:bg-green-600 text-white px-6 py-4 rounded-xl font-black transition shadow-lg flex items-center justify-center gap-2 text-lg">
+                  <i class="fi fi-sr-hand-holding-box mt-1"></i> กดรับสิทธิ์ (เจ้าหน้าที่เท่านั้น)
+              </button>
+              <p class="text-xs text-red-500 mt-3 font-bold">*กรุณากดเมื่ออยู่ต่อหน้าเจ้าหน้าที่เท่านั้น</p>
+          </div>
+          
+          <button onclick="closeWinModal()" class="mt-6 text-gray-400 hover:text-gray-600 text-sm underline font-medium">ปิดหน้าต่างนี้เพื่อดูการ์ด</button>
       </div>
   </div>
 
@@ -899,119 +936,159 @@ function submitData(overwrite = false) {
 }
 
 // ----------------------------------------------------
-// ระบบ Scratch Card และ รับรางวัล (แก้ไขเรื่องขนาดบนมือถือ)
+// ระบบ Scratch Card และ รับรางวัล
 // ----------------------------------------------------
+let isWinnerGlobal = false;
+let claimStatusGlobal = 'WAITING';
+
 function initScratchCard(result, claimStatus, fullName) {
     window.currentFullName = fullName; 
+    isWinnerGlobal = (result === 'WIN');
+    claimStatusGlobal = claimStatus;
     
+    // ตั้งชื่อใน Modal ล่วงหน้า
+    document.getElementById('winnerNameDisplay').innerText = fullName;
+    
+    // เช็คสถานะปุ่มใน Modal ล่วงหน้า
+    const modalBtn = document.getElementById('btnModalClaim');
+    if (claimStatus === 'CLAIMED') {
+        modalBtn.innerHTML = '<i class="fi fi-sr-check-circle mt-1"></i> สิทธิ์ถูกใช้งานแล้ว';
+        modalBtn.className = "w-full bg-gray-400 text-white px-6 py-4 rounded-xl font-black shadow-none flex items-center justify-center gap-2 text-lg cursor-not-allowed";
+        modalBtn.onclick = null; // ปิดการกดซ้ำ
+    }
+
     const container = document.getElementById('scratchContainer');
     const bg = document.getElementById('scratchResultBg');
     const canvas = document.getElementById('scratchCanvas');
-    const claimContainer = document.getElementById('claimContainer');
+    
+    // รีเซ็ต Canvas (เผื่อมีการส่งข้อมูลซ้ำทับ)
+    canvas.style.opacity = "1";
+    canvas.style.display = "block";
     
     // ตั้งค่ากราฟิกหลังบัตรขูด
-    if (result === 'WIN') {
-        bg.innerHTML = '<i class="fi fi-sr-gift text-4xl text-green-500 mb-2"></i><span class="text-green-600 text-xl font-black">ยินดีด้วย! คุณได้รับรางวัล</span>';
-        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-green-50 shadow-inner';
-        
-        if (claimStatus === 'WAITING') {
-            claimContainer.classList.remove('hidden');
-        } else if (claimStatus === 'CLAIMED') {
-            claimContainer.innerHTML = '<div class="text-gray-500 font-bold bg-gray-100 px-6 py-3 rounded-xl border border-gray-200 text-center">❌ สิทธิ์นี้ถูกใช้งานไปแล้ว</div>';
-            claimContainer.classList.remove('hidden');
-        }
+    if (isWinnerGlobal) {
+        bg.innerHTML = '<i class="fi fi-sr-gift text-5xl text-green-500 mb-2"></i><span class="text-green-600 text-2xl font-black mt-2">ยินดีด้วย!</span><span class="text-sm font-bold text-gray-500 mt-1">คุณได้รับรางวัล</span>';
+        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-green-50 shadow-inner border-2 border-green-200';
     } else {
-        bg.innerHTML = '<i class="fi fi-sr-sad-tear text-4xl text-gray-400 mb-2"></i><span class="text-gray-500 text-lg font-bold">เสียใจด้วย ไม่ได้รับรางวัล</span>';
-        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-gray-50 shadow-inner';
-        claimContainer.classList.add('hidden');
+        bg.innerHTML = '<i class="fi fi-sr-sad-tear text-5xl text-gray-400 mb-2"></i><span class="text-gray-500 text-xl font-black mt-2">เสียใจด้วย</span><span class="text-sm font-bold text-gray-400 mt-1">ไม่ได้รับรางวัลในครั้งนี้</span>';
+        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-gray-50 shadow-inner border-2 border-gray-200';
     }
 
-    // 🌟 ใช้วิธีดึงขนาดจริงจาก clientWidth/clientHeight ทันที 
-    // ค่าเหล่านี้จะไม่อิงตาม transform: scale ของ CSS ทำให้ได้ขนาดเต็มเสมอ
     setTimeout(() => {
-        // clientWidth จะได้ขนาดความกว้าง "ภายใน" กรอบพอดี
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        
-        // จัดการเรื่องความคมชัดบนหน้าจอมือถือ (Retina Display)
+        const rect = container.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         
-        // 1. ตั้งค่าขนาดความละเอียดจริงของ Canvas Buffer
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
         
-        // 2. บังคับขนาดการแสดงผลด้วย CSS แบบระบุพิกเซลไปเลย เพื่อป้องกัน flex box หรือ scale ทำเพี้ยน
-        canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
-
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        ctx.scale(dpr, dpr); // ปรับ Scale เพื่อให้วาดพิกัดตรงกัน
+        ctx.scale(dpr, dpr); 
 
-        // เทสีเทาเป็นสารเคลือบเต็มพื้นที่
+        // เทสีเทาเป็นสารเคลือบ
         ctx.fillStyle = '#b0bec5'; 
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0, 0, rect.width, rect.height);
         
-        // วาดข้อความให้อยู่ตรงกลางจาก "ความกว้างจริง"
-        ctx.font = "bold 20px 'Noto Sans Thai', sans-serif";
+        // วาดข้อความให้ตรงกลางเป๊ะๆ โดยใช้พิกัดของแกน (width/2, height/2) ตามสเกลที่แท้จริง
+        ctx.font = "bold 22px 'Noto Sans Thai', sans-serif";
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText("ขูดเพื่อลุ้นรางวัล!", width / 2, height / 2);
+        ctx.fillText("ขูดเพื่อลุ้นรางวัล!", rect.width / 2, rect.height / 2);
 
         let isDrawing = false;
+        let isRevealed = false; // กันการทำงานซ้ำ
         
         function getMousePos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            // คำนวณ Scale ชดเชยกรณีที่หน้าจอมือถือกำลังเล่นแอนิเมชันตอนเริ่มขูด
-            const scaleX = width / rect.width;
-            const scaleY = height / rect.height;
-
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let canvasRect = canvas.getBoundingClientRect();
             return { 
-                x: (clientX - rect.left) * scaleX, 
-                y: (clientY - rect.top) * scaleY 
+                x: clientX - canvasRect.left, 
+                y: clientY - canvasRect.top 
             };
         }
 
         function scratch(e) {
-            if (!isDrawing) return;
-            if (e.cancelable) e.preventDefault(); // ป้องกันจอมือถือขยับ
-            
-            const pos = getMousePos(e);
+            if (!isDrawing || isRevealed) return;
+            e.preventDefault(); 
+            let pos = getMousePos(e);
             
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            // ปรับขนาดวงกลมยางลบตามขนาดหน้าจอ (15% ของด้านที่สั้นกว่า)
-            const radius = Math.min(width, height) * 0.15;
-            ctx.arc(pos.x, pos.y, radius < 20 ? 20 : radius, 0, 2 * Math.PI); 
+            ctx.arc(pos.x, pos.y, 30, 0, 2 * Math.PI); // รัศมีรอยขูด
             ctx.fill();
         }
 
+        // ระบบเช็คว่าขูดไปเยอะหรือยัง (คำนวณจาก Alpha Channel แบบคร่าวๆ)
+        function checkScratchPercent() {
+            if (isRevealed) return;
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            let transparentCount = 0;
+            // เช็คทีละ 16 พิกเซลเพื่อลดภาระเครื่อง (4 * 4 กระโดดไป)
+            for (let i = 3; i < pixels.length; i += 16) { 
+                if (pixels[i] < 128) transparentCount++; 
+            }
+            const totalPixelsToCheck = pixels.length / 16;
+            const percent = (transparentCount / totalPixelsToCheck) * 100;
+            
+            if (percent > 45) { // ถ้าขูดไปเกิน 45% ให้แสดงผลเลย
+                isRevealed = true;
+                canvas.style.opacity = "0"; // Fade out canvas
+                setTimeout(() => {
+                    canvas.style.display = "none";
+                    if (isWinnerGlobal) {
+                        openWinModal(); // เปิด Pop-up ถัาถูกรางวัล
+                    }
+                }, 500); // รอจังหวะ fade 0.5s
+            }
+        }
+
         canvas.addEventListener('mousedown', () => isDrawing = true);
-        canvas.addEventListener('touchstart', (e) => { isDrawing = true; if(e.cancelable) e.preventDefault(); }, {passive: false});
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); }, {passive: false});
         canvas.addEventListener('mousemove', scratch);
         canvas.addEventListener('touchmove', scratch, {passive: false});
-        window.addEventListener('mouseup', () => isDrawing = false);
-        window.addEventListener('touchend', () => isDrawing = false);
         
-    }, 50); // รอจังหวะสั้นๆ ให้ Browser เรนเดอร์กล่องก่อนดึงขนาด
+        // เช็คเปอร์เซ็นต์ทุกครั้งที่ยกนิ้ว/เมาส์ขึ้น
+        window.addEventListener('mouseup', () => { isDrawing = false; checkScratchPercent(); });
+        window.addEventListener('touchend', () => { isDrawing = false; checkScratchPercent(); });
+        
+    }, 100); 
+}
+
+function openWinModal() {
+    let modal = document.getElementById('winModal');
+    let modalBox = modal.querySelector('div');
+    
+    modal.classList.remove('hidden');
+    // หน่วงเวลาให้ display:block ทำงานก่อน แล้วค่อยใส่ opacity
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modalBox.classList.add('animate-popIn');
+    }, 50);
+}
+
+function closeWinModal() {
+    let modal = document.getElementById('winModal');
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300); // รอ animation fade out
 }
 
 function claimPrizeBtn() {
     Swal.fire({
-        title: 'ยืนยันการใช้สิทธิ์รับรางวัล?',
-        text: "หากกดตกลงแล้วจะไม่สามารถรับรางวัลซ้ำได้อีก (เจ้าหน้าที่กดเท่านั้น)",
+        title: 'แน่ใจว่าอยู่กับเจ้าหน้าที่?',
+        text: "กรุณากดยืนยันเมื่ออยู่ต่อหน้าเจ้าหน้าที่ที่บูธเท่านั้น! หากกดยืนยันแล้วจะไม่สามารถรับรางวัลซ้ำได้อีก",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#22c55e',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'ยืนยันรับรางวัล',
+        confirmButtonText: 'ใช่, อยู่กับเจ้าหน้าที่',
         cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
-            let btn = document.getElementById('btnClaim');
+            let btn = document.getElementById('btnModalClaim');
             btn.innerHTML = '<span class="loader mr-2 !w-5 !h-5 !border-2"></span> กำลังอัปเดต...';
             btn.disabled = true;
 
@@ -1022,10 +1099,20 @@ function claimPrizeBtn() {
             .then(r => r.json())
             .then(res => {
                 if(res.status === 'success') {
-                    document.getElementById('claimContainer').innerHTML = '<div class="text-green-600 font-bold bg-green-50 px-6 py-3 rounded-xl border border-green-200 text-center">✅ ยืนยันการรับรางวัลสำเร็จ</div>';
+                    // เปลี่ยนปุ่มเป็นสีเทาและเปลี่ยนข้อความ
+                    btn.innerHTML = '<i class="fi fi-sr-check-circle mt-1"></i> สิทธิ์ถูกใช้งานแล้ว';
+                    btn.className = "w-full bg-gray-400 text-white px-6 py-4 rounded-xl font-black shadow-none flex items-center justify-center gap-2 text-lg cursor-not-allowed";
+                    btn.onclick = null; // ปิดการกดซ้ำ
+                    
+                    Swal.fire({
+                        title: 'สำเร็จ!', 
+                        text: 'ยืนยันการใช้สิทธิ์รับรางวัลเรียบร้อยแล้ว', 
+                        icon: 'success',
+                        confirmButtonColor: '#22c55e'
+                    });
                 } else {
                     Swal.fire('ข้อผิดพลาด', res.message, 'error');
-                    btn.innerHTML = '<i class="fi fi-sr-gift mt-1"></i> กดใช้สิทธิ์รับรางวัล';
+                    btn.innerHTML = '<i class="fi fi-sr-hand-holding-box mt-1"></i> กดรับสิทธิ์ (เจ้าหน้าที่เท่านั้น)';
                     btn.disabled = false;
                 }
             })

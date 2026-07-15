@@ -84,7 +84,7 @@
         padding: 0.4rem; z-index: 100;
         opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.2s ease; transform: translateY(-10px);
     }
-    .custom-select-wrapper.open .custom-options, #schoolDropdown.show, #provinceDropdown.show { opacity: 1; visibility: visible; pointer-events: all; transform: translateY(0); }
+    .custom-select-wrapper.open .custom-options, #schoolDropdown.show, #provinceDropdown.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
     
     .custom-option, #schoolDropdown li, #provinceDropdown li { 
         padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; 
@@ -207,7 +207,7 @@
                   </div>
                   
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-[60]">
-                      <div class="md:col-span-1">
+                      <div class="md:col-span-1 relative z-[60]">
                           <label class="block text-sm font-bold mb-2 text-gray-700">หลักสูตรที่เข้าศึกษา <span class="text-red-500">*</span></label>
                           <div id="courseWrapper"></div><input type="hidden" id="course">
                       </div>
@@ -217,7 +217,7 @@
                       </div>
                   </div>
 
-                  <div id="studentIdContainer" class="hidden bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden">
+                  <div id="studentIdContainer" class="hidden bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden z-[55]">
                       <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
                           <label class="block text-sm font-bold text-[#003380]">รหัสนักศึกษา 7 หลัก <span class="text-red-500">*</span></label>
                           <label class="cursor-pointer border border-orange-200 bg-white hover:bg-orange-50 px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
@@ -248,15 +248,15 @@
                   </div>
 
                   <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-50">
-                      <div class="md:col-span-1">
+                      <div class="md:col-span-1 relative z-[50]">
                           <label class="block text-sm font-bold mb-2 text-gray-700">คำนำหน้า <span class="text-red-500">*</span></label>
                           <div id="prefixWrapper"></div><input type="hidden" id="prefix">
                       </div>
-                      <div class="md:col-span-1 lg:col-span-1 col-span-2">
+                      <div class="md:col-span-1 lg:col-span-1 col-span-2 relative z-[49]">
                          <label class="block text-sm font-bold mb-2 text-gray-700">ชื่อจริง <span class="text-red-500">*</span></label>
                          <div class="group-input"><input type="text" id="fname" class="input-custom" placeholder="ระบุชื่อจริง"></div>
                       </div>
-                      <div class="md:col-span-2 col-span-2">
+                      <div class="md:col-span-2 col-span-2 relative z-[48]">
                          <label class="block text-sm font-bold mb-2 text-gray-700">นามสกุล <span class="text-red-500">*</span></label>
                          <div class="group-input"><input type="text" id="lname" class="input-custom" placeholder="ระบุนามสกุล"></div>
                       </div>
@@ -273,7 +273,15 @@
 
                   <div class="bg-gray-50 p-6 lg:p-8 rounded-2xl border border-gray-200 shadow-sm relative z-50">
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                          <div class="relative">
+                          <div class="relative z-[60]">
+                              <label class="block text-sm font-bold mb-2 text-[#003380]">โรงเรียนที่จบระดับชั้น ม.6 หรือ เทียบเท่า <span class="text-red-500">*</span></label>
+                              <div class="group-input relative">
+                                  <i class="fi fi-rr-search icon-input top-1/2 transform -translate-y-1/2 text-xl mt-0.5 z-10"></i>
+                                  <input type="text" id="schoolInputSearch" class="input-custom with-icon" autocomplete="off" placeholder="พิมพ์ชื่อโรงเรียนเพื่อค้นหา..." oninput="fastSearchSchool(this.value)">
+                              </div>
+                              <ul id="schoolDropdown"></ul>
+                          </div>
+                          <div class="relative z-[59]">
                               <label class="block text-sm font-bold mb-2 text-[#003380]">จังหวัดของโรงเรียน <span class="text-red-500">*</span></label>
                               <div class="group-input relative">
                                   <i id="provIcon" class="fi fi-rr-marker icon-input top-1/2 transform -translate-y-1/2 text-xl mt-0.5 z-10 text-gray-400 hidden"></i>
@@ -542,7 +550,12 @@ window.onload = function() {
         trigger.onclick = function(e) {
             e.stopPropagation();
             document.querySelectorAll('.custom-select-wrapper').forEach(w => { if(w !== wrapper) w.classList.remove('open'); });
-            document.getElementById('schoolDropdown').classList.remove('show');
+            
+            let schDropdown = document.getElementById('schoolDropdown');
+            if (schDropdown) schDropdown.classList.remove('show');
+            let provDropdown = document.getElementById('provinceDropdown');
+            if (provDropdown) provDropdown.classList.remove('show');
+
             wrapper.classList.toggle('open');
         };
         
@@ -551,8 +564,10 @@ window.onload = function() {
     
     document.addEventListener('click', function() {
         document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
-        document.getElementById('schoolDropdown').classList.remove('show');
-        document.getElementById('provinceDropdown').classList.remove('show');
+        let schDropdown = document.getElementById('schoolDropdown');
+        if (schDropdown) schDropdown.classList.remove('show');
+        let provDropdown = document.getElementById('provinceDropdown');
+        if (provDropdown) provDropdown.classList.remove('show');
     });
 
     let currentCoursePrefix = "";
@@ -808,5 +823,6 @@ function goToMedia() {
     window.location.href = "media.html";
 }
 </script>
+
 </body>
 </html>

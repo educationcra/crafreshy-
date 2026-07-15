@@ -281,7 +281,6 @@
                               <label class="block text-sm font-bold mb-2 text-[#003380]">โรงเรียนที่จบระดับชั้น ม.6 หรือ เทียบเท่า <span class="text-red-500">*</span></label>
                               <div class="group-input relative">
                                   <i class="fi fi-rr-search icon-input top-1/2 transform -translate-y-1/2 text-xl mt-0.5 z-10"></i>
-                                  <!-- เปลี่ยน bg-color ของ input โรงเรียนเป็นสีขาวเสมอ -->
                                   <input type="text" id="schoolInputSearch" class="input-custom with-icon !bg-white border-gray-200" autocomplete="off" placeholder="พิมพ์ชื่อโรงเรียนเพื่อค้นหา..." oninput="fastSearchSchool(this.value)">
                               </div>
                               <ul id="schoolDropdown"></ul>
@@ -290,7 +289,6 @@
                               <label class="block text-sm font-bold mb-2 text-[#003380]">จังหวัดของโรงเรียน <span class="text-red-500">*</span></label>
                               <div class="group-input relative">
                                   <i id="provIcon" class="fi fi-rr-marker icon-input top-1/2 transform -translate-y-1/2 text-xl mt-0.5 z-10 text-gray-400"></i>
-                                  <!-- เปลี่ยน bg-color ของ input จังหวัดเป็นสีขาวเสมอ และให้สามารถพิมพ์แก้ไขได้ตลอด -->
                                   <input type="text" id="provinceInput" class="input-custom with-icon text-gray-800 !bg-white border-gray-200" placeholder="พิมพ์เพื่อค้นหาจังหวัด..." oninput="fastSearchProvince(this.value)" onfocus="fastSearchProvince(this.value)">
                               </div>
                               <ul id="provinceDropdown"></ul>
@@ -370,25 +368,41 @@
 
                   <div class="flex justify-between pt-8 border-t border-gray-200 mt-6">
                       <button type="button" onclick="prevStep(3)" class="px-6 py-2.5 text-gray-500 hover:text-[#f26b21] font-bold transition">ย้อนกลับ</button>
-                      <button type="button" onclick="submitData()" id="btnSubmit" class="btn-orange px-10 py-4 font-black flex items-center gap-2 shadow-lg text-lg">ส่งข้อมูลแบบสำรวจ</button>
+                      <button type="button" onclick="submitData(false)" id="btnSubmit" class="btn-orange px-10 py-4 font-black flex items-center gap-2 shadow-lg text-lg">ส่งข้อมูลแบบสำรวจ</button>
                   </div>
               </div>
           </form>
 
-          <!-- Success View -->
-      <div id="successView" class="hidden flex flex-col items-center py-12 text-center animate-[scaleIn_0.5s_ease-out]">
-          <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-inner border border-green-200">
-              <i class="fi fi-sr-check-circle text-6xl text-green-500 mt-2"></i>
+          <!-- Success View (ระบบขูดรางวัล) -->
+          <div id="successView" class="hidden flex flex-col items-center py-12 text-center animate-[scaleIn_0.5s_ease-out]">
+              <h2 class="text-4xl font-black text-[#003380] mb-3">บันทึกข้อมูลสำเร็จ!</h2>
+              <p class="text-gray-500 mb-6 max-w-md text-base leading-relaxed">ข้อมูลของท่านถูกส่งเข้าระบบเรียบร้อยแล้ว<br>ใช้นิ้วถูที่การ์ดด้านล่างเพื่อลุ้นรับของรางวัล!</p>
+              
+              <!-- Scratch Card Area -->
+              <div id="scratchContainer" class="relative w-72 h-40 mx-auto mb-6 select-none overflow-hidden rounded-2xl shadow-lg border-2 border-gray-100 touch-none">
+                  <!-- Result Background (ซ่อนอยู่ด้านหลัง) -->
+                  <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                      <!-- JS จะแทรกข้อความหรือรูปภาพรางวัลตรงนี้ -->
+                  </div>
+                  <!-- Canvas สำหรับขูด -->
+                  <canvas id="scratchCanvas" class="absolute inset-0 z-10 cursor-crosshair touch-none"></canvas>
+              </div>
+              
+              <!-- ปุ่มรับรางวัล (แสดงเฉพาะตอนถูกรางวัล) -->
+              <div id="claimContainer" class="hidden mb-6 z-20 flex flex-col items-center">
+                  <button onclick="claimPrizeBtn()" id="btnClaim" class="bg-[#22c55e] hover:bg-green-600 text-white px-8 py-3 rounded-xl font-bold transition shadow-md flex items-center gap-2">
+                      <i class="fi fi-sr-gift mt-1"></i> กดใช้สิทธิ์รับรางวัล
+                  </button>
+                  <p class="text-xs text-red-500 mt-2 font-bold">*สำหรับเจ้าหน้าที่กดยืนยันเท่านั้น</p>
+              </div>
+
+              <button onclick="goToMedia()" class="btn-orange px-10 py-4 rounded-xl font-bold transition shadow-lg text-lg flex items-center gap-2 mt-4">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></button>
           </div>
-          <h2 class="text-4xl font-black text-[#003380] mb-3">บันทึกข้อมูลสำเร็จ!</h2>
-          <p class="text-gray-500 mb-8 max-w-md text-base leading-relaxed">ขอบคุณที่ร่วมเป็นส่วนหนึ่งของราชวิทยาลัยจุฬาภรณ์ ข้อมูลของท่านเป็นประโยชน์อย่างยิ่งในการพัฒนาสถาบัน</p>
-          <button onclick="goToMedia()" class="btn-orange px-10 py-4 rounded-xl font-bold transition shadow-lg text-lg flex items-center gap-2">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></button>
       </div>
   </div>
-</div>
 
 <script>
-// ⚠️ สำคัญมาก: นำ URL ของ Web App จาก Google Apps Script (ตอนกด Deploy) มาใส่ในเครื่องหมายคำพูดด้านล่างนี้
+// ⚠️ สำคัญมาก: เปลี่ยน URL ด้านล่างนี้เป็นอันใหม่หลังจาก Deploy Backend ตัวล่าสุด ⚠️
 const API_URL = "https://script.google.com/macros/s/AKfycbx08yDojfbtqMQb--DTSJ0lgD51A_MlEtx1Q5TLv7-yB1Vi34jrB8l72WYVT4fjmdCB/exec"; 
 
 let rawSchoolData = []; 
@@ -400,37 +414,37 @@ const prefixData = [
     { name: "นาย", icon: "fi-rr-user" }, 
     { name: "นางสาว", icon: "fi-rr-user" }
 ];
-    const platformData = [
-        { name: "Facebook", icon: "fi-brands-facebook" }, 
-        { name: "Instagram", icon: "fi-brands-instagram" }, 
-        { name: "TikTok", icon: "fi-brands-tik-tok" }, 
-        { name: "X (Twitter)", icon: "fi-brands-twitter" }
-    ];
-    const courseData = [
-        { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
-        { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
-        { name: "พยาบาลศาสตรบัณฑิต", prefix: "7002", icon: "fi-sr-heart" },
-        { name: "พยาบาลศาสตรบัณฑิต (หลักสูตรนานาชาติ)", prefix: "7022", icon: "fi-sr-globe" },
-        { name: "พยาบาลศาสตรบัณฑิต (สำหรับผู้สำเร็จปริญญาตรีสาขาอื่น)", prefix: "7013", icon: "fi-sr-heart" },
-        { name: "วท.บ. สาขาวิชารังสีเทคนิค", prefix: "7003", icon: "fi-sr-bone" },
-        { name: "วท.บ. สาขาวิชาวิทยาศาสตร์การเคลื่อนไหวและสุขภาพ", prefix: "7006", icon: "fi-sr-heart-rate" },
-        { name: "วท.บ. สาขาวิชาฉุกเฉินการแพทย์", prefix: "7023", icon: "fi-sr-ambulance" },
-        { name: "วท.บ. สาขาวิชานวัตกรรมวิทยาศาสตร์การแพทย์", prefix: "7026", icon: "fi-sr-bulb" },
-        { name: "วท.บ. สาขาวิชาเทคโนโลยีอาหารทางการแพทย์และสุขภาพ", prefix: "7027", icon: "fi-sr-restaurant" },
-        { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
-    ];
-    const tcasData = [
-        { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, 
-        { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, 
-        { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, 
-        { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" }
-    ];
+const platformData = [
+    { name: "Facebook", icon: "fi-brands-facebook" }, 
+    { name: "Instagram", icon: "fi-brands-instagram" }, 
+    { name: "TikTok", icon: "fi-brands-tik-tok" }, 
+    { name: "X (Twitter)", icon: "fi-brands-twitter" }
+];
+const courseData = [
+    { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
+    { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
+    { name: "พยาบาลศาสตรบัณฑิต", prefix: "7002", icon: "fi-sr-heart" },
+    { name: "พยาบาลศาสตรบัณฑิต (หลักสูตรนานาชาติ)", prefix: "7022", icon: "fi-sr-globe" },
+    { name: "พยาบาลศาสตรบัณฑิต (สำหรับผู้สำเร็จปริญญาตรีสาขาอื่น)", prefix: "7013", icon: "fi-sr-heart" },
+    { name: "วท.บ. สาขาวิชารังสีเทคนิค", prefix: "7003", icon: "fi-sr-bone" },
+    { name: "วท.บ. สาขาวิชาวิทยาศาสตร์การเคลื่อนไหวและสุขภาพ", prefix: "7006", icon: "fi-sr-heart-rate" },
+    { name: "วท.บ. สาขาวิชาฉุกเฉินการแพทย์", prefix: "7023", icon: "fi-sr-ambulance" },
+    { name: "วท.บ. สาขาวิชานวัตกรรมวิทยาศาสตร์การแพทย์", prefix: "7026", icon: "fi-sr-bulb" },
+    { name: "วท.บ. สาขาวิชาเทคโนโลยีอาหารทางการแพทย์และสุขภาพ", prefix: "7027", icon: "fi-sr-restaurant" },
+    { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
+];
+const tcasData = [
+    { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, 
+    { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, 
+    { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, 
+    { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" }
+];
 
-    const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
-    const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
+const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
+const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
 
 window.onload = function() {
-    // 1. Fetch ข้อมูลโรงเรียนผ่าน API แบบ GET
+    // Fetch School Data
     fetch(API_URL + "?action=getSchoolData")
         .then(response => response.json())
         .then(data => {
@@ -441,305 +455,294 @@ window.onload = function() {
     document.getElementById('reasonGroup').innerHTML = buildCheckCards(reasonsList, 'chkReason', 'wrapOtherReason', 'otherReason');
     document.getElementById('channelGroup').innerHTML = buildCheckCards(channelsList, 'chkChannel', 'wrapOtherChannel', 'otherChannel');
 
-    // Build Custom Dropdowns
     buildCustomDropdownWithIcon('prefixWrapper', 'prefix', prefixData, '-- เลือกคำนำหน้า --', null);
     buildCustomDropdownWithIcon('courseWrapper', 'course', courseData, '-- เลือกหลักสูตรที่ศึกษา --', onCourseSelected);
-        buildCustomDropdownWithIcon('tcasWrapper', 'tcasRound', tcasData, '-- เลือกรอบที่สอบติด --', null);
-        buildCustomDropdownWithIcon('platformWrapper', 'followPlatform', platformData, '-- เลือกแพลตฟอร์ม --', null);
+    buildCustomDropdownWithIcon('tcasWrapper', 'tcasRound', tcasData, '-- เลือกรอบที่สอบติด --', null);
+    buildCustomDropdownWithIcon('platformWrapper', 'followPlatform', platformData, '-- เลือกแพลตฟอร์ม --', null);
 
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        suffixBoxes.forEach((box, i) => {
-            box.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, ''); 
-                if (this.value !== '' && i < suffixBoxes.length - 1) suffixBoxes[i + 1].focus(); 
-            });
-            box.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && this.value === '' && i > 0) suffixBoxes[i - 1].focus(); 
-            });
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    suffixBoxes.forEach((box, i) => {
+        box.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, ''); 
+            if (this.value !== '' && i < suffixBoxes.length - 1) suffixBoxes[i + 1].focus(); 
         });
-    };
+        box.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value === '' && i > 0) suffixBoxes[i - 1].focus(); 
+        });
+    });
+};
 
-    function acceptPDPA() {
-        document.getElementById('pdpaOverlay').classList.add('opacity-0');
-        setTimeout(() => {
-            document.getElementById('pdpaOverlay').classList.add('hidden');
-            let content = document.getElementById('mainContent');
-            content.classList.remove('hidden');
-            setTimeout(() => { content.classList.remove('opacity-0'); }, 100);
-        }, 500);
-    }
+function acceptPDPA() {
+    document.getElementById('pdpaOverlay').classList.add('opacity-0');
+    setTimeout(() => {
+        document.getElementById('pdpaOverlay').classList.add('hidden');
+        let content = document.getElementById('mainContent');
+        content.classList.remove('hidden');
+        setTimeout(() => { content.classList.remove('opacity-0'); }, 100);
+    }, 500);
+}
 
-    // --- UI Builders ---
-    function buildCheckCards(arr, name, wrapOtherId, inputOtherId) {
-        let html = "";
-        for(let i=0; i<arr.length; i++) {
-            html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" name="'+name+'" value="'+arr[i]+'" onchange="updateCheckCardStyle(this)"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">'+arr[i]+'</span></label>';
-        }
-        html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" onchange="checkOther(this, \''+wrapOtherId+'\', \''+inputOtherId+'\')"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">อื่นๆ (โปรดระบุ)</span></label>';
-        return html;
+// --- UI Builders ---
+function buildCheckCards(arr, name, wrapOtherId, inputOtherId) {
+    let html = "";
+    for(let i=0; i<arr.length; i++) {
+        html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" name="'+name+'" value="'+arr[i]+'" onchange="updateCheckCardStyle(this)"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">'+arr[i]+'</span></label>';
     }
+    html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" onchange="checkOther(this, \''+wrapOtherId+'\', \''+inputOtherId+'\')"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">อื่นๆ (โปรดระบุ)</span></label>';
+    return html;
+}
 
-    function updateCheckCardStyle(el) {
-        if(el.checked) el.closest('.check-card').classList.add('active');
-        else el.closest('.check-card').classList.remove('active');
+function updateCheckCardStyle(el) {
+    if(el.checked) el.closest('.check-card').classList.add('active');
+    else el.closest('.check-card').classList.remove('active');
+}
+
+function updateRadioCardStyle(groupName) {
+    let radios = document.getElementsByName(groupName);
+    for(let i=0; i<radios.length; i++) {
+        if(radios[i].checked) radios[i].closest('.check-card').classList.add('active');
+        else radios[i].closest('.check-card').classList.remove('active');
     }
+}
+
+function checkOther(el, wrapId, inputId) {
+    updateCheckCardStyle(el);
+    let wrap = document.getElementById(wrapId);
+    let inp = document.getElementById(inputId);
+    if (el.checked) { wrap.classList.remove('hidden'); inp.focus(); } 
+    else { wrap.classList.add('hidden'); inp.value = ""; }
+}
+
+function buildCustomDropdownWithIcon(containerId, hiddenInputId, dataArray, placeholder, onChangeCallback) {
+    const container = document.getElementById(containerId);
+    const hiddenInput = document.getElementById(hiddenInputId);
     
-    function updateRadioCardStyle(groupName) {
-        let radios = document.getElementsByName(groupName);
-        for(let i=0; i<radios.length; i++) {
-            if(radios[i].checked) radios[i].closest('.check-card').classList.add('active');
-            else radios[i].closest('.check-card').classList.remove('active');
-        }
-    }
-
-    function checkOther(el, wrapId, inputId) {
-        updateCheckCardStyle(el);
-        let wrap = document.getElementById(wrapId);
-        let inp = document.getElementById(inputId);
-        if (el.checked) { wrap.classList.remove('hidden'); inp.focus(); } 
-        else { wrap.classList.add('hidden'); inp.value = ""; }
-    }
-
-    // 🌟 CUSTOM DROPDOWN WITH ICONS (Image 2 Style) 🌟
-    function buildCustomDropdownWithIcon(containerId, hiddenInputId, dataArray, placeholder, onChangeCallback) {
-        const container = document.getElementById(containerId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-        
-        let wrapper = document.createElement('div');
-        wrapper.className = "custom-select-wrapper";
-        
-        let trigger = document.createElement('div');
-        trigger.className = "custom-select-trigger";
+    let wrapper = document.createElement('div');
+    wrapper.className = "custom-select-wrapper";
+    
+    let trigger = document.createElement('div');
+    trigger.className = "custom-select-trigger";
+    trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
+    
+    let optionsList = document.createElement('div');
+    optionsList.className = "custom-options";
+    
+    let defOpt = document.createElement('div');
+    defOpt.className = "custom-option";
+    defOpt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi fi-rr-cross-circle mt-1"></i></div><span class="truncate text-gray-400">' + placeholder + '</span>';
+    defOpt.onclick = function(e) {
+        e.stopPropagation(); hiddenInput.value = "";
         trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-        
-        let optionsList = document.createElement('div');
-        optionsList.className = "custom-options";
-        
-        let defOpt = document.createElement('div');
-        defOpt.className = "custom-option";
-        defOpt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi fi-rr-cross-circle mt-1"></i></div><span class="truncate text-gray-400">' + placeholder + '</span>';
-        defOpt.onclick = function(e) {
-            e.stopPropagation(); hiddenInput.value = "";
-            trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-            trigger.classList.remove('active-trigger'); wrapper.classList.remove('open');
-            optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-            if(onChangeCallback) onChangeCallback("");
-        };
-        optionsList.appendChild(defOpt);
+        trigger.classList.remove('active-trigger'); wrapper.classList.remove('open');
+        optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+        if(onChangeCallback) onChangeCallback("");
+    };
+    optionsList.appendChild(defOpt);
 
-        for (let i = 0; i < dataArray.length; i++) {
-            let item = dataArray[i];
-            let opt = document.createElement('div');
-            opt.className = "custom-option";
-            opt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi ' + item.icon + ' mt-1"></i></div><span class="truncate">' + item.name + '</span>';
-            opt.setAttribute('data-value', item.name);
-            if(item.prefix) opt.setAttribute('data-prefix', item.prefix);
-            
-            opt.onclick = function(e) {
-                e.stopPropagation();
-                let val = this.getAttribute('data-value');
-                let prefix = this.getAttribute('data-prefix');
-                hiddenInput.value = val;
-                
-                trigger.innerHTML = '<div class="flex items-center gap-3 overflow-hidden w-full">' + this.innerHTML + '</div><i class="fi fi-rr-angle-small-down text-gray-400 ml-auto shrink-0"></i>';
-                
-                trigger.classList.add('active-trigger'); wrapper.classList.remove('open');
-                
-                optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-                this.classList.add('selected');
-                if(onChangeCallback) onChangeCallback(val, prefix);
-            };
-            optionsList.appendChild(opt);
-        }
-
-        trigger.onclick = function(e) {
+    for (let i = 0; i < dataArray.length; i++) {
+        let item = dataArray[i];
+        let opt = document.createElement('div');
+        opt.className = "custom-option";
+        opt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi ' + item.icon + ' mt-1"></i></div><span class="truncate">' + item.name + '</span>';
+        opt.setAttribute('data-value', item.name);
+        if(item.prefix) opt.setAttribute('data-prefix', item.prefix);
+        
+        opt.onclick = function(e) {
             e.stopPropagation();
-            document.querySelectorAll('.custom-select-wrapper').forEach(w => { if(w !== wrapper) w.classList.remove('open'); });
+            let val = this.getAttribute('data-value');
+            let prefix = this.getAttribute('data-prefix');
+            hiddenInput.value = val;
             
-            let schDropdown = document.getElementById('schoolDropdown');
-            if (schDropdown) schDropdown.classList.remove('show');
-            let provDropdown = document.getElementById('provinceDropdown');
-            if (provDropdown) provDropdown.classList.remove('show');
-
-            wrapper.classList.toggle('open');
+            trigger.innerHTML = '<div class="flex items-center gap-3 overflow-hidden w-full">' + this.innerHTML + '</div><i class="fi fi-rr-angle-small-down text-gray-400 ml-auto shrink-0"></i>';
+            
+            trigger.classList.add('active-trigger'); wrapper.classList.remove('open');
+            
+            optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+            if(onChangeCallback) onChangeCallback(val, prefix);
         };
-        
-        wrapper.appendChild(trigger); wrapper.appendChild(optionsList); container.appendChild(wrapper);
+        optionsList.appendChild(opt);
     }
-    
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+
+    trigger.onclick = function(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.custom-select-wrapper').forEach(w => { if(w !== wrapper) w.classList.remove('open'); });
+        
         let schDropdown = document.getElementById('schoolDropdown');
         if (schDropdown) schDropdown.classList.remove('show');
         let provDropdown = document.getElementById('provinceDropdown');
         if (provDropdown) provDropdown.classList.remove('show');
-    });
 
-    let currentCoursePrefix = "";
-    function onCourseSelected(courseName, prefix) {
-        const idContainer = document.getElementById('studentIdContainer');
-        const prefixBoxes = document.querySelectorAll('.pin-prefix');
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        const isUnknown = document.getElementById('unknownStudentId').checked;
-        
-        if (courseName && prefix) {
-            idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
-            for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
-            if (!isUnknown) { suffixBoxes[0].focus(); }
-        } else {
-            idContainer.classList.add('hidden'); currentCoursePrefix = "";
-            document.getElementById('unknownStudentId').checked = false;
-            updateCheckCardStyle(document.getElementById('unknownStudentId'));
-            toggleUnknownStudentId();
-        }
+        wrapper.classList.toggle('open');
+    };
+    
+    wrapper.appendChild(trigger); wrapper.appendChild(optionsList); container.appendChild(wrapper);
+}
+
+document.addEventListener('click', function() {
+    document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+    let schDropdown = document.getElementById('schoolDropdown');
+    if (schDropdown) schDropdown.classList.remove('show');
+    let provDropdown = document.getElementById('provinceDropdown');
+    if (provDropdown) provDropdown.classList.remove('show');
+});
+
+let currentCoursePrefix = "";
+function onCourseSelected(courseName, prefix) {
+    const idContainer = document.getElementById('studentIdContainer');
+    const prefixBoxes = document.querySelectorAll('.pin-prefix');
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    const isUnknown = document.getElementById('unknownStudentId').checked;
+    
+    if (courseName && prefix) {
+        idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
+        for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
+        if (!isUnknown) { suffixBoxes[0].focus(); }
+    } else {
+        idContainer.classList.add('hidden'); currentCoursePrefix = "";
+        document.getElementById('unknownStudentId').checked = false;
+        updateCheckCardStyle(document.getElementById('unknownStudentId'));
+        toggleUnknownStudentId();
     }
+}
 
-    function toggleUnknownStudentId() {
-        const isUnknown = document.getElementById('unknownStudentId').checked;
-        const suffixWrapper = document.getElementById('pinSuffixWrapper');
-        const unknownText = document.getElementById('pinUnknownText');
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        let chk = document.getElementById('unknownStudentId');
-        if(chk.checked) chk.closest('label').classList.replace('border-orange-200', 'border-[#f26b21]');
-        else chk.closest('label').classList.replace('border-[#f26b21]', 'border-orange-200');
-        
-        if (isUnknown) {
-            suffixWrapper.style.display = 'none'; unknownText.style.display = 'block';
-            suffixBoxes.forEach(b => b.value = "");
-        } else {
-            suffixWrapper.style.display = 'flex'; unknownText.style.display = 'none';
-            if (currentCoursePrefix) suffixBoxes[0].focus();
-        }
+function toggleUnknownStudentId() {
+    const isUnknown = document.getElementById('unknownStudentId').checked;
+    const suffixWrapper = document.getElementById('pinSuffixWrapper');
+    const unknownText = document.getElementById('pinUnknownText');
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    let chk = document.getElementById('unknownStudentId');
+    if(chk.checked) chk.closest('label').classList.replace('border-orange-200', 'border-[#f26b21]');
+    else chk.closest('label').classList.replace('border-[#f26b21]', 'border-orange-200');
+    
+    if (isUnknown) {
+        suffixWrapper.style.display = 'none'; unknownText.style.display = 'block';
+        suffixBoxes.forEach(b => b.value = "");
+    } else {
+        suffixWrapper.style.display = 'flex'; unknownText.style.display = 'none';
+        if (currentCoursePrefix) suffixBoxes[0].focus();
     }
+}
 
-    function fastSearchSchool(val) {
-        let box = document.getElementById('schoolDropdown'); box.innerHTML = '';
-        if (val.trim().length < 2) { box.classList.remove('show'); return; }
+function fastSearchSchool(val) {
+    let box = document.getElementById('schoolDropdown'); box.innerHTML = '';
+    if (val.trim().length < 2) { box.classList.remove('show'); return; }
 
-        let results = [];
-        for(let i=0; i<rawSchoolData.length; i++){
-            if(rawSchoolData[i][0].toLowerCase().indexOf(val.toLowerCase()) > -1) results.push(rawSchoolData[i]);
-            if(results.length >= 10) break; 
-        }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.innerHTML = '<span class="font-bold text-gray-700 whitespace-normal leading-snug w-full text-left">' + results[j][0] + '</span> <span class="text-[10px] font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">จ.' + results[j][1] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); let schInput = document.getElementById('schoolInputSearch');
-                    schInput.value = results[j][0];
-                    schInput.style.borderColor = 'rgba(0, 51, 128, 0.4)'; schInput.style.backgroundColor = '#fff';
-                    
-                    // เมื่อเลือกโรงเรียน ให้เติมจังหวัดอัตโนมัติ แต่ยังคงพิมพ์แก้ได้
-                    let p = document.getElementById('provinceInput');
-                    p.value = results[j][1];
-                    // ลบโค้ดส่วนที่ทำให้ input เป็น disabled/readonly และเปลี่ยนกลับเป็นสีขาว
-                    // p.readOnly = true;
-                    // p.classList.add('bg-gray-200', 'cursor-not-allowed', 'text-gray-500', 'border-gray-200', 'focus:border-gray-200');
-                    // p.classList.remove('text-gray-800', 'with-icon');
-                    // document.getElementById('provIcon').classList.add('hidden');
-                    
-                    box.classList.remove('show');
-                };
-                box.appendChild(li);
-            }
-        } else {
+    let results = [];
+    for(let i=0; i<rawSchoolData.length; i++){
+        if(rawSchoolData[i][0].toLowerCase().indexOf(val.toLowerCase()) > -1) results.push(rawSchoolData[i]);
+        if(results.length >= 10) break; 
+    }
+    
+    if (results.length > 0) {
+        for(let j=0; j<results.length; j++){
             let li = document.createElement('li');
-            li.innerHTML = '<div class="text-center w-full py-2"><span class="text-gray-500 text-sm">ไม่พบชื่อโรงเรียนนี้</span><br><span class="text-xs text-[#f26b21] mt-1 inline-block">พิมพ์ชื่อใหม่ลงไปได้เลยครับ</span></div>';
-            li.onclick = function(e) { 
-                e.stopPropagation(); box.classList.remove('show'); 
+            li.innerHTML = '<span class="font-bold text-gray-700 whitespace-normal leading-snug w-full text-left">' + results[j][0] + '</span> <span class="text-[10px] font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">จ.' + results[j][1] + '</span>';
+            li.onclick = function(e) {
+                e.stopPropagation(); let schInput = document.getElementById('schoolInputSearch');
+                schInput.value = results[j][0];
+                schInput.style.borderColor = 'rgba(0, 51, 128, 0.4)'; schInput.style.backgroundColor = '#fff';
                 
-                // ให้โฟกัสไปที่ช่องจังหวัดทันทีเพื่อให้พิมพ์ต่อ
                 let p = document.getElementById('provinceInput');
-                // ลบโค้ดส่วนที่ไปแก้คลาสเพื่อเปลี่ยนสีไปมา
-                p.focus(); 
-                fastSearchProvince(p.value);
-            }
+                p.value = results[j][1];
+                
+                box.classList.remove('show');
+            };
             box.appendChild(li);
         }
-        box.classList.add('show');
-    }
-
-    // ฟังก์ชันใหม่: ระบบค้นหา/ตัวเลือก 77 จังหวัด
-    function fastSearchProvince(val) {
-        let box = document.getElementById('provinceDropdown'); box.innerHTML = '';
-        let results = [];
-        let search = val.trim().toLowerCase();
-        
-        for(let i=0; i<provincesList.length; i++){
-            if(search === "" || provincesList[i].indexOf(search) > -1) results.push(provincesList[i]);
+    } else {
+        let li = document.createElement('li');
+        li.innerHTML = '<div class="text-center w-full py-2"><span class="text-gray-500 text-sm">ไม่พบชื่อโรงเรียนนี้</span><br><span class="text-xs text-[#f26b21] mt-1 inline-block">พิมพ์ชื่อใหม่ลงไปได้เลยครับ</span></div>';
+        li.onclick = function(e) { 
+            e.stopPropagation(); box.classList.remove('show'); 
+            let p = document.getElementById('provinceInput');
+            p.focus(); 
+            fastSearchProvince(p.value);
         }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.innerHTML = '<div class="opt-icon-box shrink-0 scale-75 bg-gray-100 text-gray-500"><i class="fi fi-rr-marker mt-1"></i></div> <span class="truncate flex-1 text-gray-700">' + results[j] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); 
-                    let pInput = document.getElementById('provinceInput');
-                    pInput.value = results[j];
-                    box.classList.remove('show');
-                };
-                box.appendChild(li);
-            }
-        } else {
+        box.appendChild(li);
+    }
+    box.classList.add('show');
+}
+
+function fastSearchProvince(val) {
+    let box = document.getElementById('provinceDropdown'); box.innerHTML = '';
+    let results = [];
+    let search = val.trim().toLowerCase();
+    
+    for(let i=0; i<provincesList.length; i++){
+        if(search === "" || provincesList[i].indexOf(search) > -1) results.push(provincesList[i]);
+    }
+    
+    if (results.length > 0) {
+        for(let j=0; j<results.length; j++){
             let li = document.createElement('li');
-            li.innerHTML = '<span class="text-gray-500 text-sm text-center w-full block py-2">ไม่พบชื่อจังหวัดนี้</span>';
+            li.innerHTML = '<div class="opt-icon-box shrink-0 scale-75 bg-gray-100 text-gray-500"><i class="fi fi-rr-marker mt-1"></i></div> <span class="truncate flex-1 text-gray-700">' + results[j] + '</span>';
+            li.onclick = function(e) {
+                e.stopPropagation(); 
+                let pInput = document.getElementById('provinceInput');
+                pInput.value = results[j];
+                box.classList.remove('show');
+            };
             box.appendChild(li);
         }
-        box.classList.add('show');
+    } else {
+        let li = document.createElement('li');
+        li.innerHTML = '<span class="text-gray-500 text-sm text-center w-full block py-2">ไม่พบชื่อจังหวัดนี้</span>';
+        box.appendChild(li);
     }
+    box.classList.add('show');
+}
 
-    function toggleFollowPlatform() {
-        let followRadio = document.querySelector('input[name="followPage"]:checked');
-        let wrapPlatform = document.getElementById('wrapFollowPlatform');
-        let platformInput = document.getElementById('followPlatform');
-        
-        if (followRadio && followRadio.value === "ใช่ติดตาม") {
-            wrapPlatform.classList.remove('hidden');
-        } else {
-            wrapPlatform.classList.add('hidden'); platformInput.value = ""; 
-            let trigger = wrapPlatform.querySelector('.custom-select-trigger');
-            if(trigger) {
-                trigger.innerHTML = '<span class="truncate text-gray-500">-- เลือกแพลตฟอร์ม --</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-                trigger.classList.remove('active-trigger');
-                wrapPlatform.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-            }
+function toggleFollowPlatform() {
+    let followRadio = document.querySelector('input[name="followPage"]:checked');
+    let wrapPlatform = document.getElementById('wrapFollowPlatform');
+    let platformInput = document.getElementById('followPlatform');
+    
+    if (followRadio && followRadio.value === "ใช่ติดตาม") {
+        wrapPlatform.classList.remove('hidden');
+    } else {
+        wrapPlatform.classList.add('hidden'); platformInput.value = ""; 
+        let trigger = wrapPlatform.querySelector('.custom-select-trigger');
+        if(trigger) {
+            trigger.innerHTML = '<span class="truncate text-gray-500">-- เลือกแพลตฟอร์ม --</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
+            trigger.classList.remove('active-trigger');
+            wrapPlatform.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
         }
     }
+}
 
-    function nextStep(step) {
-        if (step === 1) {
-            let course = document.getElementById('course').value;
-            let isUnknown = document.getElementById('unknownStudentId').checked;
-            let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
-            let prefix = document.getElementById('prefix').value;
-            let fname = document.getElementById('fname').value.trim();
-            let lname = document.getElementById('lname').value.trim();
-            let tcas = document.getElementById('tcasRound').value;
+function nextStep(step) {
+    if (step === 1) {
+        let course = document.getElementById('course').value;
+        let isUnknown = document.getElementById('unknownStudentId').checked;
+        let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
+        let prefix = document.getElementById('prefix').value;
+        let fname = document.getElementById('fname').value.trim();
+        let lname = document.getElementById('lname').value.trim();
+        let tcas = document.getElementById('tcasRound').value;
 
-            if (!course || !prefix || !fname || !lname || !tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
-            if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
+        if (!course || !prefix || !fname || !lname || !tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
+        if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
 
-            changeStep(1, 2, '50%');
-        } 
-        else if (step === 2) {
-            let school = document.getElementById('schoolInputSearch').value.trim();
-            let province = document.getElementById('provinceInput').value.trim();
+        changeStep(1, 2, '50%');
+    } 
+    else if (step === 2) {
+        let school = document.getElementById('schoolInputSearch').value.trim();
+        let province = document.getElementById('provinceInput').value.trim();
 
-            if (!school || !province) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาระบุโรงเรียนและจังหวัด', confirmButtonColor: '#f26b21'}); return; }
-            changeStep(2, 3, '100%');
-        }
+        if (!school || !province) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาระบุโรงเรียนและจังหวัด', confirmButtonColor: '#f26b21'}); return; }
+        changeStep(2, 3, '100%');
     }
+}
 
-    function prevStep(step) {
-        if (step === 2) changeStep(2, 1, '0%');
-        if (step === 3) changeStep(3, 2, '50%');
-    }
+function prevStep(step) {
+    if (step === 2) changeStep(2, 1, '0%');
+    if (step === 3) changeStep(3, 2, '50%');
+}
 
-    function changeStep(from, to, progress) {
-    document.getElementById('step' + from).classList.remove('active'); document.getElementById('step' + to).classList.add('active');
+function changeStep(from, to, progress) {
+    document.getElementById('step' + from).classList.remove('active'); 
+    document.getElementById('step' + to).classList.add('active');
     document.getElementById('progressBar').style.width = progress;
     
     for(let i=1; i<=3; i++){
@@ -755,7 +758,7 @@ window.onload = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function submitData() {
+function submitData(overwrite = false) {
     let getChecks = function(name, otherId) {
         let els = document.querySelectorAll('input[name="' + name + '"]:checked'); let arr = [];
         for(let i=0; i<els.length; i++) arr.push(els[i].value);
@@ -793,13 +796,13 @@ function submitData() {
         province: document.getElementById('provinceInput').value,
         reasons: reasons, channels: channels, followPage: followPage.value,
         platform: (followPage.value === "ไม่ได้ติดตาม") ? "-" : platform,
-        futureAct: futureAct, suggestion: suggestion
+        futureAct: futureAct, suggestion: suggestion,
+        overwrite: overwrite // สถานะการทับข้อมูล
     };
 
     let btn = document.getElementById('btnSubmit'); let originTxt = btn.innerHTML;
     btn.innerHTML = '<span class="loader mr-3"></span> กำลังบันทึกข้อมูล...'; btn.disabled = true;
 
-    // 2. Fetch ส่งข้อมูลฟอร์มแบบ POST
     fetch(API_URL, {
         method: "POST",
         body: JSON.stringify({ action: "submitSurvey", payload: payload })
@@ -808,9 +811,33 @@ function submitData() {
     .then(res => {
         btn.innerHTML = originTxt; btn.disabled = false;
         if (res.status === 'success') {
-            document.getElementById('surveyForm').classList.add('hidden'); document.getElementById('formStepper').classList.add('hidden');
-            document.getElementById('successView').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else { Swal.fire({icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message}); }
+            document.getElementById('surveyForm').classList.add('hidden'); 
+            document.getElementById('formStepper').classList.add('hidden');
+            document.getElementById('successView').classList.remove('hidden'); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // เตรียมการ์ดขูดรางวัล
+            initScratchCard(res.scratchResult, res.claimStatus, res.fullName);
+            
+        } else if (res.status === 'duplicate') {
+            // เจอชื่อซ้ำ ถามยืนยันการเขียนทับ
+            Swal.fire({
+                title: 'พบข้อมูลซ้ำ',
+                text: res.message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#f26b21',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่, ทับข้อมูลเดิม',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    submitData(true); // เรียกใช้งานอีกครั้งพร้อมกับสั่งให้ overwrite
+                }
+            });
+        } else { 
+            Swal.fire({icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message}); 
+        }
     })
     .catch(err => {
         btn.innerHTML = originTxt; btn.disabled = false; 
@@ -818,10 +845,120 @@ function submitData() {
     });
 }
 
+// ----------------------------------------------------
+// ระบบ Scratch Card และ รับรางวัล
+// ----------------------------------------------------
+function initScratchCard(result, claimStatus, fullName) {
+    window.currentFullName = fullName; // เก็บชื่อไว้ใช้ตอนกดรับรางวัล
+    
+    const container = document.getElementById('scratchContainer');
+    const bg = document.getElementById('scratchResultBg');
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const claimContainer = document.getElementById('claimContainer');
+    
+    // ตั้งค่ากราฟิกหลังบัตรขูด
+    if (result === 'WIN') {
+        bg.innerHTML = '<i class="fi fi-sr-gift text-4xl text-green-500 mb-2"></i><span class="text-green-600 text-xl font-black">ยินดีด้วย! คุณได้รับรางวัล</span>';
+        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl border-2 border-green-400 bg-green-50 shadow-inner';
+        
+        if (claimStatus === 'WAITING') {
+            claimContainer.classList.remove('hidden');
+        } else if (claimStatus === 'CLAIMED') {
+            claimContainer.innerHTML = '<div class="text-gray-500 font-bold bg-gray-100 px-6 py-3 rounded-xl border border-gray-200">❌ สิทธิ์นี้ถูกใช้งานไปแล้ว</div>';
+            claimContainer.classList.remove('hidden');
+        }
+    } else {
+        bg.innerHTML = '<i class="fi fi-sr-sad-tear text-4xl text-gray-400 mb-2"></i><span class="text-gray-500 text-lg font-bold">เสียใจด้วย ไม่ได้รับรางวัล</span>';
+        bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl border-2 border-gray-300 bg-gray-100 shadow-inner';
+        claimContainer.classList.add('hidden');
+    }
+
+    // ขนาดของ Canvas
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+    
+    // วาดหน้าบัตรสีเทา
+    ctx.fillStyle = '#94a3b8'; // Slate 400
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // เพิ่มลวดลาย / ข้อความบนบัตรขูด
+    ctx.font = "bold 22px Noto Sans Thai";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.fillText("ใช้นิ้วถูเพื่อลุ้นรางวัล!", canvas.width/2, (canvas.height/2) + 8);
+
+    let isDrawing = false;
+    
+    function getMousePos(e) {
+        let rect = canvas.getBoundingClientRect();
+        let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function scratch(e) {
+        if (!isDrawing) return;
+        e.preventDefault(); 
+        let pos = getMousePos(e);
+        
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI); // รัศมีแปรง = 25
+        ctx.fill();
+    }
+
+    // Events
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); }, {passive: false});
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('touchmove', scratch, {passive: false});
+    window.addEventListener('mouseup', () => isDrawing = false);
+    window.addEventListener('touchend', () => isDrawing = false);
+}
+
+// ฟังก์ชันปุ่มรับรางวัล (เจ้าหน้าที่กด)
+function claimPrizeBtn() {
+    Swal.fire({
+        title: 'ยืนยันการใช้สิทธิ์รับรางวัล?',
+        text: "หากกดตกลงแล้วจะไม่สามารถรับรางวัลซ้ำได้อีก (ให้เจ้าหน้าที่กดเท่านั้น)",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#22c55e',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ยืนยันรับรางวัล',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let btn = document.getElementById('btnClaim');
+            btn.innerHTML = '<span class="loader mr-2 !w-5 !h-5 !border-2"></span> กำลังอัปเดตระบบ...';
+            btn.disabled = true;
+
+            fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "claimPrize", payload: { fullName: window.currentFullName } })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if(res.status === 'success') {
+                    document.getElementById('claimContainer').innerHTML = '<div class="text-green-600 font-bold bg-green-50 px-6 py-3 rounded-xl border border-green-200 shadow-sm">✅ ยืนยันการแจกรางวัลสำเร็จ</div>';
+                } else {
+                    Swal.fire('ข้อผิดพลาด', res.message, 'error');
+                    btn.innerHTML = '<i class="fi fi-sr-gift mt-1"></i> กดใช้สิทธิ์รับรางวัล';
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้', 'error');
+                btn.disabled = false;
+            });
+        }
+    });
+}
+
 function goToMedia() {
     let btn = document.querySelector('#successView button');
     btn.innerHTML = '<span class="loader mr-3"></span> กำลังพาท่านไป...'; btn.disabled = true;
-    // นำทางไปยังหน้าสื่อใน Github Pages เดียวกันเลย (ถ้าไฟล์อยู่โฟลเดอร์เดียวกัน)
     window.location.href = "media.html";
 }
 </script>

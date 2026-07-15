@@ -146,8 +146,47 @@
     .step-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-    .loader { width: 24px; height: 24px; border: 3px solid #FFF; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; }
-    @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .loader {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .loader:before {
+      content: '';
+      width: 24px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.4);
+      position: absolute;
+      top: 32px;
+      left: 0;
+      border-radius: 50%;
+      animation: shadow324 0.5s linear infinite;
+    }
+    .loader:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 3px;
+      animation: jump7456 0.5s linear infinite;
+    }
+    @keyframes jump7456 {
+      15% { border-bottom-right-radius: 2px; }
+      25% { transform: translateY(6px) rotate(22.5deg); }
+      50% { transform: translateY(12px) scale(1, .9) rotate(45deg); border-bottom-right-radius: 20px; }
+      75% { transform: translateY(6px) rotate(67.5deg); }
+      100% { transform: translateY(0) rotate(90deg); }
+    }
+    @keyframes shadow324 {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(1.2, 1); }
+    }
   </style>
 </head>
 <body class="text-gray-800">
@@ -237,21 +276,21 @@
                       </div>
 
                       <!-- PIN CONTAINER (Responsive 7 boxes on one row for mobile) -->
-                      <div class="flex flex-wrap md:flex-nowrap items-center gap-1.5 md:gap-2 w-full" id="pinContainer">
+                      <div class="flex flex-nowrap items-center justify-start gap-1 sm:gap-2 w-full overflow-hidden" id="pinContainer">
                           <!-- Group 1: 4 digits -->
-                          <div class="flex gap-1.5 sm:gap-2 shrink-0">
-                              <input type="text" class="pin-prefix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
-                              <input type="text" class="pin-prefix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
-                              <input type="text" class="pin-prefix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
-                              <input type="text" class="pin-prefix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none md:mr-2" readonly>
+                          <div class="flex gap-1 sm:gap-2 shrink-0">
+                              <input type="text" class="pin-prefix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
+                              <input type="text" class="pin-prefix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
+                              <input type="text" class="pin-prefix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none" readonly>
+                              <input type="text" class="pin-prefix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-blue-100 rounded-lg sm:rounded-xl bg-blue-50 text-[#003380] pointer-events-none sm:mr-1" readonly>
                           </div>
                           <!-- Group 2: 3 digits -->
-                          <div class="flex gap-1.5 sm:gap-2 shrink-0" id="pinSuffixWrapper">
-                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
-                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
-                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-9 sm:w-11 md:w-12 h-12 sm:h-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
+                          <div class="flex gap-1 sm:gap-2 shrink-0 ml-1 sm:ml-0" id="pinSuffixWrapper">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix w-8 sm:w-11 md:w-12 h-10 sm:h-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-black border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#f26b21] outline-none transition-all bg-white text-[#f26b21] shadow-sm">
                           </div>
-                          <div id="pinUnknownText" class="hidden text-[#f26b21] font-bold text-sm md:text-base bg-orange-50 px-3 py-2 md:py-3 rounded-lg md:rounded-xl border border-orange-200 shadow-inner mt-2 md:mt-0 w-full md:w-auto text-center">(ไม่ทราบรหัส)</div>
+                          <div id="pinUnknownText" class="hidden text-[#f26b21] font-bold text-xs sm:text-sm md:text-base bg-orange-50 px-3 py-2 md:py-3 rounded-lg md:rounded-xl border border-orange-200 shadow-inner w-full md:w-auto text-center">(ไม่ทราบรหัส)</div>
                       </div>
                   </div>
 
@@ -383,7 +422,7 @@
               <p class="text-gray-500 mb-6 max-w-md text-sm md:text-base leading-relaxed">ข้อมูลของท่านถูกส่งเข้าระบบเรียบร้อยแล้ว<br>ใช้นิ้วถูที่การ์ดด้านล่างเพื่อลุ้นรับของรางวัล!</p>
               
               <!-- Scratch Card Area (ปรับขนาดให้ยืดหยุ่นขึ้น) -->
-              <div id="scratchContainer" class="relative w-[280px] h-[150px] sm:w-[320px] sm:h-[160px] md:w-[360px] md:h-[180px] mx-auto mb-6 select-none overflow-hidden rounded-2xl shadow-lg border-2 border-gray-200 touch-none bg-white">
+              <div id="scratchContainer" class="relative w-full max-w-[320px] md:max-w-[360px] aspect-[2/1] mx-auto mb-6 select-none overflow-hidden rounded-2xl shadow-lg border-2 border-gray-200 touch-none bg-white">
                   <!-- Result Background (ซ่อนอยู่ด้านหลัง) -->
                   <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4">
                       <!-- JS จะแทรกข้อความหรือรูปภาพรางวัลตรงนี้ -->
@@ -883,7 +922,7 @@ function initScratchCard(result, claimStatus, fullName) {
         claimContainer.classList.add('hidden');
     }
 
-    // 🌟 หน่วงเวลาเล็กน้อยเพื่อให้ CSS Render ขนาดกล่องเสร็จสมบูรณ์ ก่อนวาด Canvas
+    // 🌟 หน่วงเวลาเพื่อให้ CSS Render ขนาดและ Animation ขยายเสร็จสมบูรณ์ (550ms) ก่อนวาด Canvas ตัวหนังสือจะได้ไม่เบี้ยวตกขอบ
     setTimeout(() => {
         const rect = container.getBoundingClientRect();
         
@@ -904,7 +943,8 @@ function initScratchCard(result, claimStatus, fullName) {
         ctx.fillRect(0, 0, rect.width, rect.height);
         
         // วาดข้อความ
-        ctx.font = "bold 22px 'Noto Sans Thai', sans-serif";
+        // ปรับขนาดฟอนต์ให้พอดีกับหน้าจอมือถือมากขึ้น
+        ctx.font = "bold 20px 'Noto Sans Thai', sans-serif";
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";

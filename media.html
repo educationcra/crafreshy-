@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ช่องทางติดต่อ - ราชวิทยาลัยจุฬาภรณ์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  
+  <style>
+    body { 
+        font-family: 'Noto Sans Thai', sans-serif; 
+        min-height: 100vh; 
+        overflow-x: hidden;
+        background: linear-gradient(-45deg, #003380, #004aad, #001f4d, #002255);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: #ffffff;
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* วงกลมตกแต่งพื้นหลัง */
+    .blob {
+        position: fixed; filter: blur(80px); z-index: -1; opacity: 0.5; border-radius: 50%;
+    }
+    .blob-1 { top: -10%; left: -10%; width: 300px; height: 300px; background: #f26b21; }
+    .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: #00aaff; }
+
+    .glass-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .link-card {
+        background: rgba(255, 255, 255, 0.95);
+        color: #003380;
+        border-radius: 1rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .link-card::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; transition: all 0.3s;
+    }
+    .link-card.web::before { background-color: #f26b21; }
+    .link-card.fb::before { background-color: #1877F2; }
+    .link-card.ig::before { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .link-card.tt::before { background-color: #000000; }
+    .link-card.x::before { background-color: #000000; }
+    .link-card.lt::before { background-color: #1DB954; } /* Linktree Green */
+
+    .link-card:hover { 
+        transform: translateY(-5px) scale(1.02); 
+        box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.2); 
+    }
+
+    .icon-box { 
+        width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; 
+        font-size: 1.5rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    
+    /* นำสีแบรนด์มาใช้เป็นค่าเริ่มต้น */
+    .icon-box.web { background: #fff0e6; color: #f26b21; }
+    .icon-box.fb { background: #e7f0fd; color: #1877F2; }
+    .icon-box.ig { background: #fce8f3; color: #e1306c; }
+    .icon-box.tt { background: #e2e8f0; color: #000000; }
+    .icon-box.x { background: #e2e8f0; color: #000000; }
+    .icon-box.lt { background: #eaffef; color: #1DB954; }
+
+    /* เอฟเฟกต์ให้ไอคอนเด้งขยายตัวนิดหน่อยเวลาเอาเมาส์ชี้ที่การ์ด */
+    .link-card:hover .icon-box {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    .stagger-1 { animation: slideUp 0.5s ease backwards 0.1s; }
+    .stagger-2 { animation: slideUp 0.5s ease backwards 0.2s; }
+    .stagger-3 { animation: slideUp 0.5s ease backwards 0.3s; }
+    .stagger-4 { animation: slideUp 0.5s ease backwards 0.4s; }
+    .stagger-5 { animation: slideUp 0.5s ease backwards 0.5s; }
+    .stagger-6 { animation: slideUp 0.5s ease backwards 0.6s; }
+    .stagger-7 { animation: slideUp 0.5s ease backwards 0.7s; }
+    .stagger-8 { animation: slideUp 0.5s ease backwards 0.8s; }
+    .stagger-9 { animation: slideUp 0.5s ease backwards 0.9s; }
+    .stagger-10 { animation: slideUp 0.5s ease backwards 1.0s; }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center py-10 px-4 relative">
+
+  <!-- Background Ornaments -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="w-full max-w-5xl glass-container rounded-[2.5rem] p-6 md:p-8 relative z-10 flex flex-col items-center animate-[slideUp_0.6s_ease-out]">
+      
+      <!-- Profile Header -->
+      <div class="w-28 h-28 bg-white rounded-full p-1.5 shadow-2xl mb-5 flex items-center justify-center relative">
+          <div class="absolute inset-0 rounded-full border-4 border-white/40 animate-pulse"></div>
+          <img src="https://s.imgz.io/2026/07/14/S__20914249861af3d6e2a82a1e.png" alt="CRA Logo" class="w-full h-full object-contain rounded-full">
+      </div>
+      
+      <h1 class="text-2xl font-black text-white mb-1 tracking-wide drop-shadow-md text-center">ช่องทางติดตามข่าวสาร</h1>
+      <p class="text-blue-100 font-medium text-sm mb-8 text-center px-2">
+          รวมช่องทางการติดต่อและประชาสัมพันธ์<br>ของราชวิทยาลัยจุฬาภรณ์
+      </p>
+
+      <div class="w-full space-y-10">
+          <!-- SECTION 1: Education CRA -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2">เพจ Education CRA</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/educationcra" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">Education CRA</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.instagram.com/educationcra" target="_blank" class="link-card ig group stagger-2">
+                      <div class="icon-box ig shrink-0"><i class="fi fi-brands-instagram mt-1"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#e1306c]/10 text-[#e1306c] mb-1 uppercase tracking-wide border border-[#e1306c]/20">Instagram</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#e1306c] transition-colors leading-tight">@educationcra</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#e1306c] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.tiktok.com/@educationcra" target="_blank" class="link-card tt group stagger-3">
+                      <div class="icon-box tt shrink-0"><i class="fi fi-brands-tik-tok mt-1 text-xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-gray-200 text-gray-700 mb-1 uppercase tracking-wide border border-gray-300">TikTok</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-black transition-colors leading-tight">@educationcra</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-black transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://x.com/educationcra" target="_blank" class="link-card x group stagger-4">
+                      <div class="icon-box x shrink-0"><i class="fi fi-brands-twitter mt-1 text-lg"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-gray-200 text-gray-700 mb-1 uppercase tracking-wide border border-gray-300">X (Twitter)</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-black transition-colors leading-tight">@educationcra</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-black transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 2: เพจส่วนกลาง (CRA) -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2">เพจส่วนกลาง (CRA)</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.cra.ac.th/" target="_blank" class="link-card web group stagger-1">
+                      <div class="icon-box web shrink-0"><i class="fi fi-rr-globe mt-1 text-xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#f26b21]/10 text-[#f26b21] mb-1 uppercase tracking-wide border border-[#f26b21]/20">เว็บไซต์</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#f26b21] transition-colors leading-tight">ราชวิทยาลัยจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#f26b21] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://chulabhornchannel.cra.ac.th/" target="_blank" class="link-card web group stagger-2">
+                      <div class="icon-box web shrink-0"><i class="fi fi-rr-globe mt-1 text-xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#f26b21]/10 text-[#f26b21] mb-1 uppercase tracking-wide border border-[#f26b21]/20">เว็บไซต์</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#f26b21] transition-colors leading-tight">CRA Chulabhorn Channel</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#f26b21] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/ChulabhornRoyalAcademy" target="_blank" class="link-card fb group stagger-3">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">ราชวิทยาลัยจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/chulabhornhospital" target="_blank" class="link-card fb group stagger-4">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">โรงพยาบาลจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/CRAPCCMS" target="_blank" class="link-card fb group stagger-5">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">วิทยาลัยวิทยาศาสตร์การแพทย์ฯ</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/StudentAffairs.CRA" target="_blank" class="link-card fb group stagger-6">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">กิจการนักศึกษา ราชวิทยาลัยจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/CRA.Student.Dormitory" target="_blank" class="link-card fb group stagger-7">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หอพักนักศึกษาราชวิทยาลัยจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/CRA.SA2020" target="_blank" class="link-card fb group stagger-8">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">สโมสรนักศึกษาราชวิทยาลัยจุฬาภรณ์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://linktr.ee/CRAlibrary" target="_blank" class="link-card lt group stagger-9">
+                      <div class="icon-box lt shrink-0"><i class="fi fi-rr-link-alt mt-1 text-xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1DB954]/10 text-[#1DB954] mb-1 uppercase tracking-wide border border-[#1DB954]/20">Linktree</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1DB954] transition-colors leading-tight">รวม CRA Library ห้องสมุด</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1DB954] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 3: คณะแพทยศาสตร์ศรีสวางควัฒน -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะแพทยศาสตร์<br>ศรีสวางควัฒน</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/PSMD.CRA" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">คณะแพทยศาสตร์ศรีสวางควัฒน</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/HealthDataSci" target="_blank" class="link-card fb group stagger-2">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรวิทยาศาสตร์ข้อมูลสุขภาพ</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 4: คณะพยาบาลศาสตร์อัครราชกุมารี -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะพยาบาลศาสตร์<br>อัครราชกุมารี</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/nursing.cra" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">คณะพยาบาลศาสตร์อัครราชกุมารี</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 5: คณะเทคโนโลยีวิทยาศาสตร์สุขภาพ -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะเทคโนโลยี<br>วิทยาศาสตร์สุขภาพ</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/HST.CRA" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">คณะเทคโนโลยีวิทยาศาสตร์สุขภาพ</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/RTChulabhorn" target="_blank" class="link-card fb group stagger-2">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรรังสีเทคนิค</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/hkh.hst.pccms" target="_blank" class="link-card fb group stagger-3">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรวิทยาศาสตร์การเคลื่อนไหวและสุขภาพ</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                  <a href="https://www.facebook.com/PARACRA.CON" target="_blank" class="link-card fb group stagger-4">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรฉุกเฉินการแพทย์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 6: คณะวิทยาศาสตร์ -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะวิทยาศาสตร์</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/CRA.Science" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">คณะวิทยาศาสตร์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 7: คณะนวัตกรรมอาหารและโภชนาการ -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะนวัตกรรมอาหาร<br>และโภชนาการ</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/CRA.MHFT" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรเทคโนโลยีอาหารทางการแพทย์ฯ</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+          <!-- SECTION 8: คณะวิศวกรรมศาสตร์ -->
+          <div>
+              <div class="flex items-center gap-3 mb-4 opacity-90">
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+                  <h2 class="text-xs font-bold text-white uppercase tracking-widest px-2 text-center leading-tight">คณะวิศวกรรมศาสตร์</h2>
+                  <div class="h-[1px] flex-1 bg-white/30"></div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://www.facebook.com/Engineering.cra" target="_blank" class="link-card fb group stagger-1">
+                      <div class="icon-box fb shrink-0"><i class="fi fi-brands-facebook mt-1 text-2xl"></i></div>
+                      <div class="flex-1 pl-4 flex flex-col items-start justify-center pr-6">
+                          <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#1877F2]/10 text-[#1877F2] mb-1 uppercase tracking-wide border border-[#1877F2]/20">Facebook</span>
+                          <span class="font-black text-[14px] text-gray-800 group-hover:text-[#1877F2] transition-colors leading-tight">หลักสูตรวิศวกรรมชีวการแพทย์</span>
+                      </div>
+                      <i class="fi fi-rr-angle-small-right text-gray-300 absolute right-4 text-xl group-hover:text-[#1877F2] transition-transform group-hover:translate-x-1"></i>
+                  </a>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+</body>
+</html>

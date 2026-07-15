@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>แบบสำรวจนักศึกษาใหม่ ราชวิทยาลัยจุฬาภรณ์ 2569</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
@@ -242,6 +243,7 @@
           </div>
 
           <form id="surveyForm">
+              
               <!-- STEP 1: Personal Info -->
               <div id="step1" class="step-section active space-y-8">
                   <div class="flex items-center gap-4 border-b-2 border-gray-100 pb-4">
@@ -426,8 +428,8 @@
                   <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4">
                       <!-- JS จะแทรกข้อความหรือรูปภาพรางวัลตรงนี้ -->
                   </div>
-                  <!-- Canvas สำหรับขูด (เพิ่ม w-full h-full block) -->
-                  <canvas id="scratchCanvas" class="absolute inset-0 z-10 cursor-crosshair w-full h-full block"></canvas>
+                  <!-- Canvas สำหรับขูด -->
+                  <canvas id="scratchCanvas" class="absolute inset-0 z-10 cursor-crosshair block"></canvas>
               </div>
               
               <!-- ปุ่มรับรางวัล (แสดงเฉพาะตอนถูกรางวัล) -->
@@ -866,7 +868,10 @@ function submitData(overwrite = false) {
             document.getElementById('successView').classList.remove('hidden'); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            initScratchCard(res.scratchResult, res.claimStatus, res.fullName);
+            // รอแอนิเมชันเปิด SuccessView เล็กน้อยก่อนรัน Scratch Card
+            setTimeout(() => {
+                initScratchCard(res.scratchResult, res.claimStatus, res.fullName);
+            }, 100);
             
         } else if (res.status === 'duplicate') {
             Swal.fire({
@@ -894,7 +899,7 @@ function submitData(overwrite = false) {
 }
 
 // ----------------------------------------------------
-// ระบบ Scratch Card และ รับรางวัล (ปรับปรุงแล้ว)
+// ระบบ Scratch Card และ รับรางวัล (แก้ไขเรื่องขนาดบนมือถือ)
 // ----------------------------------------------------
 function initScratchCard(result, claimStatus, fullName) {
     window.currentFullName = fullName; 
@@ -921,33 +926,33 @@ function initScratchCard(result, claimStatus, fullName) {
         claimContainer.classList.add('hidden');
     }
 
-    // 🌟 สำคัญ: หน่วงเวลา 600ms เพื่อรอให้กล่อง (Success View) ขยายขนาด scaleIn จนเสร็จสมบูรณ์ 100% 
-    // หากคำนวณขนาดก่อนหน้านี้ ขนาดความกว้างของกล่องจะผิดเพี้ยนไป ทำให้ Canvas แหว่งและข้อความไม่ตรงกลาง
+    // 🌟 ใช้วิธีดึงขนาดจริงจาก clientWidth/clientHeight ทันที 
+    // ค่าเหล่านี้จะไม่อิงตาม transform: scale ของ CSS ทำให้ได้ขนาดเต็มเสมอ
     setTimeout(() => {
-        // ใช้ offsetWidth/Height ของกล่องที่เป็นขนาดจริงหลังจาก Render เสร็จแล้ว
-        const width = container.offsetWidth;
-        const height = container.offsetHeight;
+        // clientWidth จะได้ขนาดความกว้าง "ภายใน" กรอบพอดี
+        const width = container.clientWidth;
+        const height = container.clientHeight;
         
         // จัดการเรื่องความคมชัดบนหน้าจอมือถือ (Retina Display)
         const dpr = window.devicePixelRatio || 1;
         
-        // ตั้งความละเอียดภายในของ Canvas ตาม Pixel จริง
+        // 1. ตั้งค่าขนาดความละเอียดจริงของ Canvas Buffer
         canvas.width = width * dpr;
         canvas.height = height * dpr;
         
-        // บังคับให้ Canvas ขยายเต็มกรอบด้วย CSS 100%
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
+        // 2. บังคับขนาดการแสดงผลด้วย CSS แบบระบุพิกเซลไปเลย เพื่อป้องกัน flex box หรือ scale ทำเพี้ยน
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
 
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        ctx.scale(dpr, dpr); // ปรับ Scale ให้วาดตรงตามความละเอียด
+        ctx.scale(dpr, dpr); // ปรับ Scale เพื่อให้วาดพิกัดตรงกัน
 
-        // เทสีเทาเป็นสารเคลือบ
+        // เทสีเทาเป็นสารเคลือบเต็มพื้นที่
         ctx.fillStyle = '#b0bec5'; 
         ctx.fillRect(0, 0, width, height);
         
-        // วาดข้อความให้ตรงกลางเป๊ะๆ ตามความกว้าง/ยาว ของกล่อง
-        ctx.font = "bold 22px 'Noto Sans Thai', sans-serif";
+        // วาดข้อความให้อยู่ตรงกลางจาก "ความกว้างจริง"
+        ctx.font = "bold 20px 'Noto Sans Thai', sans-serif";
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -956,40 +961,42 @@ function initScratchCard(result, claimStatus, fullName) {
         let isDrawing = false;
         
         function getMousePos(e) {
-            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            let canvasRect = canvas.getBoundingClientRect();
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             
-            // คำนวณ Scale ไว้เผื่อกรณีที่ Canvas แสดงผลเล็กหรือใหญ่กว่าที่วาดไว้ (ป้องกันการขูดเบี้ยว)
-            const scaleX = canvas.width / (canvasRect.width * dpr);
-            const scaleY = canvas.height / (canvasRect.height * dpr);
+            // คำนวณ Scale ชดเชยกรณีที่หน้าจอมือถือกำลังเล่นแอนิเมชันตอนเริ่มขูด
+            const scaleX = width / rect.width;
+            const scaleY = height / rect.height;
 
             return { 
-                x: (clientX - canvasRect.left) * scaleX, 
-                y: (clientY - canvasRect.top) * scaleY 
+                x: (clientX - rect.left) * scaleX, 
+                y: (clientY - rect.top) * scaleY 
             };
         }
 
         function scratch(e) {
             if (!isDrawing) return;
-            e.preventDefault(); 
-            let pos = getMousePos(e);
+            if (e.cancelable) e.preventDefault(); // ป้องกันจอมือถือขยับ
+            
+            const pos = getMousePos(e);
             
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI); // รัศมียางลบ
+            // ปรับขนาดวงกลมยางลบตามขนาดหน้าจอ (15% ของด้านที่สั้นกว่า)
+            const radius = Math.min(width, height) * 0.15;
+            ctx.arc(pos.x, pos.y, radius < 20 ? 20 : radius, 0, 2 * Math.PI); 
             ctx.fill();
         }
 
-        // ล้าง Event เดิมและผูก Event ใหม่
-        canvas.onmousedown = () => isDrawing = true;
-        canvas.ontouchstart = (e) => { isDrawing = true; e.preventDefault(); };
-        canvas.onmousemove = scratch;
-        canvas.ontouchmove = scratch;
-        window.onmouseup = () => isDrawing = false;
-        window.ontouchend = () => isDrawing = false;
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; if(e.cancelable) e.preventDefault(); }, {passive: false});
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('touchmove', scratch, {passive: false});
+        window.addEventListener('mouseup', () => isDrawing = false);
+        window.addEventListener('touchend', () => isDrawing = false);
         
-    }, 600); // <-- จุดแก้ที่ 1: เพิ่มเวลาเป็น 600ms ให้เลยเวลา 0.5s ของ Animation
+    }, 50); // รอจังหวะสั้นๆ ให้ Browser เรนเดอร์กล่องก่อนดึงขนาด
 }
 
 function claimPrizeBtn() {

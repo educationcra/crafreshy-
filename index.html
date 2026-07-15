@@ -723,7 +723,7 @@ function submitData() {
     if(!suggestion) { Swal.fire({icon:'warning', text:'กรุณาระบุข้อเสนอแนะเพิ่มเติม', confirmButtonColor: '#003380'}); return; }
 
     let finalStudentId = "";
-    if (document.getElementById('unknownStudentId').checked) finalStudentId = "ไม่ทราบ";
+    if (document.getElementById('unknownStudentId').checked) finalStudentId = currentCoursePrefix + "(ไม่ทราบ)";
     else finalStudentId = currentCoursePrefix + Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
 
     let payload = {

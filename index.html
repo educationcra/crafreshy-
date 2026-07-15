@@ -129,32 +129,19 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     
-    /* Simple Loader (Replacing the complex one to prevent issues) */
+    /* Simple Loader */
     .loader {
         border: 3px solid rgba(255,255,255,0.3);
         border-radius: 50%;
         border-top: 3px solid #ffffff;
         width: 20px;
         height: 20px;
-        -webkit-animation: spin 1s linear infinite; /* Safari */
+        -webkit-animation: spin 1s linear infinite;
         animation: spin 1s linear infinite;
         display: inline-block;
         vertical-align: middle;
     }
 
-    /* Green Loader for the Claim Button */
-    .loader-green {
-        border-color: rgba(34, 197, 94, 0.3);
-        border-top-color: #22c55e;
-    }
-
-    /* Gray Loader */
-    .loader-gray {
-        border-color: rgba(156, 163, 175, 0.3);
-        border-top-color: #9ca3af;
-    }
-
-    /* Safari */
     @-webkit-keyframes spin {
         0% { -webkit-transform: rotate(0deg); }
         100% { -webkit-transform: rotate(360deg); }
@@ -197,7 +184,7 @@
   <!-- Prize Modal (Pop-up) -->
   <div id="prizeModal" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 modal-leave">
       <div class="modal-content bg-white w-full max-w-sm rounded-[28px] p-6 shadow-2xl transform scale-90 opacity-0 transition-all duration-400 relative flex flex-col items-center text-center">
-          <!-- Close button (Fixed icon issue) -->
+          <!-- Close button -->
           <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
               <span class="text-xl font-bold leading-none">&times;</span>
           </button>
@@ -435,7 +422,9 @@
                   <canvas id="scratchCanvas" class="absolute inset-0 z-10 w-full h-full"></canvas>
               </div>
               
-              <button onclick="goToMedia()" class="btn-orange px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-bold transition shadow-lg text-base md:text-lg flex items-center gap-2 mt-2">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></button>
+              <button onclick="goToMedia()" class="btn-orange px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-bold transition shadow-lg text-base md:text-lg flex items-center justify-center gap-2 mt-2 w-full max-w-[320px]">
+                  <span id="btnMediaText">ติดตามข่าวสารของเรา <i class="fi fi-rr-arrow-up-right-from-square mt-1"></i></span>
+              </button>
           </div>
       </div>
   </div>
@@ -734,18 +723,17 @@ function submitData(overwrite = false) {
     };
 
     let btn = document.getElementById('btnSubmit'); 
-    let originTxt = btn.innerHTML; // เก็บข้อความเดิมไว้ (เช่น "ส่งข้อมูลแบบสำรวจ")
     
-    // เปลี่ยนข้อความและใส่ Loader แบบง่ายๆ ที่เพิ่งสร้างใหม่
+    // ใส่ Loader ลงไปแทนที่ข้อความเดิม
     btn.innerHTML = '<span class="loader mr-2"></span> กำลังบันทึก...'; 
     btn.disabled = true;
-    btn.classList.add('opacity-80', 'cursor-not-allowed'); // ทำให้ปุ่มดูเหมือนถูกกดไม่ได้
+    btn.classList.add('opacity-80', 'cursor-not-allowed');
 
     fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "submitSurvey", payload: payload }) })
     .then(r => r.json())
     .then(res => {
-        // คืนค่าปุ่มกลับมาเหมือนเดิม
-        btn.innerHTML = originTxt; 
+        // คืนค่าปุ่ม
+        btn.innerHTML = 'ส่งข้อมูลแบบสำรวจ'; 
         btn.disabled = false;
         btn.classList.remove('opacity-80', 'cursor-not-allowed');
 
@@ -763,7 +751,12 @@ function submitData(overwrite = false) {
             .then((result) => { if (result.isConfirmed) submitData(true); });
         } else { Swal.fire({icon: 'error', title: 'เกิดข้อผิดพลาด', text: res.message}); }
     })
-    .catch(err => { btn.innerHTML = originTxt; btn.disabled = false; Swal.fire({icon: 'error', text: 'ระบบขัดข้องในการเชื่อมต่อกับเซิฟเวอร์ (CORS/Network Error)'}); });
+    .catch(err => { 
+        btn.innerHTML = 'ส่งข้อมูลแบบสำรวจ'; 
+        btn.disabled = false; 
+        btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        Swal.fire({icon: 'error', text: 'ระบบขัดข้องในการเชื่อมต่อกับเซิฟเวอร์ (CORS/Network Error)'}); 
+    });
 }
 
 // ----------------------------------------------------
@@ -774,7 +767,7 @@ let glbIsWinner = false;
 
 function initScratchCard(result, claimStatus, fullName, studentId) {
     window.currentFullName = fullName; 
-    window.currentStudentId = studentId; // ** ใช้รหัสนักศึกษาในการอ้างอิงตอนกดรับสิทธิ์
+    window.currentStudentId = studentId; // ** เก็บ StudentID ไว้ใช้งานตอนกดรับสิทธิ์
     window.claimStatus = claimStatus;
     glbIsWinner = (result === 'WIN');
     
@@ -948,7 +941,8 @@ function claimPrizeBtn() {
 
             fetch(API_URL, {
                 method: "POST",
-                body: JSON.stringify({ action: "claimPrize", payload: { studentId: window.currentStudentId } }) // ส่ง StudentID ไปแทน
+                // 🔴 จุดสำคัญ: เปลี่ยนจาก fullName เป็น studentId แล้ว! 
+                body: JSON.stringify({ action: "claimPrize", payload: { studentId: window.currentStudentId } }) 
             })
             .then(r => r.json())
             .then(res => {
@@ -980,8 +974,9 @@ function claimPrizeBtn() {
 
 function goToMedia() {
     let btn = document.querySelector('#successView button:last-child');
-    // ใช้ Loader วงกลมแบบเดียวกันสำหรับปุ่มพาท่านไป...
-    btn.innerHTML = '<span class="loader mr-3"></span> กำลังพาท่านไป...'; 
+    let btnText = document.getElementById('btnMediaText');
+    
+    btnText.innerHTML = '<span class="loader mr-2"></span> กำลังพาท่านไป...'; 
     btn.disabled = true;
     btn.classList.add('opacity-80', 'cursor-not-allowed');
     window.location.href = "media.html";

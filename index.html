@@ -129,12 +129,40 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     
-    /* Loader */
-    .loader { width: 24px; height: 24px; position: relative; display: inline-block; vertical-align: middle; }
-    .loader:before { content: ''; width: 24px; height: 4px; background: rgba(255, 255, 255, 0.4); position: absolute; top: 32px; left: 0; border-radius: 50%; animation: shadow324 0.5s linear infinite; }
-    .loader:after { content: ''; width: 100%; height: 100%; background: #ffffff; position: absolute; top: 0; left: 0; border-radius: 3px; animation: jump7456 0.5s linear infinite; }
-    @keyframes jump7456 { 15% { border-bottom-right-radius: 2px; } 25% { transform: translateY(6px) rotate(22.5deg); } 50% { transform: translateY(12px) scale(1, .9) rotate(45deg); border-bottom-right-radius: 20px; } 75% { transform: translateY(6px) rotate(67.5deg); } 100% { transform: translateY(0) rotate(90deg); } }
-    @keyframes shadow324 { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.2, 1); } }
+    /* Simple Loader (Replacing the complex SVG one to prevent issues) */
+    .loader {
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top: 3px solid #ffffff;
+        width: 20px;
+        height: 20px;
+        -webkit-animation: spin 1s linear infinite; /* Safari */
+        animation: spin 1s linear infinite;
+        display: inline-block;
+    }
+
+    /* Green Loader for the Claim Button */
+    .loader-green {
+        border-color: rgba(34, 197, 94, 0.3);
+        border-top-color: #22c55e;
+    }
+
+    /* Gray Loader */
+    .loader-gray {
+        border-color: rgba(156, 163, 175, 0.3);
+        border-top-color: #9ca3af;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
     /* Modal Animation */
     .modal-enter { opacity: 1 !important; }
@@ -166,11 +194,11 @@
   </div>
 
   <!-- Prize Modal (Pop-up) -->
-  <div id="prizeModal" class="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 modal-leave hidden">
+  <div id="prizeModal" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 modal-leave">
       <div class="modal-content bg-white w-full max-w-sm rounded-[28px] p-6 shadow-2xl transform scale-90 opacity-0 transition-all duration-400 relative flex flex-col items-center text-center">
-          <!-- Close button -->
+          <!-- Close button (Fixed icon issue) -->
           <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
-              <i class="fi fi-br-cross text-xs"></i>
+              <span class="text-xl font-bold leading-none">&times;</span>
           </button>
           
           <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-4 mt-2">
@@ -189,7 +217,7 @@
 
           <!-- The Claim Button inside Modal -->
           <button onclick="claimPrizeBtn()" id="modalBtnClaim" class="w-full bg-[#22c55e] hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-bold transition shadow-md flex items-center justify-center gap-2">
-              <i class="fi fi-sr-hand-holding-box mt-1"></i> กดใช้สิทธิ์รับรางวัล
+              <i class="fi fi-sr-hand-holding-box mt-1" id="modalBtnIcon"></i> <span id="modalBtnText">กดใช้สิทธิ์รับรางวัล</span>
           </button>
       </div>
   </div>
@@ -705,7 +733,7 @@ function submitData(overwrite = false) {
     };
 
     let btn = document.getElementById('btnSubmit'); let originTxt = btn.innerHTML;
-    btn.innerHTML = '<span class="loader mr-3"></span> กำลังบันทึกข้อมูล...'; btn.disabled = true;
+    btn.innerHTML = '<span class="loader-gray mr-3"></span> กำลังบันทึกข้อมูล...'; btn.disabled = true;
 
     fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "submitSurvey", payload: payload }) })
     .then(r => r.json())
@@ -717,8 +745,8 @@ function submitData(overwrite = false) {
             document.getElementById('successView').classList.remove('hidden'); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // ส่งค่าไปเตรียมขูดบัตร (ส่งชื่อเต็มไปด้วย)
-            initScratchCard(res.scratchResult, res.claimStatus, payload.fname + " " + payload.lname);
+            // ส่งค่าไปเตรียมขูดบัตร (ส่งชื่อเต็ม และ **รหัสนักศึกษา** ไปแทน)
+            initScratchCard(res.scratchResult, res.claimStatus, payload.fname + " " + payload.lname, finalStudentId);
             
         } else if (res.status === 'duplicate') {
             Swal.fire({ title: 'พบข้อมูลซ้ำ', text: res.message, icon: 'warning', showCancelButton: true, confirmButtonColor: '#f26b21', cancelButtonColor: '#d33', confirmButtonText: 'ใช่, ทับข้อมูลเดิม', cancelButtonText: 'ยกเลิก' })
@@ -731,11 +759,12 @@ function submitData(overwrite = false) {
 // ----------------------------------------------------
 // ระบบ Scratch Card และ Pop-up รับรางวัล
 // ----------------------------------------------------
-let isCardCleared = false; // ตัวเช็คว่าเปิดบัตรหมดหรือยัง
+let isCardCleared = false; 
 let glbIsWinner = false; 
 
-function initScratchCard(result, claimStatus, fullName) {
+function initScratchCard(result, claimStatus, fullName, studentId) {
     window.currentFullName = fullName; 
+    window.currentStudentId = studentId; // ** ใช้รหัสนักศึกษาในการอ้างอิงตอนกดรับสิทธิ์
     window.claimStatus = claimStatus;
     glbIsWinner = (result === 'WIN');
     
@@ -752,15 +781,14 @@ function initScratchCard(result, claimStatus, fullName) {
         bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-gray-50 shadow-inner';
     }
 
-    // 🌟 ฟังก์ชันวาด Canvas ที่รับประกันว่าจะไม่วาดตอนจอยังเล็ก (หลีกเลี่ยงบั๊กจอขาว)
+    // ฟังก์ชันวาด Canvas
     function drawCanvas() {
-        // ดึงความกว้างที่แท้จริง ไม่โดนหลอกด้วย Animation
         const cw = container.clientWidth;
         const ch = container.clientHeight;
         
-        // ถ้าหน้าจอยังแสดงไม่เต็ม (width เป็น 0) ให้รอวนซ้ำไปอีก 50ms
+        // ถ้าหน้าจอยังแสดงไม่เต็ม ให้รอวนซ้ำไปเรื่อยๆ จนกว่าความกว้างจะมา
         if(cw === 0 || ch === 0) {
-            setTimeout(drawCanvas, 50);
+            setTimeout(drawCanvas, 100);
             return;
         }
 
@@ -771,11 +799,9 @@ function initScratchCard(result, claimStatus, fullName) {
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         ctx.scale(dpr, dpr);
 
-        // เทสีเทา
         ctx.fillStyle = '#b0bec5'; 
         ctx.fillRect(0, 0, cw, ch);
         
-        // วาดข้อความตรงกลาง
         ctx.font = "bold 20px 'Noto Sans Thai', sans-serif";
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "center";
@@ -785,8 +811,7 @@ function initScratchCard(result, claimStatus, fullName) {
         setupScratchEvents(canvas, ctx, cw, ch);
     }
 
-    // เริ่มทำงานหลังจาก Animation กล่องเสร็จ (เผื่อไว้ 300ms)
-    setTimeout(drawCanvas, 300);
+    setTimeout(drawCanvas, 200);
 }
 
 function setupScratchEvents(canvas, ctx, w, h) {
@@ -816,14 +841,11 @@ function setupScratchEvents(canvas, ctx, w, h) {
         if(!isDrawing) return;
         isDrawing = false;
         
-        // ถ้ายกนิ้วขึ้นแล้ว และขูดไปเยอะพอสมควร (ประเมินคร่าวๆ จากการขยับ) ให้ลบแผ่นเคลือบทั้งหมดทิ้งเลย
         if(scratchCount > 25 && !isCardCleared) {
             isCardCleared = true;
-            // ทำการ Fade out canvas
             canvas.style.transition = 'opacity 0.4s ease';
             canvas.style.opacity = '0';
             
-            // รอแอนิเมชัน Fade out เสร็จค่อยโชว์ Popup
             setTimeout(() => {
                 canvas.style.display = 'none';
                 if(glbIsWinner) {
@@ -847,26 +869,26 @@ function setupScratchEvents(canvas, ctx, w, h) {
 function showPrizeModal() {
     let modal = document.getElementById('prizeModal');
     let btnClaim = document.getElementById('modalBtnClaim');
+    let btnIcon = document.getElementById('modalBtnIcon');
+    let btnText = document.getElementById('modalBtnText');
     
-    // ตั้งชื่อคนได้รางวัล
     document.getElementById('modalWinnerName').innerText = "คุณ " + window.currentFullName;
     
-    // เช็คสถานะการกดรับสิทธิ์
     if(window.claimStatus === 'CLAIMED') {
-        btnClaim.innerHTML = '<i class="fi fi-sr-checkbox mt-1"></i> สิทธิ์ใช้งานแล้ว';
+        btnIcon.className = "fi fi-sr-checkbox mt-1";
+        btnText.innerText = "สิทธิ์ใช้งานแล้ว";
         btnClaim.className = "w-full bg-gray-400 text-white px-6 py-3.5 rounded-xl font-bold cursor-not-allowed shadow-none flex items-center justify-center gap-2";
-        btnClaim.onclick = null; // ปิดการกดปุ่ม
+        btnClaim.onclick = null; 
     } else {
-        btnClaim.innerHTML = '<i class="fi fi-sr-hand-holding-box mt-1"></i> กดใช้สิทธิ์รับรางวัล';
+        btnIcon.className = "fi fi-sr-hand-holding-box mt-1";
+        btnText.innerText = "กดใช้สิทธิ์รับรางวัล";
         btnClaim.className = "w-full bg-[#22c55e] hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-bold transition shadow-md flex items-center justify-center gap-2";
-        btnClaim.onclick = claimPrizeBtn; // เปิดให้กด
+        btnClaim.onclick = claimPrizeBtn; 
     }
 
-    // เปิด Modal ให้มีแอนิเมชันดุ๊กดิ๊ก
     modal.classList.remove('hidden');
     modal.classList.add('flex');
     
-    // ใช้ Timeout สั้นๆ เพื่อให้ Browser คำนวณ display flex ก่อน ค่อยเพิ่มคลาส Animation
     setTimeout(() => {
         modal.classList.remove('modal-leave');
         modal.classList.add('modal-enter');
@@ -878,7 +900,6 @@ function closeModal() {
     modal.classList.remove('modal-enter');
     modal.classList.add('modal-leave');
     
-    // ซ่อน element ไปเลยเมื่อแอนิเมชันจางจบ
     setTimeout(() => {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
@@ -906,29 +927,36 @@ function claimPrizeBtn() {
     }).then((result) => {
         if (result.isConfirmed) {
             let btn = document.getElementById('modalBtnClaim');
-            btn.innerHTML = '<span class="loader mr-2 !w-5 !h-5 !border-2"></span> กำลังอัปเดต...';
+            let btnIcon = document.getElementById('modalBtnIcon');
+            let btnText = document.getElementById('modalBtnText');
+
+            btnIcon.className = "loader mr-1"; // ใช้ Loader แบบปกติแล้ว
+            btnText.innerText = " กำลังอัปเดต...";
             btn.disabled = true;
 
             fetch(API_URL, {
                 method: "POST",
-                body: JSON.stringify({ action: "claimPrize", payload: { fullName: window.currentFullName } })
+                body: JSON.stringify({ action: "claimPrize", payload: { studentId: window.currentStudentId } }) // ส่ง StudentID ไปแทน
             })
             .then(r => r.json())
             .then(res => {
                 if(res.status === 'success') {
-                    // เปลี่ยนสถานะและ UI เป็นใช้งานแล้ว
                     window.claimStatus = 'CLAIMED';
-                    btn.innerHTML = '<i class="fi fi-sr-checkbox mt-1"></i> สิทธิ์ใช้งานแล้ว';
+                    btnIcon.className = "fi fi-sr-checkbox mt-1";
+                    btnText.innerText = "สิทธิ์ใช้งานแล้ว";
                     btn.className = "w-full bg-gray-400 text-white px-6 py-3.5 rounded-xl font-bold cursor-not-allowed shadow-none flex items-center justify-center gap-2";
-                    btn.onclick = null; // ถอดฟังก์ชันทิ้ง กันกดซ้ำ
+                    btn.onclick = null; 
                 } else {
                     Swal.fire('ข้อผิดพลาด', res.message, 'error');
-                    btn.innerHTML = '<i class="fi fi-sr-hand-holding-box mt-1"></i> กดใช้สิทธิ์รับรางวัล';
+                    btnIcon.className = "fi fi-sr-hand-holding-box mt-1";
+                    btnText.innerText = "กดใช้สิทธิ์รับรางวัล";
                     btn.disabled = false;
                 }
             })
             .catch(err => {
                 Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิฟเวอร์ได้', 'error');
+                btnIcon.className = "fi fi-sr-hand-holding-box mt-1";
+                btnText.innerText = "กดใช้สิทธิ์รับรางวัล";
                 btn.disabled = false;
             });
         }

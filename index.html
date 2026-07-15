@@ -272,22 +272,24 @@
                   </div>
 
                   <div class="bg-gray-50 p-6 lg:p-8 rounded-2xl border border-gray-200 shadow-sm relative z-50">
-                      <!-- โรงเรียน -->
-                      <div class="relative w-full z-[60]">
-                          <label class="block text-sm font-bold mb-2 text-[#003380]">โรงเรียนที่จบระดับชั้น ม.6 หรือ เทียบเท่า <span class="text-red-500">*</span></label>
-                          <div class="relative w-full">
-                              <i class="fi fi-sr-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                              <input type="text" id="schoolInputSearch" class="w-full h-[45px] pl-12 pr-4 bg-[#f8fafc] border-2 border-transparent rounded-xl focus:bg-white focus:border-blue-400 focus:shadow-[0_0_0_5px_rgba(59,130,246,0.3)] transition-all outline-none font-medium text-gray-700" autocomplete="off" placeholder="พิมพ์ชื่อโรงเรียนเพื่อค้นหา..." oninput="fastSearchSchool(this.value)" onfocus="fastSearchSchool(this.value)">
-                              <ul id="schoolDropdown" class="absolute z-50 w-full bg-white border border-gray-100 rounded-xl mt-1 max-h-48 overflow-y-auto hidden shadow-xl"></ul>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                          <!-- โรงเรียน -->
+                          <div class="relative w-full z-[60]">
+                              <label class="block text-sm font-bold mb-2 text-[#003380]">โรงเรียนที่จบระดับชั้น ม.6 หรือ เทียบเท่า <span class="text-red-500">*</span></label>
+                              <div class="relative w-full">
+                                  <i class="fi fi-sr-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                  <input type="text" id="schoolInputSearch" class="w-full h-[48px] pl-12 pr-4 bg-[#f8fafc] border-2 border-transparent rounded-xl focus:bg-white focus:border-[#f26b21] focus:shadow-[0_0_0_4px_rgba(242,107,33,0.1)] transition-all outline-none font-medium text-gray-700" autocomplete="off" placeholder="พิมพ์ชื่อโรงเรียนเพื่อค้นหา..." oninput="fastSearchSchool(this.value)" onfocus="fastSearchSchool(this.value)">
+                                  <ul id="schoolDropdown" class="absolute z-50 w-full bg-white border border-gray-100 rounded-xl mt-1 max-h-48 overflow-y-auto hidden shadow-xl"></ul>
+                              </div>
                           </div>
-                      </div>
-                      <!-- จังหวัด -->
-                      <div class="relative w-full z-[59]">
-                          <label class="block text-sm font-bold mb-2 text-[#003380]">จังหวัดของโรงเรียน <span class="text-red-500">*</span></label>
-                          <div class="relative w-full">
-                              <i id="provIcon" class="fi fi-sr-marker absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                              <input type="text" id="provinceInput" class="w-full h-[45px] pl-12 pr-4 bg-[#f8fafc] border-2 border-transparent rounded-xl focus:bg-white focus:border-blue-400 focus:shadow-[0_0_0_5px_rgba(59,130,246,0.3)] transition-all outline-none font-medium text-gray-700" autocomplete="off" placeholder="พิมพ์เพื่อค้นหาจังหวัด..." oninput="fastSearchProvince(this.value)" onfocus="fastSearchProvince(this.value)">
-                              <ul id="provinceDropdown" class="absolute z-50 w-full bg-white border border-gray-100 rounded-xl mt-1 max-h-48 overflow-y-auto hidden shadow-xl"></ul>
+                          <!-- จังหวัด -->
+                          <div class="relative w-full z-[59]">
+                              <label class="block text-sm font-bold mb-2 text-[#003380]">จังหวัดของโรงเรียน <span class="text-red-500">*</span></label>
+                              <div class="relative w-full">
+                                  <i class="fi fi-sr-marker absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                  <input type="text" id="provinceInput" class="w-full h-[48px] pl-12 pr-4 bg-[#f8fafc] border-2 border-transparent rounded-xl focus:bg-white focus:border-[#f26b21] focus:shadow-[0_0_0_4px_rgba(242,107,33,0.1)] transition-all outline-none font-medium text-gray-700" autocomplete="off" placeholder="พิมพ์เพื่อค้นหาจังหวัด..." oninput="fastSearchProvince(this.value)" onfocus="fastSearchProvince(this.value)">
+                                  <ul id="provinceDropdown" class="absolute z-50 w-full bg-white border border-gray-100 rounded-xl mt-1 max-h-48 overflow-y-auto hidden shadow-xl"></ul>
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -354,11 +356,11 @@
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                       <div class="w-full flex flex-col">
                           <label class="block text-sm font-bold mb-3 text-[#003380]">กิจกรรมที่อยากให้ราชวิทยาลัยทำการจัดในอนาคต <span class="text-red-500">*</span></label>
-                          <textarea id="futureAct" rows="4" class="w-full p-4 bg-[#f8fafc] text-[#0d0c22] border-2 border-transparent rounded-xl outline-none focus:border-[#818cf8] focus:bg-white focus:shadow-[0_0_0_5px_rgba(129,140,248,0.3)] transition-all resize-none font-medium" placeholder="เช่น ค่ายวิชาการ, ติวเตอร์..."></textarea>
+                          <textarea id="futureAct" rows="4" class="w-full p-4 bg-[#f8fafc] text-[#0d0c22] border-2 border-transparent rounded-xl outline-none focus:border-[#f26b21] focus:bg-white focus:shadow-[0_0_0_4px_rgba(242,107,33,0.1)] transition-all resize-none font-medium" placeholder="เช่น ค่ายวิชาการ, ติวเตอร์..."></textarea>
                       </div>
                       <div class="w-full flex flex-col">
                           <label class="block text-sm font-bold mb-3 text-[#003380]">ข้อเสนอแนะอื่นๆ <span class="text-red-500">*</span></label>
-                          <textarea id="suggestion" rows="4" class="w-full p-4 bg-[#f8fafc] text-[#0d0c22] border-2 border-transparent rounded-xl outline-none focus:border-[#818cf8] focus:bg-white focus:shadow-[0_0_0_5px_rgba(129,140,248,0.3)] transition-all resize-none font-medium" placeholder="ข้อเสนอแนะเพื่อการพัฒนา..."></textarea>
+                          <textarea id="suggestion" rows="4" class="w-full p-4 bg-[#f8fafc] text-[#0d0c22] border-2 border-transparent rounded-xl outline-none focus:border-[#f26b21] focus:bg-white focus:shadow-[0_0_0_4px_rgba(242,107,33,0.1)] transition-all resize-none font-medium" placeholder="ข้อเสนอแนะเพื่อการพัฒนา..."></textarea>
                       </div>
                   </div>
 
@@ -389,411 +391,314 @@ let rawSchoolData = [];
 
 const provincesList = ["กรุงเทพมหานคร","กระบี่","กาญจนบุรี","กาฬสินธุ์","กำแพงเพชร","ขอนแก่น","จันทบุรี","ฉะเชิงเทรา","ชลบุรี","ชัยนาท","ชัยภูมิ","ชุมพร","เชียงราย","เชียงใหม่","ตรัง","ตราด","ตาก","นครนายก","นครปฐม","นครพนม","นครราชสีมา","นครศรีธรรมราช","นครสวรรค์","นนทบุรี","นราธิวาส","น่าน","บึงกาฬ","บุรีรัมย์","ปทุมธานี","ประจวบคีรีขันธ์","ปราจีนบุรี","ปัตตานี","พระนครศรีอยุธยา","พะเยา","พังงา","พัทลุง","พิจิตร","พิษณุโลก","เพชรบุรี","เพชรบูรณ์","แพร่","ภูเก็ต","มหาสารคาม","มุกดาหาร","แม่ฮ่องสอน","ยโสธร","ยะลา","ร้อยเอ็ด","ระนอง","ระยอง","ราชบุรี","ลพบุรี","ลำปาง","ลำพูน","เลย","ศรีสะเกษ","สกลนคร","สงขลา","สตูล","สมุทรปราการ","สมุทรสงคราม","สมุทรสาคร","สระแก้ว","สระบุรี","สิงห์บุรี","สุโขทัย","สุพรรณบุรี","สุราษฎร์ธานี","สุรินทร์","หนองคาย","หนองบัวลำภู","อ่างทอง","อำนาจเจริญ","อุดรธานี","อุตรดิตถ์","อุทัยธานี","อุบลราชธานี"];
 
-// --- Data Sources with Icons ---
 const prefixData = [
     { name: "นาย", icon: "fi-rr-user" }, 
     { name: "นางสาว", icon: "fi-rr-user" }
 ];
-    const platformData = [
-        { name: "Facebook", icon: "fi-brands-facebook" }, 
-        { name: "Instagram", icon: "fi-brands-instagram" }, 
-        { name: "TikTok", icon: "fi-brands-tik-tok" }, 
-        { name: "X (Twitter)", icon: "fi-brands-twitter" }
-    ];
-    const courseData = [
-        { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
-        { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
-        { name: "พยาบาลศาสตรบัณฑิต", prefix: "7002", icon: "fi-sr-heart" },
-        { name: "พยาบาลศาสตรบัณฑิต (หลักสูตรนานาชาติ)", prefix: "7022", icon: "fi-sr-globe" },
-        { name: "พยาบาลศาสตรบัณฑิต (สำหรับผู้สำเร็จปริญญาตรีสาขาอื่น)", prefix: "7013", icon: "fi-sr-heart" },
-        { name: "วท.บ. สาขาวิชารังสีเทคนิค", prefix: "7003", icon: "fi-sr-bone" },
-        { name: "วท.บ. สาขาวิชาวิทยาศาสตร์การเคลื่อนไหวและสุขภาพ", prefix: "7006", icon: "fi-sr-heart-rate" },
-        { name: "วท.บ. สาขาวิชาฉุกเฉินการแพทย์", prefix: "7023", icon: "fi-sr-ambulance" },
-        { name: "วท.บ. สาขาวิชานวัตกรรมวิทยาศาสตร์การแพทย์", prefix: "7026", icon: "fi-sr-bulb" },
-        { name: "วท.บ. สาขาวิชาเทคโนโลยีอาหารทางการแพทย์และสุขภาพ", prefix: "7027", icon: "fi-sr-restaurant" },
-        { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
-    ];
-    const tcasData = [
-        { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, 
-        { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, 
-        { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, 
-        { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" }
-    ];
+const platformData = [
+    { name: "Facebook", icon: "fi-brands-facebook" }, 
+    { name: "Instagram", icon: "fi-brands-instagram" }, 
+    { name: "TikTok", icon: "fi-brands-tik-tok" }, 
+    { name: "X (Twitter)", icon: "fi-brands-twitter" }
+];
+const courseData = [
+    { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
+    { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
+    { name: "พยาบาลศาสตรบัณฑิต", prefix: "7002", icon: "fi-sr-heart" },
+    { name: "พยาบาลศาสตรบัณฑิต (หลักสูตรนานาชาติ)", prefix: "7022", icon: "fi-sr-globe" },
+    { name: "พยาบาลศาสตรบัณฑิต (สำหรับผู้สำเร็จปริญญาตรีสาขาอื่น)", prefix: "7013", icon: "fi-sr-heart" },
+    { name: "วท.บ. สาขาวิชารังสีเทคนิค", prefix: "7003", icon: "fi-sr-bone" },
+    { name: "วท.บ. สาขาวิชาวิทยาศาสตร์การเคลื่อนไหวและสุขภาพ", prefix: "7006", icon: "fi-sr-heart-rate" },
+    { name: "วท.บ. สาขาวิชาฉุกเฉินการแพทย์", prefix: "7023", icon: "fi-sr-ambulance" },
+    { name: "วท.บ. สาขาวิชานวัตกรรมวิทยาศาสตร์การแพทย์", prefix: "7026", icon: "fi-sr-bulb" },
+    { name: "วท.บ. สาขาวิชาเทคโนโลยีอาหารทางการแพทย์และสุขภาพ", prefix: "7027", icon: "fi-sr-restaurant" },
+    { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
+];
+const tcasData = [
+    { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, 
+    { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, 
+    { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, 
+    { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" }
+];
 
-    const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
-    const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
+const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
+const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
 
 window.onload = function() {
-    // 1. Fetch ข้อมูลโรงเรียนผ่าน API แบบ GET
     fetch(API_URL + "?action=getSchoolData")
         .then(response => response.json())
-        .then(data => {
-            rawSchoolData = data;
-        })
+        .then(data => { rawSchoolData = data; })
         .catch(error => console.error("Error loading school data:", error));
 
     document.getElementById('reasonGroup').innerHTML = buildCheckCards(reasonsList, 'chkReason', 'wrapOtherReason', 'otherReason');
     document.getElementById('channelGroup').innerHTML = buildCheckCards(channelsList, 'chkChannel', 'wrapOtherChannel', 'otherChannel');
 
-    // Build Custom Dropdowns
     buildCustomDropdownWithIcon('prefixWrapper', 'prefix', prefixData, '-- เลือกคำนำหน้า --', null);
     buildCustomDropdownWithIcon('courseWrapper', 'course', courseData, '-- เลือกหลักสูตรที่ศึกษา --', onCourseSelected);
-        buildCustomDropdownWithIcon('tcasWrapper', 'tcasRound', tcasData, '-- เลือกรอบที่สอบติด --', null);
-        buildCustomDropdownWithIcon('platformWrapper', 'followPlatform', platformData, '-- เลือกแพลตฟอร์ม --', null);
+    buildCustomDropdownWithIcon('tcasWrapper', 'tcasRound', tcasData, '-- เลือกรอบที่สอบติด --', null);
+    buildCustomDropdownWithIcon('platformWrapper', 'followPlatform', platformData, '-- เลือกแพลตฟอร์ม --', null);
 
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        suffixBoxes.forEach((box, i) => {
-            box.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, ''); 
-                if (this.value !== '' && i < suffixBoxes.length - 1) suffixBoxes[i + 1].focus(); 
-            });
-            box.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && this.value === '' && i > 0) suffixBoxes[i - 1].focus(); 
-            });
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    suffixBoxes.forEach((box, i) => {
+        box.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, ''); 
+            if (this.value !== '' && i < suffixBoxes.length - 1) suffixBoxes[i + 1].focus(); 
         });
-    };
-
-    function acceptPDPA() {
-        document.getElementById('pdpaOverlay').classList.add('opacity-0');
-        setTimeout(() => {
-            document.getElementById('pdpaOverlay').classList.add('hidden');
-            let content = document.getElementById('mainContent');
-            content.classList.remove('hidden');
-            setTimeout(() => { content.classList.remove('opacity-0'); }, 100);
-        }, 500);
-    }
-
-    // --- UI Builders ---
-    function buildCheckCards(arr, name, wrapOtherId, inputOtherId) {
-        let html = "";
-        for(let i=0; i<arr.length; i++) {
-            html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" name="'+name+'" value="'+arr[i]+'" onchange="updateCheckCardStyle(this)"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">'+arr[i]+'</span></label>';
-        }
-        html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" onchange="checkOther(this, \''+wrapOtherId+'\', \''+inputOtherId+'\')"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">อื่นๆ (โปรดระบุ)</span></label>';
-        return html;
-    }
-
-    function updateCheckCardStyle(el) {
-        if(el.checked) el.closest('.check-card').classList.add('active');
-        else el.closest('.check-card').classList.remove('active');
-    }
-    
-    function updateRadioCardStyle(groupName) {
-        let radios = document.getElementsByName(groupName);
-        for(let i=0; i<radios.length; i++) {
-            if(radios[i].checked) radios[i].closest('.check-card').classList.add('active');
-            else radios[i].closest('.check-card').classList.remove('active');
-        }
-    }
-
-    function checkOther(el, wrapId, inputId) {
-        updateCheckCardStyle(el);
-        let wrap = document.getElementById(wrapId);
-        let inp = document.getElementById(inputId);
-        if (el.checked) { wrap.classList.remove('hidden'); inp.focus(); } 
-        else { wrap.classList.add('hidden'); inp.value = ""; }
-    }
-
-    // 🌟 CUSTOM DROPDOWN WITH ICONS (Image 2 Style) 🌟
-    function buildCustomDropdownWithIcon(containerId, hiddenInputId, dataArray, placeholder, onChangeCallback) {
-        const container = document.getElementById(containerId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-        
-        let wrapper = document.createElement('div');
-        wrapper.className = "custom-select-wrapper";
-        
-        let trigger = document.createElement('div');
-        trigger.className = "custom-select-trigger";
-        trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-        
-        let optionsList = document.createElement('div');
-        optionsList.className = "custom-options";
-        
-        let defOpt = document.createElement('div');
-        defOpt.className = "custom-option";
-        defOpt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi fi-rr-cross-circle mt-1"></i></div><span class="truncate text-gray-400">' + placeholder + '</span>';
-        defOpt.onclick = function(e) {
-            e.stopPropagation(); hiddenInput.value = "";
-            trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-            trigger.classList.remove('active-trigger'); wrapper.classList.remove('open');
-            optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-            if(onChangeCallback) onChangeCallback("");
-        };
-        optionsList.appendChild(defOpt);
-
-        for (let i = 0; i < dataArray.length; i++) {
-            let item = dataArray[i];
-            let opt = document.createElement('div');
-            opt.className = "custom-option";
-            opt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi ' + item.icon + ' mt-1"></i></div><span class="truncate">' + item.name + '</span>';
-            opt.setAttribute('data-value', item.name);
-            if(item.prefix) opt.setAttribute('data-prefix', item.prefix);
-            
-            opt.onclick = function(e) {
-                e.stopPropagation();
-                let val = this.getAttribute('data-value');
-                let prefix = this.getAttribute('data-prefix');
-                hiddenInput.value = val;
-                
-                // แก้ไขการจัดวางไอคอนและข้อความให้อยู่ชิดกันเสมอ (ห่างกันด้วย gap-3)
-                trigger.innerHTML = '<div class="flex items-center gap-3 overflow-hidden w-full">' + this.innerHTML + '</div><i class="fi fi-rr-angle-small-down text-gray-400 ml-auto shrink-0"></i>';
-                
-                trigger.classList.add('active-trigger'); wrapper.classList.remove('open');
-                
-                optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-                this.classList.add('selected');
-                if(onChangeCallback) onChangeCallback(val, prefix);
-            };
-            optionsList.appendChild(opt);
-        }
-
-        trigger.onclick = function(e) {
-            e.stopPropagation();
-            document.querySelectorAll('.custom-select-wrapper').forEach(w => { if(w !== wrapper) w.classList.remove('open'); });
-            
-            let schDropdown = document.getElementById('schoolDropdown');
-            if (schDropdown) schDropdown.classList.remove('show');
-            let provDropdown = document.getElementById('provinceDropdown');
-            if (provDropdown) provDropdown.classList.remove('show');
-
-            wrapper.classList.toggle('open');
-        };
-        
-        wrapper.appendChild(trigger); wrapper.appendChild(optionsList); container.appendChild(wrapper);
-    }
-    
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
-        let schDropdown = document.getElementById('schoolDropdown');
-        if (schDropdown) schDropdown.classList.remove('show');
-        let provDropdown = document.getElementById('provinceDropdown');
-        if (provDropdown) provDropdown.classList.remove('show');
+        box.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value === '' && i > 0) suffixBoxes[i - 1].focus(); 
+        });
     });
+};
 
-    let currentCoursePrefix = "";
-    function onCourseSelected(courseName, prefix) {
-        const idContainer = document.getElementById('studentIdContainer');
-        const prefixBoxes = document.querySelectorAll('.pin-prefix');
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        const isUnknown = document.getElementById('unknownStudentId').checked;
+function acceptPDPA() {
+    document.getElementById('pdpaOverlay').classList.add('opacity-0');
+    setTimeout(() => {
+        document.getElementById('pdpaOverlay').classList.add('hidden');
+        let content = document.getElementById('mainContent');
+        content.classList.remove('hidden');
+        setTimeout(() => { content.classList.remove('opacity-0'); }, 100);
+    }, 500);
+}
+
+function buildCheckCards(arr, name, wrapOtherId, inputOtherId) {
+    let html = "";
+    for(let i=0; i<arr.length; i++) {
+        html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" name="'+name+'" value="'+arr[i]+'" onchange="updateCheckCardStyle(this)"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">'+arr[i]+'</span></label>';
+    }
+    html += '<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" onchange="checkOther(this, \''+wrapOtherId+'\', \''+inputOtherId+'\')"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">อื่นๆ (โปรดระบุ)</span></label>';
+    return html;
+}
+
+function updateCheckCardStyle(el) {
+    if(el.checked) el.closest('.check-card').classList.add('active');
+    else el.closest('.check-card').classList.remove('active');
+}
+
+function updateRadioCardStyle(groupName) {
+    let radios = document.getElementsByName(groupName);
+    for(let i=0; i<radios.length; i++) {
+        if(radios[i].checked) radios[i].closest('.check-card').classList.add('active');
+        else radios[i].closest('.check-card').classList.remove('active');
+    }
+}
+
+function checkOther(el, wrapId, inputId) {
+    updateCheckCardStyle(el);
+    let wrap = document.getElementById(wrapId);
+    let inp = document.getElementById(inputId);
+    if (el.checked) { wrap.classList.remove('hidden'); inp.focus(); } 
+    else { wrap.classList.add('hidden'); inp.value = ""; }
+}
+
+function buildCustomDropdownWithIcon(containerId, hiddenInputId, dataArray, placeholder, onChangeCallback) {
+    const container = document.getElementById(containerId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    let wrapper = document.createElement('div'); wrapper.className = "custom-select-wrapper";
+    let trigger = document.createElement('div'); trigger.className = "custom-select-trigger";
+    trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
+    let optionsList = document.createElement('div'); optionsList.className = "custom-options";
+    
+    let defOpt = document.createElement('div'); defOpt.className = "custom-option";
+    defOpt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi fi-rr-cross-circle mt-1"></i></div><span class="truncate text-gray-400">' + placeholder + '</span>';
+    defOpt.onclick = function(e) {
+        e.stopPropagation(); hiddenInput.value = "";
+        trigger.innerHTML = '<span class="truncate text-gray-500">' + placeholder + '</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
+        trigger.classList.remove('active-trigger'); wrapper.classList.remove('open');
+        optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+        if(onChangeCallback) onChangeCallback("");
+    };
+    optionsList.appendChild(defOpt);
+
+    for (let i = 0; i < dataArray.length; i++) {
+        let item = dataArray[i];
+        let opt = document.createElement('div'); opt.className = "custom-option";
+        opt.innerHTML = '<div class="opt-icon-box shrink-0"><i class="fi ' + item.icon + ' mt-1"></i></div><span class="truncate">' + item.name + '</span>';
+        opt.setAttribute('data-value', item.name);
+        if(item.prefix) opt.setAttribute('data-prefix', item.prefix);
         
-        if (courseName && prefix) {
-            idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
-            for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
-            if (!isUnknown) { suffixBoxes[0].focus(); }
-        } else {
-            idContainer.classList.add('hidden'); currentCoursePrefix = "";
-            document.getElementById('unknownStudentId').checked = false;
-            updateCheckCardStyle(document.getElementById('unknownStudentId'));
-            toggleUnknownStudentId();
-        }
+        opt.onclick = function(e) {
+            e.stopPropagation();
+            let val = this.getAttribute('data-value'); let prefix = this.getAttribute('data-prefix');
+            hiddenInput.value = val;
+            trigger.innerHTML = '<div class="flex items-center gap-3 overflow-hidden w-full">' + this.innerHTML + '</div><i class="fi fi-rr-angle-small-down text-gray-400 ml-auto shrink-0"></i>';
+            trigger.classList.add('active-trigger'); wrapper.classList.remove('open');
+            optionsList.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+            if(onChangeCallback) onChangeCallback(val, prefix);
+        };
+        optionsList.appendChild(opt);
     }
 
-    function toggleUnknownStudentId() {
-        const isUnknown = document.getElementById('unknownStudentId').checked;
-        const suffixWrapper = document.getElementById('pinSuffixWrapper');
-        const unknownText = document.getElementById('pinUnknownText');
-        const suffixBoxes = document.querySelectorAll('.pin-suffix');
-        let chk = document.getElementById('unknownStudentId');
-        if(chk.checked) chk.closest('label').classList.replace('border-orange-200', 'border-[#f26b21]');
-        else chk.closest('label').classList.replace('border-[#f26b21]', 'border-orange-200');
-        
-        if (isUnknown) {
-            suffixWrapper.style.display = 'none'; unknownText.style.display = 'block';
-            suffixBoxes.forEach(b => b.value = "");
-        } else {
-            suffixWrapper.style.display = 'flex'; unknownText.style.display = 'none';
-            if (currentCoursePrefix) suffixBoxes[0].focus();
-        }
+    trigger.onclick = function(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.custom-select-wrapper').forEach(w => { if(w !== wrapper) w.classList.remove('open'); });
+        let schDropdown = document.getElementById('schoolDropdown'); if (schDropdown) schDropdown.classList.add('hidden');
+        let provDropdown = document.getElementById('provinceDropdown'); if (provDropdown) provDropdown.classList.add('hidden');
+        wrapper.classList.toggle('open');
+    };
+    wrapper.appendChild(trigger); wrapper.appendChild(optionsList); container.appendChild(wrapper);
+}
+
+document.addEventListener('click', function() {
+    document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+    let schDropdown = document.getElementById('schoolDropdown');
+    if (schDropdown) schDropdown.classList.add('hidden');
+    let provDropdown = document.getElementById('provinceDropdown');
+    if (provDropdown) provDropdown.classList.add('hidden');
+});
+
+let currentCoursePrefix = "";
+function onCourseSelected(courseName, prefix) {
+    const idContainer = document.getElementById('studentIdContainer');
+    const prefixBoxes = document.querySelectorAll('.pin-prefix');
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    const isUnknown = document.getElementById('unknownStudentId').checked;
+    
+    if (courseName && prefix) {
+        idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
+        for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
+        if (!isUnknown) { suffixBoxes[0].focus(); }
+    } else {
+        idContainer.classList.add('hidden'); currentCoursePrefix = "";
+        document.getElementById('unknownStudentId').checked = false;
+        updateCheckCardStyle(document.getElementById('unknownStudentId'));
+        toggleUnknownStudentId();
     }
+}
 
-    function fastSearchSchool(val) {
-        let box = document.getElementById('schoolDropdown'); box.innerHTML = '';
-        if (val.trim().length < 2) { box.classList.add('hidden'); return; }
+function toggleUnknownStudentId() {
+    const isUnknown = document.getElementById('unknownStudentId').checked;
+    const suffixWrapper = document.getElementById('pinSuffixWrapper');
+    const unknownText = document.getElementById('pinUnknownText');
+    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    let chk = document.getElementById('unknownStudentId');
+    if(chk.checked) chk.closest('label').classList.replace('border-orange-200', 'border-[#f26b21]');
+    else chk.closest('label').classList.replace('border-[#f26b21]', 'border-orange-200');
+    
+    if (isUnknown) {
+        suffixWrapper.style.display = 'none'; unknownText.style.display = 'block';
+        suffixBoxes.forEach(b => b.value = "");
+    } else {
+        suffixWrapper.style.display = 'flex'; unknownText.style.display = 'none';
+        if (currentCoursePrefix) suffixBoxes[0].focus();
+    }
+}
 
-        let results = [];
-        for(let i=0; i<rawSchoolData.length; i++){
-            if(rawSchoolData[i][0].toLowerCase().indexOf(val.toLowerCase()) > -1) results.push(rawSchoolData[i]);
-            if(results.length >= 10) break; 
-        }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.className = "px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-[#f0f7ff] transition-colors border-b border-gray-50 last:border-0";
-                li.innerHTML = '<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0"><i class="fi fi-sr-school text-[#004aad] text-xs mt-0.5"></i></div><span class="truncate flex-1 font-bold text-gray-700">' + results[j][0] + '</span> <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-md shrink-0 border border-gray-200">จ.' + results[j][1] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); 
-                    document.getElementById('schoolInputSearch').value = results[j][0];
-                    document.getElementById('provinceInput').value = results[j][1];
-                    box.classList.add('hidden');
-                };
-                box.appendChild(li);
-            }
-        } else {
+function fastSearchSchool(val) {
+    let box = document.getElementById('schoolDropdown'); box.innerHTML = '';
+    if (val.trim().length < 2) { box.classList.add('hidden'); return; }
+
+    let results = [];
+    for(let i=0; i<rawSchoolData.length; i++){
+        if(rawSchoolData[i][0].toLowerCase().indexOf(val.toLowerCase()) > -1) results.push(rawSchoolData[i]);
+        if(results.length >= 10) break; 
+    }
+    
+    if (results.length > 0) {
+        for(let j=0; j<results.length; j++){
             let li = document.createElement('li');
-            li.className = "px-4 py-4 text-center cursor-pointer hover:bg-orange-50 transition-colors";
-            li.innerHTML = '<span class="text-gray-500 text-sm font-medium">ไม่พบชื่อโรงเรียนนี้</span><br><span class="text-xs font-bold text-[#f26b21] mt-1 inline-block"><i class="fi fi-sr-add"></i> พิมพ์ชื่อโรงเรียนใหม่ลงไปได้เลยครับ</span>';
-            li.onclick = function(e) { 
+            li.className = "px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-[#f0f7ff] transition-colors border-b border-gray-50 last:border-0";
+            li.innerHTML = '<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0"><i class="fi fi-sr-school text-[#004aad] text-xs mt-0.5"></i></div><span class="truncate flex-1 font-bold text-gray-700">' + results[j][0] + '</span> <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-md shrink-0 border border-gray-200">จ.' + results[j][1] + '</span>';
+            li.onclick = function(e) {
                 e.stopPropagation(); 
-                box.classList.add('hidden'); 
-                document.getElementById('provinceInput').focus();
-            }
+                document.getElementById('schoolInputSearch').value = results[j][0];
+                document.getElementById('provinceInput').value = results[j][1];
+                box.classList.add('hidden');
+            };
             box.appendChild(li);
         }
-        box.classList.remove('hidden');
-    }
-
-    function fastSearchProvince(val) {
-        let box = document.getElementById('provinceDropdown'); box.innerHTML = '';
-        let results = [];
-        let search = val.trim().toLowerCase();
-        
-        for(let i=0; i<provincesList.length; i++){
-            if(search === "" || provincesList[i].indexOf(search) > -1) results.push(provincesList[i]);
+    } else {
+        let li = document.createElement('li');
+        li.className = "px-4 py-4 text-center cursor-pointer hover:bg-orange-50 transition-colors";
+        li.innerHTML = '<span class="text-gray-500 text-sm font-medium">ไม่พบชื่อโรงเรียนนี้</span><br><span class="text-xs font-bold text-[#f26b21] mt-1 inline-block"><i class="fi fi-sr-add"></i> พิมพ์ชื่อโรงเรียนใหม่ลงไปได้เลยครับ</span>';
+        li.onclick = function(e) { 
+            e.stopPropagation(); 
+            box.classList.add('hidden'); 
+            document.getElementById('provinceInput').focus();
         }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.className = "px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-[#f0f7ff] transition-colors border-b border-gray-50 last:border-0";
-                li.innerHTML = '<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0"><i class="fi fi-sr-marker text-gray-500 text-xs mt-0.5"></i></div> <span class="truncate flex-1 font-bold text-gray-700">' + results[j] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); 
-                    document.getElementById('provinceInput').value = results[j];
-                    box.classList.add('hidden');
-                };
-                box.appendChild(li);
-            }
-        } else {
+        box.appendChild(li);
+    }
+    box.classList.remove('hidden');
+}
+
+function fastSearchProvince(val) {
+    let box = document.getElementById('provinceDropdown'); box.innerHTML = '';
+    let results = [];
+    let search = val.trim().toLowerCase();
+    
+    for(let i=0; i<provincesList.length; i++){
+        if(search === "" || provincesList[i].indexOf(search) > -1) results.push(provincesList[i]);
+    }
+    
+    if (results.length > 0) {
+        for(let j=0; j<results.length; j++){
             let li = document.createElement('li');
-            li.className = "px-4 py-4 text-center";
-            li.innerHTML = '<span class="text-gray-500 text-sm font-medium">ไม่พบชื่อจังหวัดนี้</span>';
+            li.className = "px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-[#f0f7ff] transition-colors border-b border-gray-50 last:border-0";
+            li.innerHTML = '<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0"><i class="fi fi-sr-marker text-gray-500 text-xs mt-0.5"></i></div> <span class="truncate flex-1 font-bold text-gray-700">' + results[j] + '</span>';
+            li.onclick = function(e) {
+                e.stopPropagation(); 
+                document.getElementById('provinceInput').value = results[j];
+                box.classList.add('hidden');
+            };
             box.appendChild(li);
         }
-        box.classList.remove('hidden');
+    } else {
+        let li = document.createElement('li');
+        li.className = "px-4 py-4 text-center";
+        li.innerHTML = '<span class="text-gray-500 text-sm font-medium">ไม่พบชื่อจังหวัดนี้</span>';
+        box.appendChild(li);
     }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.innerHTML = '<span class="truncate flex-1 font-bold text-gray-700">' + results[j][0] + '</span> <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-md shrink-0">จ.' + results[j][1] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); let schInput = document.getElementById('schoolInputSearch');
-                    schInput.value = results[j][0];
-                    schInput.style.borderColor = 'rgba(0, 51, 128, 0.4)'; schInput.style.backgroundColor = '#fff';
-                    
-                    // เมื่อเลือกโรงเรียน ให้กลับไปล็อคช่องจังหวัดเหมือนเดิม
-                    let p = document.getElementById('provinceInput');
-                    p.value = results[j][1];
-                    p.readOnly = true;
-                    p.classList.add('bg-gray-200', 'cursor-not-allowed', 'text-gray-500', 'border-gray-200', 'focus:border-gray-200');
-                    p.classList.remove('text-gray-800', 'with-icon');
-                    document.getElementById('provIcon').classList.add('hidden');
-                    
-                    box.classList.remove('show');
-                };
-                box.appendChild(li);
-            }
-        } else {
-            let li = document.createElement('li');
-            li.innerHTML = '<div class="text-center w-full py-2"><span class="text-gray-500 text-sm">ไม่พบชื่อโรงเรียนนี้</span><br><span class="text-xs text-[#f26b21] mt-1 inline-block">พิมพ์ชื่อใหม่ลงไปได้เลยครับ</span></div>';
-            li.onclick = function(e) { 
-                e.stopPropagation(); box.classList.remove('show'); 
-                
-                // ปลดล็อคช่องจังหวัด พร้อมเรียกแสดงผลรายชื่อ 77 จังหวัด
-                let p = document.getElementById('provinceInput');
-                p.readOnly = false; p.value = ""; p.focus(); 
-                p.classList.remove('bg-gray-200', 'cursor-not-allowed', 'text-gray-500', 'border-gray-200', 'focus:border-gray-200');
-                p.classList.add('text-gray-800', 'with-icon');
-                p.placeholder = "พิมพ์เพื่อค้นหาจังหวัด...";
-                document.getElementById('provIcon').classList.remove('hidden');
-                
-                fastSearchProvince("");
-            }
-            box.appendChild(li);
-        }
-        box.classList.add('show');
-    }
+    box.classList.remove('hidden');
+}
 
-    // ฟังก์ชันใหม่: ระบบค้นหา/ตัวเลือก 77 จังหวัด
-    function fastSearchProvince(val) {
-        let box = document.getElementById('provinceDropdown'); box.innerHTML = '';
-        let results = [];
-        let search = val.trim().toLowerCase();
-        
-        for(let i=0; i<provincesList.length; i++){
-            if(search === "" || provincesList[i].indexOf(search) > -1) results.push(provincesList[i]);
-        }
-        
-        if (results.length > 0) {
-            for(let j=0; j<results.length; j++){
-                let li = document.createElement('li');
-                li.innerHTML = '<div class="opt-icon-box shrink-0 scale-75 bg-gray-100 text-gray-500"><i class="fi fi-rr-marker mt-1"></i></div> <span class="truncate flex-1 text-gray-700">' + results[j] + '</span>';
-                li.onclick = function(e) {
-                    e.stopPropagation(); 
-                    let pInput = document.getElementById('provinceInput');
-                    pInput.value = results[j];
-                    box.classList.remove('show');
-                };
-                box.appendChild(li);
-            }
-        } else {
-            let li = document.createElement('li');
-            li.innerHTML = '<span class="text-gray-500 text-sm text-center w-full block py-2">ไม่พบชื่อจังหวัดนี้</span>';
-            box.appendChild(li);
-        }
-        box.classList.add('show');
-    }
-
-    function toggleFollowPlatform() {
-        let followRadio = document.querySelector('input[name="followPage"]:checked');
-        let wrapPlatform = document.getElementById('wrapFollowPlatform');
-        let platformInput = document.getElementById('followPlatform');
-        
-        if (followRadio && followRadio.value === "ใช่ติดตาม") {
-            wrapPlatform.classList.remove('hidden');
-        } else {
-            wrapPlatform.classList.add('hidden'); platformInput.value = ""; 
-            let trigger = wrapPlatform.querySelector('.custom-select-trigger');
-            if(trigger) {
-                trigger.innerHTML = '<span class="truncate text-gray-500">-- เลือกแพลตฟอร์ม --</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
-                trigger.classList.remove('active-trigger');
-                wrapPlatform.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
-            }
+function toggleFollowPlatform() {
+    let followRadio = document.querySelector('input[name="followPage"]:checked');
+    let wrapPlatform = document.getElementById('wrapFollowPlatform');
+    let platformInput = document.getElementById('followPlatform');
+    
+    if (followRadio && followRadio.value === "ใช่ติดตาม") {
+        wrapPlatform.classList.remove('hidden');
+    } else {
+        wrapPlatform.classList.add('hidden'); platformInput.value = ""; 
+        let trigger = wrapPlatform.querySelector('.custom-select-trigger');
+        if(trigger) {
+            trigger.innerHTML = '<span class="truncate text-gray-500">-- เลือกแพลตฟอร์ม --</span><i class="fi fi-rr-angle-small-down text-gray-400"></i>';
+            trigger.classList.remove('active-trigger');
+            wrapPlatform.querySelectorAll('.custom-option').forEach(el => el.classList.remove('selected'));
         }
     }
+}
 
-    function nextStep(step) {
-        if (step === 1) {
-            let course = document.getElementById('course').value;
-            let isUnknown = document.getElementById('unknownStudentId').checked;
-            let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
-            let prefix = document.getElementById('prefix').value;
-            let fname = document.getElementById('fname').value.trim();
-            let lname = document.getElementById('lname').value.trim();
-            let tcas = document.getElementById('tcasRound').value;
+function nextStep(step) {
+    if (step === 1) {
+        let course = document.getElementById('course').value;
+        let isUnknown = document.getElementById('unknownStudentId').checked;
+        let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
+        let prefix = document.getElementById('prefix').value;
+        let fname = document.getElementById('fname').value.trim();
+        let lname = document.getElementById('lname').value.trim();
+        let tcas = document.getElementById('tcasRound').value;
 
-            if (!course || !prefix || !fname || !lname || !tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
-            if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
+        if (!course || !prefix || !fname || !lname || !tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
+        if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
 
-            changeStep(1, 2, '50%');
-        } 
-        else if (step === 2) {
-            let school = document.getElementById('schoolInputSearch').value.trim();
-            let province = document.getElementById('provinceInput').value.trim();
+        changeStep(1, 2, '50%');
+    } 
+    else if (step === 2) {
+        let school = document.getElementById('schoolInputSearch').value.trim();
+        let province = document.getElementById('provinceInput').value.trim();
 
-            if (!school || !province) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาระบุโรงเรียนและจังหวัด', confirmButtonColor: '#f26b21'}); return; }
-            changeStep(2, 3, '100%');
-        }
+        if (!school || !province) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาระบุโรงเรียนและจังหวัด', confirmButtonColor: '#f26b21'}); return; }
+        changeStep(2, 3, '100%');
     }
+}
 
-    function prevStep(step) {
-        if (step === 2) changeStep(2, 1, '0%');
-        if (step === 3) changeStep(3, 2, '50%');
-    }
+function prevStep(step) {
+    if (step === 2) changeStep(2, 1, '0%');
+    if (step === 3) changeStep(3, 2, '50%');
+}
 
-    function changeStep(from, to, progress) {
+function changeStep(from, to, progress) {
     document.getElementById('step' + from).classList.remove('active'); document.getElementById('step' + to).classList.add('active');
     document.getElementById('progressBar').style.width = progress;
     
@@ -854,7 +759,6 @@ function submitData() {
     let btn = document.getElementById('btnSubmit'); let originTxt = btn.innerHTML;
     btn.innerHTML = '<span class="loader mr-3"></span> กำลังบันทึกข้อมูล...'; btn.disabled = true;
 
-    // 2. Fetch ส่งข้อมูลฟอร์มแบบ POST
     fetch(API_URL, {
         method: "POST",
         body: JSON.stringify({ action: "submitSurvey", payload: payload })
@@ -876,7 +780,6 @@ function submitData() {
 function goToMedia() {
     let btn = document.querySelector('#successView button');
     btn.innerHTML = '<span class="loader mr-3"></span> กำลังพาท่านไป...'; btn.disabled = true;
-    // นำทางไปยังหน้าสื่อใน Github Pages เดียวกันเลย (ถ้าไฟล์อยู่โฟลเดอร์เดียวกัน)
     window.location.href = "media.html";
 }
 </script>

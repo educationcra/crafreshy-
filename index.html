@@ -41,8 +41,9 @@
     .glass-panel { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); }
     .btn-orange { background: linear-gradient(135deg, #f26b21 0%, #e05e18 100%); color: white; transition: all 0.3s ease; border-radius: 12px; cursor: pointer; border: none; }
     .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(242, 107, 33, 0.4); }
+    .btn-blue { background: linear-gradient(135deg, #004aad 0%, #003380 100%); color: white; transition: all 0.3s ease; border-radius: 12px; cursor: pointer; border: none; }
+    .btn-blue:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 74, 173, 0.4); }
 
-    /* Inputs */
     .group-input { display: flex; align-items: center; position: relative; width: 100%; height: 48px;}
     .input-custom {
       width: 100%; height: 100%; line-height: 30px;
@@ -56,7 +57,6 @@
     .icon-input { position: absolute; left: 1rem; color: #94a3b8; pointer-events: none;}
     textarea.input-custom { height: auto; padding-top: 0.75rem; }
 
-    /* Dropdowns */
     .custom-select-wrapper { position: relative; width: 100%; user-select: none; }
     .custom-select-trigger {
       width: 100%; height: 48px; padding: 0 1rem; border: 2px solid transparent; border-radius: 10px;
@@ -92,7 +92,6 @@
     .custom-options::-webkit-scrollbar, #schoolDropdown::-webkit-scrollbar, #provinceDropdown::-webkit-scrollbar { width: 6px; }
     .custom-options::-webkit-scrollbar-thumb, #schoolDropdown::-webkit-scrollbar-thumb, #provinceDropdown::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
 
-    /* Cards */
     .check-card {
         position: relative; display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem;
         border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; cursor: pointer; transition: all 0.2s ease;
@@ -102,7 +101,6 @@
     .check-text { font-size: 0.9rem; font-weight: 500; color: #475569; line-height: 1.4; padding-top: 0.2rem;}
     .check-card.active .check-text { color: #f26b21; font-weight: 700; }
 
-    /* Checkbox Anim */
     .checkbox-wrapper-12 { position: relative; flex-shrink: 0; padding-top: 2px;}
     .checkbox-wrapper-12 * { box-sizing: border-box; }
     .checkbox-wrapper-12 input[type="checkbox"], .checkbox-wrapper-12 input[type="radio"] { 
@@ -123,45 +121,29 @@
       100% { background: #f26b21; box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent; border-color: #f26b21; }
     }
 
-    /* Steps */
     .step-section { display: none; animation: fadeIn 0.4s ease-out forwards; }
     .step-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     
-    /* Simple Loader */
     .loader {
-        border: 3px solid rgba(255,255,255,0.3);
-        border-radius: 50%;
-        border-top: 3px solid #ffffff;
-        width: 20px;
-        height: 20px;
-        -webkit-animation: spin 1s linear infinite;
-        animation: spin 1s linear infinite;
-        display: inline-block;
-        vertical-align: middle;
+        border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #ffffff;
+        width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle;
     }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Modal Animation */
     .modal-enter { opacity: 1 !important; }
     .modal-enter .modal-content { transform: scale(1) !important; opacity: 1 !important; }
     .modal-leave { opacity: 0 !important; pointer-events: none; }
     .modal-leave .modal-content { transform: scale(0.9) !important; opacity: 0 !important; }
+
+    /* Degree Selection Cards */
+    .degree-card { transition: all 0.3s ease; border: 2px solid transparent; }
+    .degree-card:hover { transform: translateY(-5px); border-color: #003380; box-shadow: 0 20px 25px -5px rgba(0, 51, 128, 0.1); }
   </style>
 </head>
 <body class="text-gray-800">
 
-  <!-- PDPA Overlay Modal -->
   <div id="pdpaOverlay" class="fixed inset-0 z-[200] flex items-center justify-center p-4 transition-opacity duration-500 pdpa-container">
       <div class="bg-white w-full max-w-lg rounded-[30px] flex flex-col justify-center shadow-2xl min-h-[300px] relative overflow-hidden animate-[scaleIn_0.4s_ease-out]">
           <div class="w-16 h-16 flex items-center justify-center absolute top-0 left-0 ml-6 mt-6 bg-blue-50 rounded-2xl text-[#003380] z-20">
@@ -181,38 +163,29 @@
       </div>
   </div>
 
-  <!-- Prize Modal (Pop-up) -->
   <div id="prizeModal" class="fixed inset-0 z-[300] hidden items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 modal-leave">
       <div class="modal-content bg-white w-full max-w-sm rounded-[28px] p-6 shadow-2xl transform scale-90 opacity-0 transition-all duration-400 relative flex flex-col items-center text-center">
-          <!-- Close button -->
           <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
               <span class="text-xl font-bold leading-none">&times;</span>
           </button>
-          
           <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-4 mt-2">
               <i class="fi fi-sr-gift text-4xl mt-2"></i>
           </div>
-          
           <h3 class="text-2xl font-black text-[#003380] mb-2">ยินดีด้วย!</h3>
           <p class="text-gray-600 font-medium mb-1">คุณได้รับรางวัล</p>
           <p id="modalWinnerName" class="text-lg font-bold text-[#f26b21] mb-4"></p>
-          
           <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-6 w-full">
               <p class="text-xs text-[#003380] leading-relaxed font-semibold">
                   โปรดแคปหน้านี้หรือแสดงหลักฐาน<br>ให้ทางเจ้าหน้าที่ที่บูธดูเพื่อรับของรางวัล
               </p>
           </div>
-
-          <!-- The Claim Button inside Modal -->
           <button onclick="claimPrizeBtn()" id="modalBtnClaim" class="w-full bg-[#22c55e] hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-bold transition shadow-md flex items-center justify-center gap-2">
               <i class="fi fi-sr-hand-holding-box mt-1" id="modalBtnIcon"></i> <span id="modalBtnText">กดใช้สิทธิ์รับรางวัล</span>
           </button>
       </div>
   </div>
 
-  <!-- Main Content -->
   <div id="mainContent" class="w-full max-w-5xl mx-auto p-4 md:p-8 relative z-10 opacity-0 hidden">
-      <!-- Header -->
       <div class="text-center mb-8 drop-shadow-sm animate-[fadeIn_0.6s_ease-out]">
           <div class="bg-white/50 backdrop-blur-md p-4 rounded-3xl inline-block mb-4 shadow-sm border border-white/40">
               <img src="https://s.imgz.io/2026/07/14/S__20914249861af3d6e2a82a1e.png" alt="CRA Logo" class="h-20 md:h-24 mx-auto object-contain">
@@ -221,40 +194,73 @@
           <p class="text-lg text-white font-medium mt-2 bg-[#003380]/80 backdrop-blur-sm inline-block px-4 py-1 rounded-full border border-white/20">ราชวิทยาลัยจุฬาภรณ์ ปีการศึกษา 2569</p>
       </div>
 
-      <!-- Form Container -->
       <div class="glass-panel w-full p-6 md:p-10 lg:p-12 relative animate-[fadeIn_0.8s_ease-out]">
           <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#003380] to-[#f26b21] rounded-t-[1.5rem]"></div>
 
-          <!-- Stepper -->
-          <div id="formStepper" class="mb-10 relative max-w-2xl mx-auto">
+          <div id="formStepper" class="mb-10 relative max-w-2xl mx-auto hidden">
               <div class="flex items-center justify-between relative z-10">
                   <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1.5 bg-gray-100 -z-10 rounded-full"></div>
                   <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-1.5 bg-[#f26b21] transition-all duration-500 rounded-full" id="progressBar" style="width: 0%;"></div>
                   <div class="flex flex-col items-center gap-2"><div id="dot1" class="w-12 h-12 rounded-full bg-[#f26b21] text-white flex items-center justify-center font-bold shadow-lg text-lg ring-4 ring-orange-50">1</div><span class="text-xs font-bold text-[#003380]">ข้อมูลส่วนตัว</span></div>
-                  <div class="flex flex-col items-center gap-2"><div id="dot2" class="w-12 h-12 rounded-full bg-white border-2 border-gray-200 text-gray-400 flex items-center justify-center font-bold transition-all text-lg">2</div><span class="text-xs font-bold text-gray-400">การศึกษา</span></div>
+                  <div id="dot2-wrapper" class="flex flex-col items-center gap-2"><div id="dot2" class="w-12 h-12 rounded-full bg-white border-2 border-gray-200 text-gray-400 flex items-center justify-center font-bold transition-all text-lg">2</div><span class="text-xs font-bold text-gray-400">การศึกษา</span></div>
                   <div class="flex flex-col items-center gap-2"><div id="dot3" class="w-12 h-12 rounded-full bg-white border-2 border-gray-200 text-gray-400 flex items-center justify-center font-bold transition-all text-lg">3</div><span class="text-xs font-bold text-gray-400">แบบสอบถาม</span></div>
               </div>
           </div>
 
           <form id="surveyForm">
-              <!-- STEP 1: Personal Info -->
-              <div id="step1" class="step-section active space-y-8">
+              
+              <div id="step0" class="step-section active space-y-8">
+                  <div class="text-center mb-6">
+                      <h2 class="text-2xl font-black text-[#003380] mb-2">เลือกระดับการศึกษาของคุณ</h2>
+                      <p class="text-gray-500">กรุณาเลือกระดับปริญญาที่คุณเข้าศึกษาต่อเพื่อเริ่มทำแบบสำรวจ</p>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                      <!-- ปริญญาตรี -->
+                      <div onclick="selectDegree('ปริญญาตรี')" class="degree-card bg-blue-50 rounded-2xl p-6 cursor-pointer flex flex-col items-center text-center shadow-sm">
+                          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#003380] shadow-md mb-4">
+                              <i class="fi fi-sr-graduation-cap text-4xl mt-2"></i>
+                          </div>
+                          <h3 class="text-xl font-black text-[#003380]">ปริญญาตรี</h3>
+                          <p class="text-sm text-gray-500 mt-2">หลักสูตรระดับปริญญาบัณฑิต</p>
+                      </div>
+                      <!-- ปริญญาโท -->
+                      <div onclick="selectDegree('ปริญญาโท')" class="degree-card bg-orange-50 rounded-2xl p-6 cursor-pointer flex flex-col items-center text-center shadow-sm">
+                          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#f26b21] shadow-md mb-4">
+                              <i class="fi fi-sr-diploma text-4xl mt-2"></i>
+                          </div>
+                          <h3 class="text-xl font-black text-[#f26b21]">ปริญญาโท</h3>
+                          <p class="text-sm text-gray-500 mt-2">หลักสูตรระดับมหาบัณฑิต</p>
+                      </div>
+                      <!-- ปริญญาเอก -->
+                      <div onclick="selectDegree('ปริญญาเอก')" class="degree-card bg-indigo-50 rounded-2xl p-6 cursor-pointer flex flex-col items-center text-center shadow-sm">
+                          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-md mb-4">
+                              <i class="fi fi-sr-book-alt text-4xl mt-2"></i>
+                          </div>
+                          <h3 class="text-xl font-black text-indigo-700">ปริญญาเอก</h3>
+                          <p class="text-sm text-gray-500 mt-2">หลักสูตรระดับดุษฎีบัณฑิต</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div id="step1" class="step-section space-y-8">
                   <div class="flex items-center gap-4 border-b-2 border-gray-100 pb-4">
                       <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-[#003380] shadow-sm"><i class="fi fi-sr-user text-xl mt-1"></i></div>
-                      <h2 class="text-2xl font-black text-[#003380]">ข้อมูลผู้เข้าศึกษา</h2>
+                      <h2 class="text-2xl font-black text-[#003380]">ข้อมูลผู้เข้าศึกษา <span id="degreeLabelText" class="text-[#f26b21] text-lg font-bold ml-2"></span></h2>
                   </div>
                   
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-[60]">
-                      <div class="md:col-span-1 relative z-[61]">
+                      <div id="tcasSection" class="md:col-span-1 relative z-[61]">
                           <label class="block text-sm font-bold mb-2 text-gray-700">รอบที่สอบติด TCAS <span class="text-red-500">*</span></label>
                           <div id="tcasWrapper"></div><input type="hidden" id="tcasRound">
                       </div>
-                      <div class="md:col-span-1 relative z-[60]">
+                      <div id="courseSection" class="md:col-span-1 relative z-[60]">
                           <label class="block text-sm font-bold mb-2 text-gray-700">หลักสูตรที่เข้าศึกษา <span class="text-red-500">*</span></label>
                           <div id="courseWrapper"></div><input type="hidden" id="course">
                       </div>
                   </div>
 
+                  <!-- รหัสนักศึกษา ป.ตรี (แบบเดิม) -->
                   <div id="studentIdContainer" class="hidden bg-gray-50 p-4 md:p-6 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden z-[55]">
                       <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
                           <label class="block text-sm font-bold text-[#003380]">รหัสนักศึกษา 7 หลัก <span class="text-red-500">*</span></label>
@@ -285,6 +291,36 @@
                       </div>
                   </div>
 
+                  <!-- รหัสนักศึกษา ป.โท/เอก (ไม่มี Prefix ป้อน 7 ตัวตรงๆ) -->
+                  <div id="studentIdContainerGrad" class="hidden bg-gray-50 p-4 md:p-6 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden z-[55]">
+                      <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                          <label class="block text-sm font-bold text-[#003380]">รหัสนักศึกษา <span class="text-red-500">*</span></label>
+                          <label class="cursor-pointer border border-indigo-200 bg-white hover:bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
+                              <div class="checkbox-wrapper-12 scale-75 !mr-0 !pt-0">
+                                  <div class="cbx">
+                                      <input type="checkbox" id="unknownStudentIdGrad" onchange="toggleUnknownStudentIdGrad()">
+                                      <label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg>
+                                  </div>
+                              </div>
+                              <span class="text-xs font-bold text-indigo-600 pt-0.5">ไม่ทราบรหัสนักศึกษา</span>
+                          </label>
+                      </div>
+
+                      <div class="flex flex-nowrap items-center justify-start gap-1 sm:gap-2 w-full overflow-hidden" id="pinContainerGrad">
+                          <div class="flex gap-1 sm:gap-1.5 shrink-0" id="pinSuffixWrapperGrad">
+                              <!-- สร้างกล่องรับค่า 7 กล่อง -->
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                              <input type="text" maxlength="1" inputmode="numeric" class="pin-suffix-grad w-8 sm:w-10 md:w-12 h-10 sm:h-12 md:h-14 text-center text-base sm:text-lg md:text-xl font-black border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none transition-all bg-white text-indigo-700 shadow-sm">
+                          </div>
+                          <div id="pinUnknownTextGrad" class="hidden text-indigo-600 font-bold text-xs sm:text-sm md:text-base bg-indigo-50 px-3 py-2 md:py-3 rounded-lg md:rounded-xl border border-indigo-200 shadow-inner w-full md:w-auto text-center">(ไม่ทราบรหัส)</div>
+                      </div>
+                  </div>
+
                   <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-50">
                       <div class="md:col-span-1 relative z-[50]">
                           <label class="block text-sm font-bold mb-2 text-gray-700">คำนำหน้า <span class="text-red-500">*</span></label>
@@ -299,10 +335,12 @@
                          <div class="group-input"><input type="text" id="lname" class="input-custom" placeholder="ระบุนามสกุล"></div>
                       </div>
                   </div>
-                  <div class="flex justify-end pt-6"><button type="button" onclick="nextStep(1)" class="btn-orange px-10 py-3.5 font-bold flex items-center gap-2 text-lg">ถัดไป <i class="fi fi-sr-arrow-right mt-1"></i></button></div>
+                  <div class="flex justify-between pt-6 border-t border-gray-100 mt-4">
+                      <button type="button" onclick="changeStep(1, 0, '0%'); document.getElementById('formStepper').classList.add('hidden');" class="px-6 py-2.5 text-gray-500 hover:text-[#f26b21] font-bold transition">เปลี่ยนระดับการศึกษา</button>
+                      <button type="button" onclick="nextStep(1)" class="btn-blue px-10 py-3.5 font-bold flex items-center gap-2 text-lg">ถัดไป <i class="fi fi-sr-arrow-right mt-1"></i></button>
+                  </div>
               </div>
 
-              <!-- STEP 2: Education -->
               <div id="step2" class="step-section space-y-8">
                   <div class="flex items-center gap-4 border-b-2 border-gray-100 pb-4">
                       <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-[#f26b21] shadow-sm"><i class="fi fi-sr-school text-xl mt-1"></i></div>
@@ -335,7 +373,6 @@
                   </div>
               </div>
 
-              <!-- STEP 3: Survey -->
               <div id="step3" class="step-section space-y-8">
                   <div class="flex items-center gap-4 border-b-2 border-gray-100 pb-4">
                       <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-[#003380] shadow-sm"><i class="fi fi-sr-comment-alt text-xl mt-1"></i></div>
@@ -407,18 +444,12 @@
               </div>
           </form>
 
-          <!-- Success View (ระบบขูดการ์ด) -->
           <div id="successView" class="hidden flex flex-col items-center py-12 text-center animate-[scaleIn_0.5s_ease-out]">
               <h2 class="text-3xl md:text-4xl font-black text-[#003380] mb-3">บันทึกข้อมูลสำเร็จ!</h2>
               <p class="text-gray-500 mb-6 max-w-md text-sm md:text-base leading-relaxed">ข้อมูลของท่านถูกส่งเข้าระบบเรียบร้อยแล้ว<br>ใช้นิ้วถูที่การ์ดด้านล่างเพื่อลุ้นรับของรางวัล!</p>
               
-              <!-- Scratch Card Area -->
               <div id="scratchContainer" class="relative w-full max-w-[320px] md:max-w-[360px] aspect-[2/1] mx-auto mb-6 select-none overflow-hidden rounded-2xl shadow-lg border-2 border-gray-200 touch-none bg-white cursor-pointer" onclick="handleCardClick()">
-                  <!-- Result Background -->
-                  <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4">
-                      <!-- แทรกด้วย JS -->
-                  </div>
-                  <!-- Canvas สำหรับขูด -->
+                  <div id="scratchResultBg" class="absolute inset-0 flex flex-col items-center justify-center p-4"></div>
                   <canvas id="scratchCanvas" class="absolute inset-0 z-10 w-full h-full"></canvas>
               </div>
               
@@ -430,15 +461,17 @@
   </div>
 
 <script>
-// ⚠️ ใส่ URL ของ Apps Script ตรงนี้
 const API_URL = "https://script.google.com/macros/s/AKfycbx08yDojfbtqMQb--DTSJ0lgD51A_MlEtx1Q5TLv7-yB1Vi34jrB8l72WYVT4fjmdCB/exec"; 
 
+let currentDegreeLevel = ""; // เก็บค่าระดับการศึกษาที่เลือก (ปริญญาตรี, โท, เอก)
 let rawSchoolData = []; 
 const provincesList = ["กรุงเทพมหานคร","กระบี่","กาญจนบุรี","กาฬสินธุ์","กำแพงเพชร","ขอนแก่น","จันทบุรี","ฉะเชิงเทรา","ชลบุรี","ชัยนาท","ชัยภูมิ","ชุมพร","เชียงราย","เชียงใหม่","ตรัง","ตราด","ตาก","นครนายก","นครปฐม","นครพนม","นครราชสีมา","นครศรีธรรมราช","นครสวรรค์","นนทบุรี","นราธิวาส","น่าน","บึงกาฬ","บุรีรัมย์","ปทุมธานี","ประจวบคีรีขันธ์","ปราจีนบุรี","ปัตตานี","พระนครศรีอยุธยา","พะเยา","พังงา","พัทลุง","พิจิตร","พิษณุโลก","เพชรบุรี","เพชรบูรณ์","แพร่","ภูเก็ต","มหาสารคาม","มุกดาหาร","แม่ฮ่องสอน","ยโสธร","ยะลา","ร้อยเอ็ด","ระนอง","ระยอง","ราชบุรี","ลพบุรี","ลำปาง","ลำพูน","เลย","ศรีสะเกษ","สกลนคร","สงขลา","สตูล","สมุทรปราการ","สมุทรสงคราม","สมุทรสาคร","สระแก้ว","สระบุรี","สิงห์บุรี","สุโขทัย","สุพรรณบุรี","สุราษฎร์ธานี","สุรินทร์","หนองคาย","หนองบัวลำภู","อ่างทอง","อำนาจเจริญ","อุดรธานี","อุตรดิตถ์","อุทัยธานี","อุบลราชธานี"];
 
-const prefixData = [ { name: "นาย", icon: "fi-rr-user" }, { name: "นางสาว", icon: "fi-rr-user" } ];
+const prefixData = [ { name: "นาย", icon: "fi-rr-user" }, { name: "นาง", icon: "fi-rr-user" }, { name: "นางสาว", icon: "fi-rr-user" } ];
 const platformData = [ { name: "Facebook", icon: "fi-brands-facebook" }, { name: "Instagram", icon: "fi-brands-instagram" }, { name: "TikTok", icon: "fi-brands-tik-tok" }, { name: "X (Twitter)", icon: "fi-brands-twitter" }, { name: "Youtube CRA CHULABHORN Channel", icon: "fi-brands-youtube" } ];
-const courseData = [
+
+// ชุดข้อมูลหลักสูตรแบ่งตามระดับ
+const courseDataBachelor = [
     { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
     { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
     { name: "พยาบาลศาสตรบัณฑิต", prefix: "7002", icon: "fi-sr-heart" },
@@ -449,8 +482,22 @@ const courseData = [
     { name: "วท.บ. สาขาวิชาฉุกเฉินการแพทย์", prefix: "7023", icon: "fi-sr-ambulance" },
     { name: "วท.บ. สาขาวิชานวัตกรรมวิทยาศาสตร์การแพทย์", prefix: "7026", icon: "fi-sr-bulb" },
     { name: "วท.บ. สาขาวิชาเทคโนโลยีอาหารทางการแพทย์และสุขภาพ", prefix: "7027", icon: "fi-sr-restaurant" },
-    { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
+    { name: "วท.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
 ];
+
+const courseDataMaster = [
+    { name: "วท.ม. สาขาวิชาฟิสิกส์การแพทย์", icon: "fi-sr-dna" },
+    { name: "วท.ม. สาขาวิชาสุขภาพดิจิทัล", icon: "fi-sr-computer" },
+    { name: "วท.ม. สาขาวิชาตจวิทยา", icon: "fi-sr-microscope" },
+    { name: "วท.ม. สาขาวิชาเวชศาสตร์ประยุกต์และเทคโนโลยีสุขภาพ", icon: "fi-sr-medicine" },
+    { name: "ม.ท. สาขาวิชาเทคโนโลยีมหาบัณฑิต (มุ่งเน้นรังสีเทคนิค)", icon: "fi-sr-bone" }
+];
+
+const courseDataPhD = [
+    { name: "วท.ม. สาขาวิชาฟิสิกส์การแพทย์และวิศวกรรมการแพทย์ (หลักสูตรนานาชาติ)", icon: "fi-sr-globe" },
+    { name: "วท.ม. สาขาวิชาเวชศาสตร์ประยุกต์และเทคโนโลยีสุขภาพ", icon: "fi-sr-medicine" }
+];
+
 const tcasData = [ { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" } ];
 const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัยโดดเด่น ตอบโจทย์ตลาดแรงงาน", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "มีจุดเด่นในด้านการวิจัยและนวัตกรรม", "มีระบบนิเวศทางวิชาการและวิชาชีพที่ครบถ้วนทั้งการเรียนการสอน การวิจัยและโรงพยาบาลจุฬาภรณ์", "การสื่อสารประชาสัมพันธ์และกิจกรรมของราชวิทยาลัยจุฬาภรณ์", "มีทุนการศึกษาสนับสนุน", "มีสิ่งอำนวยความสะดวก สภาพสิ่งแวดล้อมและบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", 'ได้รับคำแนะนำจาก "ครูแนะแนว" และ "รุ่นพี่/เพื่อน" ในการให้ข้อมูลเกี่ยวกับราชวิทยาลัยฯ'];
 const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
@@ -462,11 +509,17 @@ window.onload = function() {
     document.getElementById('channelGroup').innerHTML = buildCheckCards(channelsList, 'chkChannel', 'wrapOtherChannel', 'otherChannel');
 
     buildCustomDropdownWithIcon('prefixWrapper', 'prefix', prefixData, '-- เลือกคำนำหน้า --', null);
-    buildCustomDropdownWithIcon('courseWrapper', 'course', courseData, '-- เลือกหลักสูตรที่ศึกษา --', onCourseSelected);
     buildCustomDropdownWithIcon('tcasWrapper', 'tcasRound', tcasData, '-- เลือกรอบที่สอบติด --', null);
     buildCustomDropdownWithIcon('platformWrapper', 'followPlatform', platformData, '-- เลือกแพลตฟอร์ม --', null);
 
-    const suffixBoxes = document.querySelectorAll('.pin-suffix');
+    // Event listener สำหรับ Pin Suffix ป.ตรี (3 ช่อง)
+    setupPinInputs('.pin-suffix');
+    // Event listener สำหรับ Pin Suffix ป.โท/เอก (7 ช่อง)
+    setupPinInputs('.pin-suffix-grad');
+};
+
+function setupPinInputs(selector) {
+    const suffixBoxes = document.querySelectorAll(selector);
     suffixBoxes.forEach((box, i) => {
         box.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, ''); 
@@ -476,7 +529,7 @@ window.onload = function() {
             if (e.key === 'Backspace' && this.value === '' && i > 0) suffixBoxes[i - 1].focus(); 
         });
     });
-};
+}
 
 function acceptPDPA() {
     document.getElementById('pdpaOverlay').classList.add('opacity-0');
@@ -488,7 +541,56 @@ function acceptPDPA() {
     }, 500);
 }
 
-// UI Helpers
+function selectDegree(level) {
+    currentDegreeLevel = level;
+    document.getElementById('degreeLabelText').innerText = `(${level})`;
+
+    // เตรียมตัวแปร UI
+    const courseSection = document.getElementById('courseSection');
+    const tcasSection = document.getElementById('tcasSection');
+    const courseWrapper = document.getElementById('courseWrapper');
+    const dot2Wrapper = document.getElementById('dot2-wrapper');
+    const dot3 = document.getElementById('dot3');
+    const stepper = document.getElementById('formStepper');
+    const idBachelor = document.getElementById('studentIdContainer');
+    const idGrad = document.getElementById('studentIdContainerGrad');
+
+    // เคลียร์และสร้าง Dropdown หลักสูตรใหม่
+    courseWrapper.innerHTML = ''; 
+    document.getElementById('course').value = ''; // รีเซ็ตค่า
+
+    let targetCourseData = [];
+    if(level === 'ปริญญาตรี') targetCourseData = courseDataBachelor;
+    else if(level === 'ปริญญาโท') targetCourseData = courseDataMaster;
+    else if(level === 'ปริญญาเอก') targetCourseData = courseDataPhD;
+
+    buildCustomDropdownWithIcon('courseWrapper', 'course', targetCourseData, '-- เลือกหลักสูตรที่ศึกษา --', onCourseSelected);
+
+    // ปรับ UI การแสดงผลแบบ Dynamic
+    if(level === 'ปริญญาตรี') {
+        tcasSection.classList.remove('hidden');
+        courseSection.className = "md:col-span-1 relative z-[60]";
+        dot2Wrapper.style.display = 'flex'; // แสดงจุด Step 2
+        dot3.innerText = '3'; // แสดงเลข 3 ให้กลับมาปกติ
+        idBachelor.classList.add('hidden'); // รอเลือก course ค่อยโชว์
+        idGrad.classList.add('hidden');
+    } else {
+        // ป.โท / ป.เอก ซ่อน TCAS และให้ Course เต็มบรรทัด
+        tcasSection.classList.add('hidden');
+        courseSection.className = "md:col-span-2 relative z-[60]";
+        dot2Wrapper.style.display = 'none'; // ซ่อนจุด Step 2
+        dot3.innerText = '2'; // เปลี่ยนเป็นเลข 2 ให้ UX ดูต่อเนื่อง
+        idBachelor.classList.add('hidden');
+        idGrad.classList.remove('hidden'); // โชว์กรอกรหัสแบบไม่มี Prefix เลย
+    }
+
+    // ไป Step 1 และโชว์ Stepper
+    stepper.classList.remove('hidden');
+    
+    // ตั้ง Progress Bar เริ่มต้นที่ 0% (อยู่จุดที่ 1 พอดี)
+    changeStep(0, 1, '0%'); 
+}
+
 function buildCheckCards(arr, name, wrapId, inputId) {
     let html = "";
     for(let i=0; i<arr.length; i++) html += `<label class="check-card"><div class="checkbox-wrapper-12"><div class="cbx"><input type="checkbox" name="${name}" value="${arr[i]}" onchange="updateCheckCardStyle(this)"><label></label><svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8.36364L6.23077 12L13 2"></path></svg></div></div><span class="check-text">${arr[i]}</span></label>`;
@@ -550,7 +652,6 @@ document.addEventListener('click', function() {
     document.getElementById('provinceDropdown')?.classList.remove('show');
 });
 
-// Dropdowns search
 function fastSearchSchool(val) {
     let box = document.getElementById('schoolDropdown'); box.innerHTML = '';
     if (val.trim().length < 2) { box.classList.remove('show'); return; }
@@ -598,23 +699,26 @@ function fastSearchProvince(val) {
     box.classList.add('show');
 }
 
-// Logic Inputs
 let currentCoursePrefix = "";
 function onCourseSelected(courseName, prefix) {
-    const idContainer = document.getElementById('studentIdContainer');
-    const prefixBoxes = document.querySelectorAll('.pin-prefix');
-    const suffixBoxes = document.querySelectorAll('.pin-suffix');
-    const isUnknown = document.getElementById('unknownStudentId').checked;
-    if (courseName && prefix) {
-        idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
-        for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
-        if (!isUnknown) { suffixBoxes[0].focus(); }
-    } else {
-        idContainer.classList.add('hidden'); currentCoursePrefix = "";
-        document.getElementById('unknownStudentId').checked = false;
-        updateCheckCardStyle(document.getElementById('unknownStudentId')); toggleUnknownStudentId();
+    if(currentDegreeLevel === 'ปริญญาตรี') {
+        const idContainer = document.getElementById('studentIdContainer');
+        const prefixBoxes = document.querySelectorAll('.pin-prefix');
+        const suffixBoxes = document.querySelectorAll('.pin-suffix');
+        const isUnknown = document.getElementById('unknownStudentId').checked;
+        if (courseName && prefix) {
+            idContainer.classList.remove('hidden'); currentCoursePrefix = prefix;
+            for(let i=0; i<4; i++) { prefixBoxes[i].value = prefix[i]; }
+            if (!isUnknown) { suffixBoxes[0].focus(); }
+        } else {
+            idContainer.classList.add('hidden'); currentCoursePrefix = "";
+            document.getElementById('unknownStudentId').checked = false;
+            updateCheckCardStyle(document.getElementById('unknownStudentId')); toggleUnknownStudentId();
+        }
     }
+    // ป.โท ป.เอก ไม่ต้องทำอะไรตรงนี้ เพราะช่อง Student ID โชว์ไว้อยู่แล้วแบบไม่มี prefix
 }
+
 function toggleUnknownStudentId() {
     const isUnknown = document.getElementById('unknownStudentId').checked;
     const suffixWrapper = document.getElementById('pinSuffixWrapper');
@@ -631,6 +735,24 @@ function toggleUnknownStudentId() {
         if (currentCoursePrefix) suffixBoxes[0].focus();
     }
 }
+
+function toggleUnknownStudentIdGrad() {
+    const isUnknown = document.getElementById('unknownStudentIdGrad').checked;
+    const suffixWrapper = document.getElementById('pinSuffixWrapperGrad');
+    const unknownText = document.getElementById('pinUnknownTextGrad');
+    const suffixBoxes = document.querySelectorAll('.pin-suffix-grad');
+    let chk = document.getElementById('unknownStudentIdGrad');
+    chk.checked ? chk.closest('label').classList.replace('border-indigo-200', 'border-indigo-600') : chk.closest('label').classList.replace('border-indigo-600', 'border-indigo-200');
+    
+    if (isUnknown) {
+        suffixWrapper.style.display = 'none'; unknownText.style.display = 'block'; unknownText.classList.replace('hidden','block');
+        suffixBoxes.forEach(b => b.value = "");
+    } else {
+        suffixWrapper.style.display = 'flex'; unknownText.style.display = 'none'; unknownText.classList.replace('block','hidden');
+        suffixBoxes[0].focus();
+    }
+}
+
 function toggleFollowPlatform() {
     let followRadio = document.querySelector('input[name="followPage"]:checked');
     let wrapPlatform = document.getElementById('wrapFollowPlatform');
@@ -647,19 +769,30 @@ function toggleFollowPlatform() {
     }
 }
 
-// Stepper
 function nextStep(step) {
     if (step === 1) {
         let course = document.getElementById('course').value;
-        let isUnknown = document.getElementById('unknownStudentId').checked;
-        let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
         let prefix = document.getElementById('prefix').value;
         let fname = document.getElementById('fname').value.trim();
         let lname = document.getElementById('lname').value.trim();
-        let tcas = document.getElementById('tcasRound').value;
-        if (!course || !prefix || !fname || !lname || !tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
-        if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
-        changeStep(1, 2, '50%');
+        
+        if (!course || !prefix || !fname || !lname) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณากรอกข้อมูลส่วนตัวให้ครบถ้วน', confirmButtonColor: '#003380'}); return; }
+        
+        if (currentDegreeLevel === 'ปริญญาตรี') {
+            let tcas = document.getElementById('tcasRound').value;
+            let isUnknown = document.getElementById('unknownStudentId').checked;
+            let stdSuffix = Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
+            if (!tcas) { Swal.fire({icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาเลือกรอบที่สอบติด TCAS', confirmButtonColor: '#003380'}); return; }
+            if (!isUnknown && stdSuffix.length !== 3) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 3 หลักท้ายให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#003380'}); return; }
+            changeStep(1, 2, '50%'); // ป.ตรี ขยับหลอดไปที่ 50%
+        } else {
+            // ป.โท และ ป.เอก ตรวจสอบรหัสแบบ 7 ตัว
+            let isUnknownGrad = document.getElementById('unknownStudentIdGrad').checked;
+            let stdSuffixGrad = Array.from(document.querySelectorAll('.pin-suffix-grad')).map(b => b.value).join('');
+            if (!isUnknownGrad && stdSuffixGrad.length !== 7) { Swal.fire({icon: 'warning', title: 'รหัสนักศึกษาไม่ครบถ้วน', text: 'กรุณากรอกรหัสนักศึกษา 7 หลักให้ครบ หรือเลือก "ไม่ทราบรหัสนักศึกษา"', confirmButtonColor: '#4f46e5'}); return; }
+            // ข้าม Step 2 และขยับหลอดไปที่ 100% เลย
+            changeStep(1, 3, '100%');
+        }
     } 
     else if (step === 2) {
         let school = document.getElementById('schoolInputSearch').value.trim();
@@ -668,12 +801,20 @@ function nextStep(step) {
         changeStep(2, 3, '100%');
     }
 }
-function prevStep(step) { if (step === 2) changeStep(2, 1, '0%'); if (step === 3) changeStep(3, 2, '50%'); }
+function prevStep(step) { 
+    if (step === 2) changeStep(2, 1, '0%'); 
+    if (step === 3) {
+        if(currentDegreeLevel === 'ปริญญาตรี') changeStep(3, 2, '50%');
+        else changeStep(3, 1, '0%'); // ป.โท ป.เอก กลับไป Step 1 (0%)
+    }
+}
 function changeStep(from, to, progress) {
     document.getElementById('step' + from).classList.remove('active'); document.getElementById('step' + to).classList.add('active');
     document.getElementById('progressBar').style.width = progress;
     for(let i=1; i<=3; i++){
-        let dot = document.getElementById('dot' + i); let textSpan = dot.nextElementSibling;
+        let dot = document.getElementById('dot' + i); 
+        if(!dot) continue;
+        let textSpan = dot.nextElementSibling;
         if(i <= to) {
             dot.className = "w-12 h-12 rounded-full bg-[#f26b21] text-white flex items-center justify-center font-bold shadow-lg text-lg ring-4 ring-orange-50 transition-all";
             textSpan.className = "text-xs font-bold text-[#003380]";
@@ -685,7 +826,6 @@ function changeStep(from, to, progress) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Submit Data
 function submitData(overwrite = false) {
     let getChecks = function(name, otherId) {
         let els = document.querySelectorAll('input[name="' + name + '"]:checked'); let arr = [];
@@ -710,21 +850,38 @@ function submitData(overwrite = false) {
     if(!suggestion) { Swal.fire({icon:'warning', text:'กรุณาระบุข้อเสนอแนะเพิ่มเติม', confirmButtonColor: '#003380'}); return; }
 
     let finalStudentId = "";
-    if (document.getElementById('unknownStudentId').checked) finalStudentId = currentCoursePrefix + "(ไม่ทราบ)";
-    else finalStudentId = currentCoursePrefix + Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
+    let finalTcas = "-";
+    let finalSchool = "-";
+    let finalProvince = "-";
+
+    if (currentDegreeLevel === 'ปริญญาตรี') {
+        if (document.getElementById('unknownStudentId').checked) finalStudentId = currentCoursePrefix + "(ไม่ทราบ)";
+        else finalStudentId = currentCoursePrefix + Array.from(document.querySelectorAll('.pin-suffix')).map(b => b.value).join('');
+        finalTcas = document.getElementById('tcasRound').value;
+        finalSchool = document.getElementById('schoolInputSearch').value;
+        finalProvince = document.getElementById('provinceInput').value;
+    } else {
+        if (document.getElementById('unknownStudentIdGrad').checked) finalStudentId = "(ไม่ทราบ)";
+        else finalStudentId = Array.from(document.querySelectorAll('.pin-suffix-grad')).map(b => b.value).join('');
+        // tcas, school, province จะปล่อยเป็น "-"
+    }
 
     let payload = {
-        course: document.getElementById('course').value, studentId: finalStudentId,
-        prefix: document.getElementById('prefix').value, fname: document.getElementById('fname').value, lname: document.getElementById('lname').value,
-        tcasRound: document.getElementById('tcasRound').value, school: document.getElementById('schoolInputSearch').value, province: document.getElementById('provinceInput').value,
+        degree: currentDegreeLevel, // เก็บค่าปริญญาตรี โท เอก
+        course: document.getElementById('course').value, 
+        studentId: finalStudentId,
+        prefix: document.getElementById('prefix').value, 
+        fname: document.getElementById('fname').value, 
+        lname: document.getElementById('lname').value,
+        tcasRound: finalTcas, 
+        school: finalSchool, 
+        province: finalProvince,
         reasons: reasons, channels: channels, followPage: followPage.value,
         platform: (followPage.value === "ไม่ได้ติดตาม") ? "-" : platform,
         futureAct: futureAct, suggestion: suggestion, overwrite: overwrite
     };
 
     let btn = document.getElementById('btnSubmit'); 
-    
-    // ใส่ Loader ลงไปแทนที่ข้อความเดิม
     btn.innerHTML = '<span class="loader mr-2"></span> กำลังบันทึก...'; 
     btn.disabled = true;
     btn.classList.add('opacity-80', 'cursor-not-allowed');
@@ -732,7 +889,6 @@ function submitData(overwrite = false) {
     fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "submitSurvey", payload: payload }) })
     .then(r => r.json())
     .then(res => {
-        // คืนค่าปุ่ม
         btn.innerHTML = 'ส่งข้อมูลแบบสำรวจ'; 
         btn.disabled = false;
         btn.classList.remove('opacity-80', 'cursor-not-allowed');
@@ -743,7 +899,6 @@ function submitData(overwrite = false) {
             document.getElementById('successView').classList.remove('hidden'); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // 🔴 แก้ไข: รับ fullName ที่ตรงกับฐานข้อมูลเป๊ะๆ จาก Backend มาเลย
             initScratchCard(res.scratchResult, res.claimStatus, res.fullName);
             
         } else if (res.status === 'duplicate') {
@@ -759,15 +914,11 @@ function submitData(overwrite = false) {
     });
 }
 
-// ----------------------------------------------------
-// ระบบ Scratch Card และ Pop-up รับรางวัล
-// ----------------------------------------------------
 let isCardCleared = false; 
 let glbIsWinner = false; 
 
-// 🔴 แก้ไข: รับพารามิเตอร์ fullName ที่ดึงตรงมาจากฐานข้อมูล Backend
 function initScratchCard(result, claimStatus, fullName) {
-    window.currentFullName = fullName; // อ้างอิงตัวแปรนี้ตรงๆ เลย 
+    window.currentFullName = fullName; 
     window.claimStatus = claimStatus;
     glbIsWinner = (result === 'WIN');
     
@@ -775,7 +926,6 @@ function initScratchCard(result, claimStatus, fullName) {
     const bg = document.getElementById('scratchResultBg');
     const canvas = document.getElementById('scratchCanvas');
     
-    // ตั้งค่ากราฟิกหลังบัตรขูด
     if (glbIsWinner) {
         bg.innerHTML = '<i class="fi fi-sr-gift text-4xl text-green-500 mb-2"></i><span class="text-green-600 text-xl font-black">ยินดีด้วย! คุณได้รับรางวัล</span><span class="text-xs text-gray-400 mt-2">(คลิกเพื่อดูรายละเอียด)</span>';
         bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-green-50 shadow-inner';
@@ -784,12 +934,10 @@ function initScratchCard(result, claimStatus, fullName) {
         bg.className = 'absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-gray-50 shadow-inner';
     }
 
-    // ฟังก์ชันวาด Canvas
     function drawCanvas() {
         const cw = container.clientWidth;
         const ch = container.clientHeight;
         
-        // ถ้าหน้าจอยังแสดงไม่เต็ม ให้รอวนซ้ำไปเรื่อยๆ จนกว่าความกว้างจะมา
         if(cw === 0 || ch === 0) {
             setTimeout(drawCanvas, 100);
             return;
@@ -813,7 +961,6 @@ function initScratchCard(result, claimStatus, fullName) {
 
         setupScratchEvents(canvas, ctx, cw, ch);
     }
-
     setTimeout(drawCanvas, 200);
 }
 
@@ -866,9 +1013,6 @@ function setupScratchEvents(canvas, ctx, w, h) {
     window.addEventListener('touchend', stopScratching);
 }
 
-// ----------------------------------------------------
-// ระบบ Modal สำหรับรางวัล
-// ----------------------------------------------------
 function showPrizeModal() {
     let modal = document.getElementById('prizeModal');
     let btnClaim = document.getElementById('modalBtnClaim');
@@ -909,14 +1053,12 @@ function closeModal() {
     }, 300);
 }
 
-// หากบัตรโดนเปิดหมดแล้ว และเป็น Winner กดที่บัตรเพื่อเปิด Popup ซ้ำได้
 function handleCardClick() {
     if(isCardCleared && glbIsWinner) {
         showPrizeModal();
     }
 }
 
-// ปุ่มกดยืนยันการรับสิทธิ์
 function claimPrizeBtn() {
     Swal.fire({
         title: 'แน่ใจว่าอยู่กับเจ้าหน้าที่?',
@@ -933,13 +1075,11 @@ function claimPrizeBtn() {
             let btnIcon = document.getElementById('modalBtnIcon');
             let btnText = document.getElementById('modalBtnText');
 
-            // ใช้ Loader ตัวใหม่ที่สร้างไว้
             btnIcon.className = "loader mr-1"; 
             btnText.innerText = " กำลังอัปเดต...";
             btn.disabled = true;
             btn.classList.add('opacity-80', 'cursor-not-allowed');
 
-            // 🔴 แก้ไข: ส่งข้อมูล fullName ที่รับมาจาก Backend เข้าไปเช็คเพื่อความชัวร์ 100%
             let claimPayload = {
                 fullName: window.currentFullName
             };

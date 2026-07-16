@@ -361,7 +361,7 @@
                   </div>
 
                   <div class="p-6 md:p-8 border border-blue-100 bg-[#f0f7ff] rounded-2xl shadow-sm relative z-40">
-                      <label class="block text-base font-bold mb-4 text-[#003380]">ปัจจุบันท่านได้ติดตามประกาศและข่าวสารในเพจ Education CRA หรือไม่ <span class="text-red-500">*</span></label>
+                      <label class="block text-base font-bold mb-4 text-[#003380]">ปัจจุบันท่านได้ติดตามประกาศและข่าวสารในเพจราชวิทยาลยจุฬาภรณ์ และ Education CRA หรือไม่ <span class="text-red-500">*</span></label>
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <label class="check-card">
                               <div class="checkbox-wrapper-12">
@@ -437,7 +437,7 @@ let rawSchoolData = [];
 const provincesList = ["กรุงเทพมหานคร","กระบี่","กาญจนบุรี","กาฬสินธุ์","กำแพงเพชร","ขอนแก่น","จันทบุรี","ฉะเชิงเทรา","ชลบุรี","ชัยนาท","ชัยภูมิ","ชุมพร","เชียงราย","เชียงใหม่","ตรัง","ตราด","ตาก","นครนายก","นครปฐม","นครพนม","นครราชสีมา","นครศรีธรรมราช","นครสวรรค์","นนทบุรี","นราธิวาส","น่าน","บึงกาฬ","บุรีรัมย์","ปทุมธานี","ประจวบคีรีขันธ์","ปราจีนบุรี","ปัตตานี","พระนครศรีอยุธยา","พะเยา","พังงา","พัทลุง","พิจิตร","พิษณุโลก","เพชรบุรี","เพชรบูรณ์","แพร่","ภูเก็ต","มหาสารคาม","มุกดาหาร","แม่ฮ่องสอน","ยโสธร","ยะลา","ร้อยเอ็ด","ระนอง","ระยอง","ราชบุรี","ลพบุรี","ลำปาง","ลำพูน","เลย","ศรีสะเกษ","สกลนคร","สงขลา","สตูล","สมุทรปราการ","สมุทรสงคราม","สมุทรสาคร","สระแก้ว","สระบุรี","สิงห์บุรี","สุโขทัย","สุพรรณบุรี","สุราษฎร์ธานี","สุรินทร์","หนองคาย","หนองบัวลำภู","อ่างทอง","อำนาจเจริญ","อุดรธานี","อุตรดิตถ์","อุทัยธานี","อุบลราชธานี"];
 
 const prefixData = [ { name: "นาย", icon: "fi-rr-user" }, { name: "นางสาว", icon: "fi-rr-user" } ];
-const platformData = [ { name: "Facebook", icon: "fi-brands-facebook" }, { name: "Instagram", icon: "fi-brands-instagram" }, { name: "TikTok", icon: "fi-brands-tik-tok" }, { name: "X (Twitter)", icon: "fi-brands-twitter" }, { name: "Youtube CRA CHULABHORN Channel", icon: "fi-brands-Youtube" } ];
+const platformData = [ { name: "Facebook", icon: "fi-brands-facebook" }, { name: "Instagram", icon: "fi-brands-instagram" }, { name: "TikTok", icon: "fi-brands-tik-tok" }, { name: "X (Twitter)", icon: "fi-brands-twitter" }, { name: "Youtube CRA CHULABHORN Channel", icon: "fi-brands-youtube" } ];
 const courseData = [
     { name: "แพทยศาสตรบัณฑิต", prefix: "7008", icon: "fi-sr-stethoscope" },
     { name: "วท.บ. สาขาวิชาวิทยาศาสตร์ข้อมูลสุขภาพ", prefix: "7005", icon: "fi-sr-chart-histogram" },
@@ -704,7 +704,7 @@ function submitData(overwrite = false) {
 
     if(!reasons) { Swal.fire({icon:'warning', text:'กรุณาเลือกเหตุผลที่เลือกศึกษาต่ออย่างน้อย 1 ข้อ', confirmButtonColor: '#003380'}); return; }
     if(!channels) { Swal.fire({icon:'warning', text:'กรุณาเลือกช่องทางที่รู้จักอย่างน้อย 1 ข้อ', confirmButtonColor: '#003380'}); return; }
-    if(!followPage) { Swal.fire({icon:'warning', text:'กรุณาระบุว่าติดตามเพจ Education CRA หรือไม่', confirmButtonColor: '#003380'}); return; }
+    if(!followPage) { Swal.fire({icon:'warning', text:'กรุณาระบุว่าติดตามเพจราชวิทยาลยจุฬาภรณ์ และ Education CRA หรือไม่', confirmButtonColor: '#003380'}); return; }
     if(followPage.value === "ใช่ติดตาม" && !platform) { Swal.fire({icon:'warning', text:'กรุณาเลือกแพลตฟอร์มที่ติดตาม', confirmButtonColor: '#003380'}); return; }
     if(!futureAct) { Swal.fire({icon:'warning', text:'กรุณาระบุกิจกรรมที่อยากให้ราชวิทยาลัยทำการจัดในอนาคต', confirmButtonColor: '#003380'}); return; }
     if(!suggestion) { Swal.fire({icon:'warning', text:'กรุณาระบุข้อเสนอแนะเพิ่มเติม', confirmButtonColor: '#003380'}); return; }

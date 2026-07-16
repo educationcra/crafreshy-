@@ -391,7 +391,7 @@
 
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                       <div class="w-full flex flex-col">
-                          <label class="block text-sm font-bold mb-3 text-[#003380]">กิจกรรมที่อยากให้ราชวิทยาลัยทำการจัดในอนาคต <span class="text-red-500">*</span></label>
+                          <label class="block text-sm font-bold mb-3 text-[#003380]">ท่านอยากให้ราชวิทยาลัยจุฬาภรณ์จัดกิจกรรมประเภทใดในอนาคต <span class="text-red-500">*</span></label>
                           <textarea id="futureAct" rows="4" class="w-full p-4 bg-[#f8fafc] text-[#0d0c22] border-2 border-transparent rounded-xl outline-none focus:border-[#818cf8] focus:bg-white focus:shadow-[0_0_0_5px_rgba(129,140,248,0.3)] transition-all resize-none font-medium" placeholder="เช่น ค่ายวิชาการ, ติวเตอร์..."></textarea>
                       </div>
                       <div class="w-full flex flex-col">
@@ -452,7 +452,7 @@ const courseData = [
     { name: "วศ.บ. สาขาวิชาวิศวกรรมชีวการแพทย์", prefix: "7028", icon: "fi-sr-settings" }
 ];
 const tcasData = [ { name: "รอบที่ 1 Portfolio", icon: "fi-sr-folder" }, { name: "รอบที่ 2 Quota", icon: "fi-sr-document" }, { name: "รอบที่ 3 Admission", icon: "fi-sr-graduation-cap" }, { name: "รอบ 4 Direct Admission", icon: "fi-sr-briefcase" } ];
-const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
+const reasonsList = ["ชื่อเสียงและความน่าเชื่อถือของสถาบัน", "หลักสูตรทันสมัย ตอบโจทย์ตลาดแรงงาน", "หลักสูตรมีความโดดเด่นและมีรายวิชาเข้มข้นเฉพาะทาง", "ต้องการทำงานด้านวิทยาศาสตร์สุขภาพ", "สถาบันมีจุดเด่นในด้านการวิจัย และนวัตกรรม", "มีทุนการศึกษาสนับสนุน", "การสื่อสารประชาสัมพันธ์และกิจกรรมของราชวิทยาลัยจุฬาภรณ์", "มีสิ่งแวดล้อม และบรรยากาศดี", "สถานที่ตั้งอยู่ในพื้นที่สะดวกต่อการเดินทาง", "ได้รับคำแนะนำจากครอบครัว / เพื่อน / ครู"];
 const channelsList = ["กิจกรรม CRA Open House", "กิจกรรม CRA Roadshow ตามโรงเรียน", "กิจกรรม CRA The Tutor", "กิจกรรมทางการศึกษาราชวิทยาลัยจุฬาภรณ์", "งาน DEK-D's TCAS Fair ไบเทค บางนา", "เพจราชวิทยาลัยจุฬาภรณ์ และ EducationCRA", "เว็บไซต์ www.cra.ac.th", "เว็บไซต์ TCAS", "สื่อสังคมออนไลน์ และเว็บไซต์ข่าว", "โทรทัศน์ / หนังสือพิมพ์ / โปสเตอร์", "ผู้ปกครอง เพื่อนและครู"];
 
 window.onload = function() {

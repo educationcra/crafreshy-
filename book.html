@@ -247,7 +247,7 @@
   <!-- หน้าที่สอง (Shake Zone) -->
   <div id="shakeStep" class="step-section">
     <h2 class="font-bold text-cra-gold text-2xl mb-2 drop-shadow-md">ตั้งจิตอธิษฐาน</h2>
-    <p class="text-[#ddd] text-base mb-6 leading-relaxed">จับมือถือให้แน่นแล้ว <b class="text-white font-semibold">"เขย่า"</b><br>หรือ <b class="text-white font-semibold">"แตะรัวๆ"</b> ที่กระบอกเซียมซี</p>
+    <p class="text-[#ddd] text-base mb-6 leading-relaxed">จับมือถือให้แน่นแล้ว<b class="text-white font-semibold">"แตะรัวๆ"</b> ที่กระบอกเซียมซี</p>
     
     <div id="siamsi-container" class="siamsi-wrapper" onclick="triggerManualTap()">
       <div class="stick-base stick-1"></div>
@@ -278,7 +278,16 @@
     <div id="officerArea" style="display:none;">
       <button class="w-full py-4 text-base font-bold rounded-xl text-white bg-gradient-to-br from-[#0275d8] to-[#014c8e] shadow-[0_5px_15px_rgba(2,117,216,0.3)] hover:-translate-y-0.5 transition-all duration-300" onclick="officerConfirm()">ยืนยันมอบของรางวัล (เจ้าหน้าที่)</button>
     </div>
-    <div id="closeArea" style="display:none;">
+    
+    <!-- แก้ไขตรง id="closeArea" โดยเพิ่ม class="space-y-3" และเพิ่มปุ่ม Linktree -->
+    <div id="closeArea" style="display:none;" class="space-y-3">
+      <button class="w-full py-4 text-base font-bold rounded-xl text-white bg-gradient-to-br from-[#10b981] to-[#047857] shadow-[0_5px_20px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2" onclick="window.open('https://linktr.ee/CRAlibrary', '_blank')">
+        <!-- ไอคอน Link -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+        </svg>
+        ช่องทางการติดตามห้องสมุด
+      </button>
       <button class="w-full py-4 text-base font-bold rounded-xl text-white bg-gradient-to-br from-cra-red to-cra-darkred shadow-[0_5px_20px_rgba(181,43,39,0.3)] hover:-translate-y-0.5 transition-all duration-300" onclick="closeOverlay()">กลับสู่หน้าหลัก</button>
     </div>
   </div>
@@ -326,7 +335,12 @@
     "รางวัลใหญ่อาจเป็นของคนอื่น แต่ความสุขและความสนุกในรั้วมหาลัยตลอด 4 ปีต่อจากนี้จะเป็นของคุณแน่นอน",
     "ระบบแจ้งว่าดวงคุณไม่ได้นก แค่กำลังสะสมพลังไปสุ่มเจอเพื่อนร่วมเซกที่ดี และรุ่นพี่ที่คอยช่วยเหลือซัพพอร์ต",
     "ไม่มีของรางวัลแจกให้ มีแต่คำอวยพรสุดเอ็กซ์คลูซีฟส่งตรงถึงคุณ: ขอให้เป็นเฟรชชี่ที่มีความสุขที่สุดในรุ่น",
-    "อกหักจากรางวัลในเกมวันนี้ เพื่อไปสมหวังกับทุกโปรเจกต์และทุกวิชาโหดๆ ที่ต้องเจอต่อจากนี้นะ สู้ๆ"
+    "อกหักจากรางวัลในเกมวันนี้ เพื่อไปสมหวังกับทุกโปรเจกต์และทุกวิชาโหดๆ ที่ต้องเจอต่อจากนี้นะ สู้ๆ",
+    "ของรางวัลชิ้นใหญ่ที่สุดในตอนนี้ คือการที่คุณได้ก้าวเข้ามาเป็นนักศึกษาใหม่ที่นี่ ยินดีต้อนรับสู่บ้านหลังใหม่นะ",
+    "รางวัลในเกมเป็นแค่ทางผ่าน การได้มิตรภาพดีๆ และเรียนจบพร้อมกันต่างหากคือชัยชนะที่แท้จริง",
+    "เฉียดรางวัลไปนิดเดียว แต่ความเก่งและสติปัญญาของคุณจะไม่เฉียดแน่นอน ทุกวิชาที่ลงเรียนผ่านฉลุยไร้กังวล",
+    "ถึงไม่ได้ของรางวัลติดมือกลับไป แต่คุณได้รับตั๋วความโชคดีตลอดปี 1 ขอให้ทุกวันมีแต่รอยยิ้มและเรื่องราวดีๆ",
+    "ยินดีต้อนรับเฟรชชี่สู่ชีวิตที่แท้จริง! สัปดาห์แรกจะรู้สึกเหมือนมาเที่ยว สัปดาห์ต่อมาจะเริ่มสงสัยว่าเรามาทำอะไรที่นี่ และสัปดาห์สอบจะอยากกลับไปเป็นทารกอีกครั้ง"
   ];
 
   const boxShakeAudio = new Audio('https://www.soundjay.com/misc/sounds/shaking-dice-1.mp3');
@@ -500,7 +514,7 @@
         textEl.innerHTML = `<span class="block text-xl text-white font-bold mb-3 border-b border-cra-gold/30 pb-2">${res.fullName}</span>คุณได้รับรางวัลไปเรียบร้อยแล้ว<br><span class='text-green-500 font-bold'>[ สถานะ: ใช้สิทธิ์แล้ว ]</span>`;
         officerArea.style.display = 'none'; closeArea.style.display = 'block';
       } else {
-        textEl.innerHTML = `<span class="block text-xl text-white font-bold mb-3 border-b border-cra-gold/30 pb-2">${res.fullName}</span>คุณได้รับรางวัล! <br>โปรดแคปหน้าจอนี้ ส่งไปที่ LINE OA :CRA Library เพื่อให้เจ้าหน้าที่ตรวจสอบอีกที หรือนำหน้าจอนี้ไปแสดงต่อเจ้าหน้าที่บูธห้องสมุดเพื่อรับรางวัล 🎁`;
+        textEl.innerHTML = `<span class="block text-xl text-white font-bold mb-3 border-b border-cra-gold/30 pb-2">${res.fullName}</span>คุณได้รับรางวัล! <br>โปรดแคปหน้าจอนี้ ส่งไปที่ LINE OA :CRA Library เพื่อให้เจ้าหน้าที่ตรวจสอบ หรือนำหน้าจอนี้ไปแสดงต่อเจ้าหน้าที่บูธห้องสมุดเพื่อรับรางวัล 🎁`;
         officerArea.style.display = 'block'; closeArea.style.display = 'none';
         document.getElementById('officerArea').innerHTML = `<button class="w-full py-4 text-base font-bold rounded-xl text-white bg-gradient-to-br from-[#0275d8] to-[#014c8e] shadow-[0_5px_15px_rgba(2,117,216,0.3)] hover:-translate-y-0.5 transition-all duration-300" onclick="officerConfirm(${res.rowNumber})">ยืนยันมอบของรางวัล (เจ้าหน้าที่)</button>`;
       }

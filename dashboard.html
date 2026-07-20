@@ -128,7 +128,8 @@
           <thead class="bg-gray-50 text-gray-800 font-bold uppercase rounded-t-xl">
               <tr>
                   <th class="p-4 w-20 text-center">อันดับ</th>
-                  <th class="p-4">รายชื่อโรงเรียน</th>
+                  <!-- อัปเดต Hint ในหัวตาราง -->
+                  <th class="p-4">รายชื่อโรงเรียน <span class="text-xs text-gray-500 font-normal ml-2 no-print">(คลิกที่แถวเพื่อดูหลักสูตรที่เข้าศึกษา)</span></th>
                   <th class="p-4 text-right w-32">จำนวนคน</th>
                   <th class="p-4 text-right w-32">ร้อยละ</th>
               </tr>
@@ -170,7 +171,7 @@
     </div>
   </div>
 
-  <!-- Modal สำหรับ Filter / Comments / รายชื่อนักศึกษา -->
+  <!-- Modal สำหรับ Filter / Comments / รายชื่อนักศึกษา / รายชื่อหลักสูตรโรงเรียน -->
   <div id="modalBase" class="fixed inset-0 z-50 hidden no-print">
     <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4">
@@ -385,7 +386,7 @@
         let p = preciseRound(it[1]*100/total, 2).toFixed(2);
         return `<tr class="hover:bg-blue-50 transition-colors cursor-pointer group" onclick="openCourseStudentsModal('${it[0]}')"> 
             <td class="p-3 text-center align-middle font-bold text-gray-400">${i+1}</td> 
-            <td class="p-3 font-bold text-gray-700 group-hover:text-cra-secondary transition-colors">${it[0]} <span class="hidden group-hover:inline-block ml-2 text-xs text-blue-500 font-medium">กดดูรายชื่อ <i class="fi fi-sr-arrow-right"></i></span></td> 
+            <td class="p-3 font-bold text-gray-700 group-hover:text-cra-secondary transition-colors">${it[0]} <span class="hidden group-hover:inline-block ml-2 text-xs text-blue-500 font-medium bg-blue-100 px-2 py-0.5 rounded">กดดูรายชื่อ <i class="fi fi-sr-arrow-right text-[10px]"></i></span></td> 
             <td class="p-3 text-right font-black text-cra-secondary text-lg">${it[1]}</td> 
             <td class="p-3 text-right text-gray-500 font-bold">${p}%</td> 
             <td class="p-3 no-print"><div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden"><div class="bg-cra-primary h-2.5 rounded-full" style="width:${p}%"></div></div></td>
@@ -461,12 +462,16 @@
             if(it.rank === 1) rowStyle = "bg-orange-50/60";
             else if(it.rank === 2) rowStyle = "bg-gray-50/60";
             else if(it.rank === 3) rowStyle = "bg-amber-50/30";
+            
+            // ป้องกันปัญหาเครื่องหมายคำพูดในชื่อโรงเรียน ทำให้ onclick แตก
+            let safeName = it.name.replace(/"/g, '&quot;');
 
-            return `<tr class="${rowStyle} hover:bg-blue-50 transition-colors">
+            return `<tr class="${rowStyle} hover:bg-orange-50 transition-colors cursor-pointer group" onclick="openSchoolCoursesModal(this.getAttribute('data-school'))" data-school="${safeName}">
                 <td class="p-3 text-center align-middle">${icon}</td>
-                <td class="p-3 font-bold text-gray-700">
+                <td class="p-3 font-bold text-gray-700 group-hover:text-cra-primary transition-colors">
                     ${it.name}
                     ${it.prov && it.prov !== '-' ? `<span class="inline-block bg-blue-50 text-blue-600 text-[10px] px-2.5 py-0.5 rounded-full ml-2 border border-blue-100 uppercase tracking-wide">จ.${it.prov}</span>` : ''}
+                    <span class="hidden group-hover:inline-block ml-2 text-xs text-orange-500 font-medium bg-orange-100 px-2 py-0.5 rounded">ดูหลักสูตร <i class="fi fi-sr-arrow-right text-[10px]"></i></span>
                 </td>
                 <td class="p-3 text-right font-black text-cra-secondary text-lg">${it.count}</td>
                 <td class="p-3 text-right text-gray-500 font-bold">${it.percent}%</td>
@@ -478,6 +483,46 @@
             <span class="text-sm font-bold text-gray-500 bg-gray-50 px-4 py-1.5 rounded-lg border border-gray-200">หน้า ${schoolCurrentPage} จาก ${totalPages}</span>
             <button onclick="changeSchoolPage(1)" class="px-4 py-2 text-sm font-bold rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition disabled:opacity-50" ${schoolCurrentPage === totalPages ? 'disabled' : ''}>ถัดไป <i class="fi fi-sr-angle-small-right"></i></button>
         `;
+    }
+
+    function openSchoolCoursesModal(schoolName) {
+        document.getElementById('mHeader').innerHTML = `<i class="fi fi-sr-school text-cra-primary"></i> ข้อมูลหลักสูตร: ${schoolName}`;
+        
+        // กรองหานักศึกษาทั้งหมดที่มาจากโรงเรียนที่คลิก (ใช้ข้อมูลที่ผ่าน filter แล้ว)
+        let students = FILTERED_DATA.filter(r => String(r[6] || '').trim() === schoolName);
+        
+        // นับจำนวนแยกตามหลักสูตร (Index 0)
+        let courseCounts = {};
+        students.forEach(s => {
+            let course = String(s[0] || 'ไม่ระบุ').trim();
+            courseCounts[course] = (courseCounts[course] || 0) + 1;
+        });
+        
+        // เรียงลำดับจากมากไปน้อย
+        let sortedCourses = Object.entries(courseCounts).sort((a,b) => b[1] - a[1]);
+        
+        let html = `<div class="overflow-x-auto"><table class="w-full text-sm text-left border-collapse">
+            <thead class="bg-orange-50 text-orange-800 font-bold sticky top-0">
+                <tr>
+                    <th class="p-4 w-16 text-center rounded-tl-lg">ลำดับ</th>
+                    <th class="p-4">หลักสูตรที่เข้าศึกษา</th>
+                    <th class="p-4 text-right rounded-tr-lg">จำนวน (คน)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                ${sortedCourses.map((c, i) => `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-center text-gray-400 font-bold">${i+1}</td>
+                        <td class="p-4 font-bold text-gray-700">${c[0]}</td>
+                        <td class="p-4 text-right font-black text-cra-secondary text-lg">${c[1]}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table></div>`;
+        
+        document.getElementById('mBody').innerHTML = html;
+        document.getElementById('mFooter').innerHTML = `<p class="text-sm text-gray-500 font-bold">นักศึกษาจากสถาบันนี้รวม: <span class="text-cra-primary text-lg">${students.length}</span> คน</p>`;
+        document.getElementById('modalBase').classList.remove('hidden');
     }
 
     function changeSchoolPage(dir) {
